@@ -1,0 +1,12 @@
+{
+  "name": "safer-xml",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WCAG RAG accessibility code generation demo with Pa11y evaluation.",
+  "scripts": {
+    "pa11y": "pa11y"
+  },
+  "devDependencies": {
+    "pa11y": "^9.0.0"
+  }
+}

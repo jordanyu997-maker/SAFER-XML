@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SAFER-XML</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-block">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <div>
+          <h1>SAFER-XML</h1>
+          <p>Android XML Accessibility Repair</p>
+        </div>
+      </div>
+      <div class="system-status" aria-label="System status">
+        <span class="status-item" id="serverStatus"><i></i>Local service</span>
+        <span class="status-item pending" id="apiStatus">Model API</span>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="source-pane" aria-labelledby="sourceTitle">
+        <div class="section-heading">
+          <div>
+            <span class="step-label">01</span>
+            <h2 id="sourceTitle">Resource Input</h2>
+          </div>
+          <span class="quiet-label">XML / ZIP</span>
+        </div>
+
+        <form id="checkForm">
+          <label class="upload-field" for="fileInput">
+            <strong>Select Android Resources</strong>
+            <span id="fileLabel">A single XML file or a ZIP containing res</span>
+            <input id="fileInput" type="file" accept=".xml,.zip,application/zip,text/xml">
+          </label>
+
+          <div class="divider"><span>or paste XML</span></div>
+
+          <label class="field" for="xmlText">
+            <span>XML Source</span>
+            <textarea id="xmlText" spellcheck="false" placeholder="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;…&lt;/LinearLayout&gt;"></textarea>
+          </label>
+
+          <div class="field-row">
+            <label class="field" for="providerSelect">
+              <span>Model Provider</span>
+              <select id="providerSelect">
+                <option value="deepseek">DeepSeek</option>
+                <option value="openai">OpenAI</option>
+                <option value="anthropic">Anthropic</option>
+              </select>
+            </label>
+            <label class="field" for="modelName">
+              <span>Model</span>
+              <input id="modelName" type="text" value="deepseek-v4-pro">
+            </label>
+          </div>
+
+          <details class="advanced-settings">
+            <summary>Run Settings</summary>
+            <div class="field-row settings-row">
+              <label class="field" for="maxRounds">
+                <span>Repair Rounds</span>
+                <input id="maxRounds" type="number" min="1" max="3" value="3">
+              </label>
+              <label class="field" for="maxAttempts">
+                <span>Invalid-output Retries</span>
+                <input id="maxAttempts" type="number" min="1" max="3" value="3">
+              </label>
+            </div>
+          </details>
+
+          <div class="primary-actions">
+            <button type="submit" class="primary" id="checkButton">Run Check</button>
+            <button type="button" class="accent" id="repairButton" disabled>Start Repair</button>
+          </div>
+          <button type="button" class="text-button" id="clearButton">Reset Current Task</button>
+        </form>
+      </aside>
+
+      <section class="workspace" aria-labelledby="workspaceTitle">
+        <div class="workspace-head">
+          <div>
+            <span class="step-label">02</span>
+            <h2 id="workspaceTitle">Check and Repair</h2>
+          </div>
+          <div class="job-state">
+            <span id="jobLabel">Not started</span>
+            <strong id="pipelineState">IDLE</strong>
+          </div>
+        </div>
+
+        <div class="metric-strip" aria-label="Task metrics">
+          <div><span>Errors Before</span><strong id="beforeErrorCount">-</strong></div>
+          <div><span>Errors After</span><strong id="afterErrorCount">-</strong></div>
+          <div><span>XML-safe</span><strong id="actionableCount">-</strong></div>
+          <div><span>Manual / Runtime</span><strong id="reviewCount">-</strong></div>
+          <div><span>Repair Rate</span><strong id="repairRate">-</strong></div>
+          <div><span>Model Calls</span><strong id="modelCalls">-</strong></div>
+        </div>
+
+        <nav class="tabs" aria-label="Task views" role="tablist">
+          <button class="tab active" role="tab" aria-selected="true" aria-controls="issuesView" data-tab="issuesView">Issues</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="knowledgeView" data-tab="knowledgeView">Knowledge Evidence <span id="knowledgeCount">0</span></button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="traceView" data-tab="traceView">Repair Trace</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="outputView" data-tab="outputView">XML Output</button>
+        </nav>
+
+        <section class="tab-view active" id="issuesView" role="tabpanel">
+          <div class="view-toolbar">
+            <div class="segmented" id="issueFilters" aria-label="Filter issues">
+              <button class="selected" data-filter="all">All <span id="totalCount">0</span></button>
+              <button data-filter="error">Error <span id="errorCount">0</span></button>
+              <button data-filter="warning">Warning <span id="warningCount">0</span></button>
+              <button data-filter="info">Info <span id="infoCount">0</span></button>
+            </div>
+          </div>
+          <div id="issueList" class="result-list empty-state">Run a check to view source-level evidence.</div>
+        </section>
+
+        <section class="tab-view" id="knowledgeView" role="tabpanel" hidden>
+          <div class="view-toolbar evidence-toolbar">
+            <div>
+              <strong>Issue-Conditioned Hybrid Retrieval</strong>
+              <span id="ragQuery">Waiting for a check</span>
+            </div>
+            <span class="contract-label">Deduplicated Top-2</span>
+          </div>
+          <div id="docList" class="result-list empty-state">Knowledge is retrieved only for XML-safe errors.</div>
+        </section>
+
+        <section class="tab-view" id="traceView" role="tabpanel" hidden>
+          <div class="pipeline-row" aria-label="SAFER-XML pipeline">
+            <div><b>1</b><span>Expanded v3 Check</span></div>
+            <div><b>2</b><span>XML-safe Gate</span></div>
+            <div><b>3</b><span>Hybrid Top-2</span></div>
+            <div><b>4</b><span>Restricted JSON Edits</span></div>
+            <div><b>5</b><span>Transactional Validation</span></div>
+          </div>
+          <div id="traceList" class="result-list empty-state">Repair rounds, accepted or rejected attempts, and the stop reason appear here.</div>
+        </section>
+
+        <section class="tab-view output-view" id="outputView" role="tabpanel" hidden>
+          <div class="view-toolbar output-toolbar">
+            <div class="segmented" id="fileMode">
+              <button class="selected" data-mode="original">Original</button>
+              <button data-mode="repaired" disabled>Repaired</button>
+            </div>
+            <select id="fileSelect" aria-label="Select an XML file"></select>
+            <a id="downloadButton" class="download-button disabled" href="#" aria-disabled="true">Download Repaired Package</a>
+          </div>
+          <pre id="filePreview" class="code-view">Select or paste XML, then run a check.</pre>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

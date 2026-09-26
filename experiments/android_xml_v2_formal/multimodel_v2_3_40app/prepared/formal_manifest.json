@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "protocol_id": "android_xml_v2_multimodel_40app_v2_3",
+  "status": "prepared_no_model_execution",
+  "dataset_version": "v2.3-40app-repair-benchmark",
+  "dataset_sha256": "bfc3f9420bd863d2329462a8b4b48c23eb2ff173c56465c1c757f6b66723d4f0",
+  "model_count": 3,
+  "models": [
+    {
+      "key": "deepseek_v4_pro",
+      "display_name": "DeepSeek V4 Pro",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro"
+    },
+    {
+      "key": "gpt_5_6_sol",
+      "display_name": "GPT 5.6 SOL",
+      "provider": "openai",
+      "model": "gpt-5.6-sol"
+    },
+    {
+      "key": "claude_opus_4_8",
+      "display_name": "Claude Opus 4.8",
+      "provider": "anthropic",
+      "model": "claude-opus-4-8"
+    }
+  ],
+  "groups": [
+    "raw_baseline",
+    "full_enhanced"
+  ],
+  "repair_task_count": 110,
+  "xml_safe_candidate_count": 136,
+  "repair_app_count": 40,
+  "boundary_candidate_count": 30,
+  "condition_run_count": 660,
+  "minimum_model_calls": 660,
+  "maximum_model_calls": 3300,
+  "actual_model_calls": 0,
+  "boundary_model_calls": 0,
+  "tasks_csv": "experiments/android_xml_v2_formal/multimodel_v2_3_40app/prepared/formal_tasks.csv",
+  "implementation_hashes": {
+    "preparer": {
+      "path": "tools/prepare_android_xml_v2_40app_formal_study.py",
+      "sha256": "4613f55a41206e3a29b89bdbdf2ff581a625909e1e61278d1912eefa6556f871"
+    },
+    "formal_runner": {
+      "path": "tools/run_android_xml_v2_40app_formal_study.py",
+      "sha256": "4154c25e55069d68a23711481e81585b506325c2fa858a3c4d44941c427c5248"
+    },
+    "protocol": {
+      "path": "experiments/android_xml_v2_formal/protocol_v2_3_40app.json",
+      "sha256": "d42885300f71c2719661ce2e4ac85bd4336ebe896d956bd32abf331b5eda8497"
+    },
+    "result_lock": {
+      "path": "experiments/android_xml_v2_rag/test_v2_1/FINAL_TEST_RESULT_LOCK.json",
+      "sha256": "6799f7038419d2ad6ed178dfaf40b4172e3a9a440cb781eefda683041ccdb24c"
+    },
+    "source_manifest": {
+      "path": "experiments/android_xml_v2_formal/multimodel_v2_3_40app/source_matrix/frozen_manifest.json",
+      "sha256": "ddeb22ed1c63ec33ccfa3754cf7ff43ae482fa94b109a9fc3d150d612614649f"
+    },
+    "combined_candidates": {
+      "path": "outputs/v2_dataset/v2.1_external_extension/combined_40_app_xml_safe_manifest.csv",
+      "sha256": "bfc3f9420bd863d2329462a8b4b48c23eb2ff173c56465c1c757f6b66723d4f0"
+    },
+    "detector": {
+      "path": "tools/evaluation/android_xml_a11y_check.py",
+      "sha256": "f0596a5cd7717ca0d4cd3dd3ce5e2bc174cfab049fe344074bf853fe02f0dd01"
+    },
+    "baseline_prompt": {
+      "path": "tools/run_android_xml_experiment.py",
+      "sha256": "a13ef05ee39f0b0ed76faf09f72bb90f215a0264a1d36eefedc7341b1543f50e"
+    },
+    "rag_prompt_contract": {
+      "path": "tools/android_xml_rag_prompt_contract.py",
+      "sha256": "fa78f84756fa3213edb1b3cec5887969894f2ed5c38ae3ffc67b66582df58335"
+    },
+    "retriever": {
+      "path": "tools/retrieval/v2_hybrid.py",
+      "sha256": "1425cf96bd108a9a6519f37c150074e1670fd2ed00c95f2fe5b77b51f9c16588"
+    },
+    "knowledge": {
+      "path": "knowledge/rag/knowledge_documents.json",
+      "sha256": "9d4120d33f82119769cd06e072443f8754053b29890fc28b89e704b24c30c655"
+    },
+    "operation_executor": {
+      "path": "tools/generate_android_xml.py",
+      "sha256": "e1c8f1c58099ce8622133150b676973a065126a601c3079d90d4e6661f8109a7"
+    },
+    "operation_contract": {
+      "path": "tools/android_xml_contract_v2_1.py",
+      "sha256": "72cfb1995be404efe588de70cfeb16d83866fd8ce63b69f70d04d6868ceb4f34"
+    }
+  },
+  "formal_tasks_sha256": "677e394f89a95848a78a49c8d5b31bf1260c4cdbab3838a731eac0d480a1df83",
+  "boundary_gate_sha256": "947169ece502633c1282333f9bf38c9f9837475bbe598229fb5e7806bccd6fc9",
+  "source_result_lock": "experiments/android_xml_v2_rag/test_v2_1/FINAL_TEST_RESULT_LOCK.json",
+  "source_result_lock_sha256": "6799f7038419d2ad6ed178dfaf40b4172e3a9a440cb781eefda683041ccdb24c",
+  "input_isolation": {
+    "fresh_copy_per_model_group_task": true,
+    "cross_group_output_access": false,
+    "cross_model_output_access": false,
+    "previous_test_output_in_prompt": false
+  }
+}

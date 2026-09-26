@@ -1,0 +1,8 @@
+﻿中文类型,issue_type,英文名称,finding数量,finding占比(%),涉及task数,task覆盖率(%),涉及App数,数据集版本
+输入框缺少标签或提示,input_label_hint,Input missing label or hint,45,33.09,39,35.45,25,v2.3-40app-repair-benchmark
+缺少可访问名称,accessible_name_missing,Missing accessible name,38,27.94,33,30,22,v2.3-40app-repair-benchmark
+有状态控件缺少标签,stateful_dynamic_value,Stateful control missing label,32,23.53,28,25.45,20,v2.3-40app-repair-benchmark
+焦点或无障碍树配置问题,focus_accessibility_tree,Focus/accessibility-tree issue,7,5.15,6,5.45,5,v2.3-40app-repair-benchmark
+无障碍属性冲突,accessibility_attribute_conflict,Accessibility-attribute conflict,5,3.68,5,4.55,3,v2.3-40app-repair-benchmark
+标签关联失效,label_association,Broken label association,5,3.68,4,3.64,2,v2.3-40app-repair-benchmark
+输入类型语义缺失,input_type_semantics,Missing input-type semantics,4,2.94,4,3.64,4,v2.3-40app-repair-benchmark

@@ -1,0 +1,482 @@
+{
+  "schema_version": "2.0",
+  "description": "Android accessibility issue-to-repair mappings for scanner, lint, Espresso, and manual TalkBack feedback.",
+  "documents": [
+    {
+      "doc_id": "android.fixmap.content-labeling",
+      "doc_type": "fix_mapping",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Content Labeling Finding to Repair",
+        "title_zh": "内容标签问题到修复策略",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "testing", "compose", "views", "content-labeling"],
+        "keywords_en": ["Accessibility Scanner", "content labeling", "missing label", "contentDescription", "speakable text", "TalkBack"],
+        "keywords_zh": ["无障碍扫描", "内容标签", "缺少标签", "contentDescription", "可读文本", "TalkBack"],
+        "related_wcag": ["1.1.1", "2.4.6", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "Content labeling findings usually mean a meaningful control or image lacks a programmatic name or has a vague/repeated name.",
+        "summary_zh": "内容标签问题通常表示有意义控件或图片缺少程序化名称，或名称模糊/重复。",
+        "intent_en": "Translate scanner or TalkBack label findings into concrete Compose/View naming repairs.",
+        "intent_zh": "把扫描器或 TalkBack 的标签问题转换成具体的 Compose/View 命名修复。",
+        "requirements_en": [
+          "For Compose icon-only actions, add localized contentDescription or parent semantics.",
+          "For Views, set android:contentDescription using string resources.",
+          "For repeated list actions, include item-specific context.",
+          "For decorative images, hide them instead of adding noisy labels.",
+          "Never hide logos, brand marks, avatars, profile images, QR codes, maps, charts, photos, covers, or thumbnails unless equivalent accessible text already conveys the same meaning.",
+          "For stateful selectors such as Spinner, preserve the selected value by using a visible label with labelFor; do not replace value semantics with a fixed contentDescription.",
+          "Do not include redundant role words that the platform already announces."
+        ],
+        "requirements_zh": [
+          "Compose 纯图标操作添加本地化 contentDescription 或父容器语义。",
+          "View/XML 中使用字符串资源设置 android:contentDescription。",
+          "重复列表操作必须包含条目上下文。",
+          "装饰图片应隐藏而不是添加噪声标签。",
+          "除非附近已有等价可访问文本，否则不要隐藏 Logo、品牌标志、头像、个人资料图片、二维码、地图、图表、照片、封面或缩略图。",
+          "Spinner 等有状态选择器应通过可见标签和 labelFor 保留当前选中值，不要用固定 contentDescription 替代值语义。",
+          "不要重复“按钮”“图片”等平台已播报角色词。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Repair missing icon label",
+            "title_zh": "修复图标按钮缺少标签",
+            "code": "IconButton(onClick = onShare) {\n    Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share))\n}",
+            "explanation_en": "The meaningful icon action now has a programmatic name.",
+            "explanation_zh": "有意义图标操作现在有程序化名称。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Scanner symptom",
+            "title_zh": "扫描器症状",
+            "code": "Issue: Content labeling / This item may not have a label readable by screen readers.",
+            "explanation_en": "The tool cannot find a useful accessible name for the UI node.",
+            "explanation_zh": "工具无法为该 UI 节点找到有用的可访问名称。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add, correct, or contextualize the accessible name.",
+          "Use item-specific labels for repeated actions.",
+          "Hide only clearly decorative visuals from the accessibility tree.",
+          "Classify missing Spinner labels with no existing visible label as requiring layout structure or runtime code."
+        ],
+        "repair_suggestions_zh": [
+          "添加、修正或上下文化可访问名称。",
+          "为重复操作使用结合条目的标签。",
+          "只从无障碍树中隐藏明确的纯装饰视觉元素。",
+          "当 Spinner 没有现成可见标签时，将问题归类为需要布局结构或运行时代码修复。"
+        ],
+        "manual_checks_en": ["Use TalkBack to verify the final spoken label.", "Check repeated items after scrolling recycled lists."],
+        "manual_checks_zh": ["用 TalkBack 验证最终播报标签。", "滚动复用列表后检查重复条目。"]
+      },
+      "retrieval": {
+        "search_text_en": "Accessibility Scanner content labeling missing label contentDescription speakable text TalkBack item may not have label screen reader repeated label decorative icon",
+        "search_text_zh": "Accessibility Scanner 内容标签 缺少标签 contentDescription 可读文本 TalkBack 屏幕阅读器 重复标签 装饰图标",
+        "search_text_mixed": "Accessibility Scanner content labeling missing label contentDescription speakable text TalkBack item may not have label screen reader repeated label decorative icon\nAccessibility Scanner 内容标签 缺少标签 contentDescription 可读文本 TalkBack 屏幕阅读器 重复标签 装饰图标"
+      }
+    },
+    {
+      "doc_id": "android.fixmap.touch-target-small",
+      "doc_type": "fix_mapping",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Touch Target Size Finding to Repair",
+        "title_zh": "触控目标过小到修复策略",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "testing", "compose", "views", "touch-target"],
+        "keywords_en": ["touch target", "48dp", "small touch target", "sizeIn", "minWidth", "minHeight", "padding"],
+        "keywords_zh": ["触控目标", "48dp", "点击区域过小", "sizeIn", "minWidth", "minHeight", "padding"],
+        "related_wcag": ["2.5.8", "1.4.11"]
+      },
+      "content": {
+        "summary_en": "Touch target findings mean an interactive node is smaller than the recommended 48dp by 48dp focusable/touchable area.",
+        "summary_zh": "触控目标问题表示交互节点小于推荐的 48dp x 48dp 可聚焦/可触控区域。",
+        "intent_en": "Increase the hit area without necessarily enlarging the visible icon.",
+        "intent_zh": "扩大命中区域，不一定要放大可见图标。",
+        "requirements_en": [
+          "Compose: wrap small visuals in a container with sizeIn(minWidth = 48.dp, minHeight = 48.dp).",
+          "Views: use minWidth/minHeight and padding to reach at least 48dp.",
+          "Do not rely only on tiny visible icons as click targets.",
+          "Avoid overlapping adjacent targets after increasing hit areas."
+        ],
+        "requirements_zh": [
+          "Compose：把小图标包在 sizeIn(minWidth = 48.dp, minHeight = 48.dp) 容器中。",
+          "View/XML：通过 minWidth/minHeight 和 padding 达到至少 48dp。",
+          "不要把很小的可见图标本身作为唯一点击区域。",
+          "扩大命中区域后避免相邻目标重叠。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Large hit area around small icon",
+            "title_zh": "小图标外的大点击区域",
+            "code": "Box(\n    modifier = Modifier\n        .sizeIn(minWidth = 48.dp, minHeight = 48.dp)\n        .clickable { onClose() },\n    contentAlignment = Alignment.Center\n) {\n    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))\n}",
+            "explanation_en": "The visual icon can remain compact while the touch target is large enough.",
+            "explanation_zh": "可见图标可以保持小尺寸，但触控目标足够大。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Scanner symptom",
+            "title_zh": "扫描器症状",
+            "code": "Issue: Touch target size / This clickable item is too small.",
+            "explanation_en": "The interactive node needs a larger target or spacing.",
+            "explanation_zh": "交互节点需要更大的目标区域或间距。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Increase the clickable container to at least 48dp.",
+          "Use padding or min size rather than only scaling the icon.",
+          "Retest with Accessibility Scanner or ATF."
+        ],
+        "repair_suggestions_zh": [
+          "将可点击容器扩大到至少 48dp。",
+          "优先用 padding 或最小尺寸，而不是只放大图标。",
+          "使用 Accessibility Scanner 或 ATF 复测。"
+        ],
+        "manual_checks_en": ["Check target size in scanner output.", "Try tapping the control with increased display size."],
+        "manual_checks_zh": ["检查扫描器中的目标大小结果。", "在显示尺寸放大后尝试点击控件。"]
+      },
+      "retrieval": {
+        "search_text_en": "touch target size small 48dp Accessibility Scanner ATF sizeIn minWidth minHeight padding clickable item too small",
+        "search_text_zh": "触控目标 点击区域过小 48dp Accessibility Scanner ATF sizeIn minWidth minHeight padding clickable 太小",
+        "search_text_mixed": "touch target size small 48dp Accessibility Scanner ATF sizeIn minWidth minHeight padding clickable item too small\n触控目标 点击区域过小 48dp Accessibility Scanner ATF sizeIn minWidth minHeight padding clickable 太小"
+      }
+    },
+    {
+      "doc_id": "android.fixmap.low-contrast",
+      "doc_type": "fix_mapping",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Perceivable"
+      },
+      "source": {
+        "title_en": "Low Contrast Finding to Repair",
+        "title_zh": "低对比度问题到修复策略",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "testing", "compose", "views", "contrast", "theme"],
+        "keywords_en": ["low contrast", "text contrast", "non-text contrast", "Material theme", "color token", "disabled state"],
+        "keywords_zh": ["低对比度", "文本对比度", "非文本对比度", "主题色", "颜色 token", "禁用状态"],
+        "related_wcag": ["1.4.3", "1.4.11", "1.4.1"]
+      },
+      "content": {
+        "summary_en": "Low contrast findings mean foreground text, icons, outlines, or state indicators are too close to the background or adjacent colors.",
+        "summary_zh": "低对比度问题表示前景文本、图标、边框或状态标识与背景/相邻颜色过于接近。",
+        "intent_en": "Adjust theme tokens or component colors while preserving state meaning without relying on color alone.",
+        "intent_zh": "调整主题 token 或组件颜色，同时避免只靠颜色表达状态含义。",
+        "requirements_en": [
+          "Normal text should target at least 4.5:1 contrast.",
+          "Large text and meaningful non-text UI indicators should target at least 3:1.",
+          "Repair colors through Material theme tokens when possible.",
+          "Do not make disabled content look enabled; use label text or alternative explanation when needed."
+        ],
+        "requirements_zh": [
+          "普通文本对比度目标至少 4.5:1。",
+          "大文本和有意义非文本 UI 标识目标至少 3:1。",
+          "优先通过 Material 主题 token 修复颜色。",
+          "不要让禁用内容看起来像启用；必要时增加文本说明或替代解释。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Use high-contrast theme color",
+            "title_zh": "使用高对比主题色",
+            "code": "Text(\n    text = errorMessage,\n    color = MaterialTheme.colorScheme.error\n)",
+            "explanation_en": "A semantic theme color is more maintainable than a hard-coded low-contrast color.",
+            "explanation_zh": "语义主题色比硬编码低对比颜色更可维护。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Scanner symptom",
+            "title_zh": "扫描器症状",
+            "code": "Issue: Low contrast / Text contrast ratio is lower than recommended.",
+            "explanation_en": "The color pair should be adjusted.",
+            "explanation_zh": "需要调整颜色组合。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Change foreground or background colors to meet contrast.",
+          "Prefer design-system tokens over local hard-coded colors.",
+          "Add text/icon/pattern cues when state is represented by color."
+        ],
+        "repair_suggestions_zh": [
+          "调整前景或背景颜色以满足对比度。",
+          "优先使用设计系统 token，避免局部硬编码颜色。",
+          "颜色表达状态时增加文字、图标或图案提示。"
+        ],
+        "manual_checks_en": ["Run scanner again after theme changes.", "Preview color vision deficiency modes if available."],
+        "manual_checks_zh": ["主题颜色修改后重新运行扫描。", "如可用，预览色觉缺陷模式。"]
+      },
+      "retrieval": {
+        "search_text_en": "low contrast text contrast non-text contrast Accessibility Scanner Material theme color token colorScheme error outline disabled state",
+        "search_text_zh": "低对比度 文本对比度 非文本对比度 Accessibility Scanner Material 主题色 color token colorScheme 错误 边框 禁用状态",
+        "search_text_mixed": "low contrast text contrast non-text contrast Accessibility Scanner Material theme color token colorScheme error outline disabled state\n低对比度 文本对比度 非文本对比度 Accessibility Scanner Material 主题色 color token colorScheme 错误 边框 禁用状态"
+      }
+    },
+    {
+      "doc_id": "android.fixmap.clickable-view-accessibility",
+      "doc_type": "fix_mapping",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "ClickableViewAccessibility Lint to Repair",
+        "title_zh": "ClickableViewAccessibility Lint 到修复策略",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/views/custom-views",
+        "understanding_url": "https://developer.android.com/studio/write/lint",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "lint", "views", "custom-view", "touch"],
+        "keywords_en": ["ClickableViewAccessibility", "lint", "performClick", "onTouchEvent", "OnTouchListener", "custom View"],
+        "keywords_zh": ["ClickableViewAccessibility", "Lint", "performClick", "onTouchEvent", "OnTouchListener", "自定义View"],
+        "related_wcag": ["2.1.1", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "ClickableViewAccessibility warnings indicate custom touch handling may not expose an equivalent click action to accessibility services.",
+        "summary_zh": "ClickableViewAccessibility 警告表示自定义触摸处理可能没有向辅助服务暴露等价点击动作。",
+        "intent_en": "Repair touch-only custom controls by providing performClick and consistent keyboard activation.",
+        "intent_zh": "通过 performClick 和一致键盘激活修复仅触摸的自定义控件。",
+        "requirements_en": [
+          "Override performClick and call super.performClick().",
+          "Call performClick from onTouchEvent or OnTouchListener when the click is recognized.",
+          "Do not suppress lint unless the control is truly not interactive.",
+          "Add contentDescription or node info if the control has no visible text."
+        ],
+        "requirements_zh": [
+          "覆盖 performClick 并调用 super.performClick()。",
+          "在 onTouchEvent 或 OnTouchListener 识别点击时调用 performClick。",
+          "除非控件确实不可交互，否则不要直接 suppress lint。",
+          "控件没有可见文本时补充 contentDescription 或节点信息。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Lint repair",
+            "title_zh": "Lint 修复",
+            "code": "override fun performClick(): Boolean {\n    super.performClick()\n    activate()\n    return true\n}",
+            "explanation_en": "The custom control now has a standard accessibility click action.",
+            "explanation_zh": "自定义控件现在拥有标准无障碍点击动作。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Lint symptom",
+            "title_zh": "Lint 症状",
+            "code": "Warning: Custom view has setOnTouchListener called on it but does not override performClick",
+            "explanation_en": "The issue points to a missing accessible click path.",
+            "explanation_zh": "该问题指向缺失的可访问点击路径。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add performClick to the custom View.",
+          "Route click-like touch gestures through performClick.",
+          "Retest with lint and keyboard/TalkBack."
+        ],
+        "repair_suggestions_zh": [
+          "为自定义 View 添加 performClick。",
+          "将类似点击的触摸手势路由到 performClick。",
+          "用 lint、键盘和 TalkBack 复测。"
+        ],
+        "manual_checks_en": ["Run lint and verify the warning is removed.", "Activate the control using TalkBack double-tap."],
+        "manual_checks_zh": ["运行 lint，确认警告消除。", "使用 TalkBack 双击激活控件。"]
+      },
+      "retrieval": {
+        "search_text_en": "ClickableViewAccessibility lint warning setOnTouchListener performClick onTouchEvent custom view touch accessibility click action",
+        "search_text_zh": "ClickableViewAccessibility lint 警告 setOnTouchListener performClick onTouchEvent 自定义View 触摸 无障碍 点击动作",
+        "search_text_mixed": "ClickableViewAccessibility lint warning setOnTouchListener performClick onTouchEvent custom view touch accessibility click action\nClickableViewAccessibility lint 警告 setOnTouchListener performClick onTouchEvent 自定义View 触摸 无障碍 点击动作"
+      }
+    },
+    {
+      "doc_id": "android.fixmap.implementation-focus-order",
+      "doc_type": "fix_mapping",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Implementation and Traversal Finding to Repair",
+        "title_zh": "实现/遍历顺序问题到修复策略",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "testing", "focus-order", "traversal", "talkback", "switch-access"],
+        "keywords_en": ["implementation", "traversal order", "focus order", "accessibilityTraversalBefore", "accessibilityTraversalAfter", "traversalIndex", "TalkBack"],
+        "keywords_zh": ["实现问题", "遍历顺序", "焦点顺序", "accessibilityTraversalBefore", "accessibilityTraversalAfter", "traversalIndex", "TalkBack"],
+        "related_wcag": ["1.3.2", "2.4.3", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "Implementation or traversal findings often mean accessibility focus does not match the visual/task order, or non-actionable nodes are focusable.",
+        "summary_zh": "实现或遍历顺序问题通常表示无障碍焦点与视觉/任务顺序不一致，或不可操作节点被聚焦。",
+        "intent_en": "Make the accessibility traversal order logical and reduce unnecessary focus stops.",
+        "intent_zh": "让无障碍遍历顺序符合逻辑，并减少不必要焦点停靠。",
+        "requirements_en": [
+          "Prefer fixing layout/semantics structure before overriding traversal order.",
+          "Remove focusability from decorative or structural containers.",
+          "Use traversal overrides only when source order cannot be made logical.",
+          "Test with TalkBack linear navigation and Switch Access scanning."
+        ],
+        "requirements_zh": [
+          "优先修复布局/语义结构，再考虑覆盖遍历顺序。",
+          "从装饰或结构性容器移除可聚焦属性。",
+          "仅在源码顺序无法调整时使用遍历覆盖。",
+          "使用 TalkBack 线性导航和 Switch Access 扫描测试。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Remove unnecessary focus stop",
+            "title_zh": "移除不必要焦点",
+            "code": "Icon(\n    imageVector = Icons.Default.Info,\n    contentDescription = null\n)\nText(text = helpText)",
+            "explanation_en": "The decorative icon does not create an extra focus stop before the meaningful text.",
+            "explanation_zh": "装饰图标不会在有意义文本前创建额外焦点。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Tool symptom",
+            "title_zh": "工具症状",
+            "code": "Issue: Implementation / traversal order does not match logical arrangement.",
+            "explanation_en": "The fix is usually structural semantics or traversal order repair.",
+            "explanation_zh": "修复通常是调整结构语义或遍历顺序。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Adjust source/layout order to match visual order.",
+          "Merge or clear semantics to avoid duplicate focus.",
+          "Use traversalIndex or accessibilityTraversalBefore/After sparingly."
+        ],
+        "repair_suggestions_zh": [
+          "调整源码/布局顺序以匹配视觉顺序。",
+          "合并或清理语义以避免重复焦点。",
+          "谨慎使用 traversalIndex 或 accessibilityTraversalBefore/After。"
+        ],
+        "manual_checks_en": ["Swipe through the screen with TalkBack.", "Use Switch Access group selection and inspect highlighted nodes."],
+        "manual_checks_zh": ["使用 TalkBack 滑动遍历屏幕。", "使用 Switch Access 组选择检查高亮节点。"]
+      },
+      "retrieval": {
+        "search_text_en": "implementation finding traversal order focus order logical arrangement TalkBack Switch Access traversalIndex accessibilityTraversalBefore accessibilityTraversalAfter duplicate focus stop",
+        "search_text_zh": "实现问题 遍历顺序 焦点顺序 逻辑排列 TalkBack Switch Access traversalIndex accessibilityTraversalBefore accessibilityTraversalAfter 重复焦点",
+        "search_text_mixed": "implementation finding traversal order focus order logical arrangement TalkBack Switch Access traversalIndex accessibilityTraversalBefore accessibilityTraversalAfter duplicate focus stop\n实现问题 遍历顺序 焦点顺序 逻辑排列 TalkBack Switch Access traversalIndex accessibilityTraversalBefore accessibilityTraversalAfter 重复焦点"
+      }
+    },
+    {
+      "doc_id": "android.fixmap.textfield-error-not-announced",
+      "doc_type": "fix_mapping",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Form Error Not Announced to Repair",
+        "title_zh": "表单错误未播报到修复策略",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "understanding_url": "",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "views", "form", "validation", "error"],
+        "keywords_en": ["form error", "validation", "TextField", "EditText", "isError", "supportingText", "error summary", "TalkBack"],
+        "keywords_zh": ["表单错误", "校验", "TextField", "EditText", "isError", "supportingText", "错误摘要", "TalkBack"],
+        "related_wcag": ["3.3.1", "3.3.2", "3.3.3", "4.1.3"]
+      },
+      "content": {
+        "summary_en": "Form validation errors are visible but not programmatically associated with fields or announced when submission fails.",
+        "summary_zh": "表单校验错误可见，但没有与字段程序化关联，或提交失败时没有播报。",
+        "intent_en": "Expose field error state, place useful error text near the field, and manage focus for blocking validation failures.",
+        "intent_zh": "暴露字段错误状态，在字段附近显示有用错误文本，并为阻塞性校验失败管理焦点。",
+        "requirements_en": [
+          "Compose: set isError and supportingText for invalid TextField.",
+          "Views: use EditText error or associate nearby error text.",
+          "Move focus to the error summary or first invalid field on blocking submit.",
+          "Error messages should identify the issue and suggest correction."
+        ],
+        "requirements_zh": [
+          "Compose：无效 TextField 设置 isError 和 supportingText。",
+          "View：使用 EditText error 或关联邻近错误文本。",
+          "阻塞性提交失败时，焦点移到错误摘要或第一个无效字段。",
+          "错误信息应说明问题并给出修正建议。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Compose field error",
+            "title_zh": "Compose 字段错误",
+            "code": "OutlinedTextField(\n    value = email,\n    onValueChange = onEmailChange,\n    label = { Text(stringResource(R.string.email)) },\n    isError = emailError != null,\n    supportingText = { emailError?.let { Text(it) } }\n)",
+            "explanation_en": "The invalid state and error text are exposed with the field.",
+            "explanation_zh": "无效状态和错误文本随字段一起暴露。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Manual symptom",
+            "title_zh": "人工测试症状",
+            "code": "TalkBack symptom: after submit, the screen shows red text but no error is announced.",
+            "explanation_en": "The error is visual-only or focus is not managed.",
+            "explanation_zh": "错误只在视觉上呈现，或焦点管理缺失。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Expose isError/error text at field level.",
+          "Add an error summary for multi-field forms.",
+          "Move focus to the first blocking error after submit."
+        ],
+        "repair_suggestions_zh": [
+          "在字段层暴露 isError/错误文本。",
+          "多字段表单增加错误摘要。",
+          "提交后把焦点移动到第一个阻塞性错误。"
+        ],
+        "manual_checks_en": ["Submit invalid data with TalkBack on.", "Verify field label, error state, and error message are spoken."],
+        "manual_checks_zh": ["开启 TalkBack 提交无效数据。", "确认字段标签、错误状态和错误信息都会播报。"]
+      },
+      "retrieval": {
+        "search_text_en": "form error not announced validation TextField EditText isError supportingText error summary first invalid field TalkBack red text",
+        "search_text_zh": "表单错误 未播报 校验 TextField EditText isError supportingText 错误摘要 第一个无效字段 TalkBack 红色文本",
+        "search_text_mixed": "form error not announced validation TextField EditText isError supportingText error summary first invalid field TalkBack red text\n表单错误 未播报 校验 TextField EditText isError supportingText 错误摘要 第一个无效字段 TalkBack 红色文本"
+      }
+    }
+  ]
+}

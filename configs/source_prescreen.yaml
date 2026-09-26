@@ -1,0 +1,52 @@
+schema_version: 1
+
+paths:
+  existing_repository_root: fdroid_apps/selected_xml_apps
+  fdroid_metadata_root: fdroid_apps/_fdroiddata/metadata
+  sparse_clone_root: fdroid_apps/source_prescreen_sparse
+  output_root: outputs/source_prescreen
+
+scan:
+  existing_repositories_first: true
+  max_new_repositories: 200
+  shallow_clone_depth: 1
+  sparse_checkout: true
+  dry_run_repository_limit: 10
+  detector_profile: expanded_v3
+  max_issues_per_app_type: 4
+  compose_search_file_limit: 5000
+
+dataset_targets:
+  target_apps_min: 35
+  target_apps_max: 45
+  target_xml_min: 90
+  target_xml_max: 120
+  target_issues_min: 140
+  target_issues_max: 180
+  target_xml_safe_min: 120
+  target_xml_safe_max: 150
+  target_boundary_min: 20
+  target_boundary_max: 30
+  target_issue_types: 8
+  min_instances_per_type: 15
+  min_apps_per_type: 4
+  max_app_contribution_ratio: 0.10
+  max_easy_issue_ratio: 0.30
+  development_ratio: 0.20
+
+confidence:
+  formal_candidate_level: high
+  high_min_score: 0.80
+  medium_min_score: 0.50
+
+resources:
+  resolve_strings: true
+  resolve_dimens: true
+  resolve_styles: true
+  resolve_layout_includes: true
+
+execution:
+  allow_paid_api: false
+  allow_issue_injection: false
+  overwrite_v1_outputs: false
+  use_model_outputs_for_selection: false

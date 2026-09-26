@@ -1,0 +1,4072 @@
+[
+  {
+    "id": "pattern.login-form",
+    "name": "Login Form",
+    "component_type": "form",
+    "keywords": [
+      "登录",
+      "登陆",
+      "表单",
+      "邮箱",
+      "密码",
+      "login",
+      "sign in",
+      "form",
+      "email",
+      "password"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.7",
+      "3.3.1",
+      "3.3.2",
+      "3.3.8",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "使用 form、label、input、button 等原生语义元素。",
+      "每个 input 都必须有持久可见的 label，并通过 for/id 关联。",
+      "email 输入框使用 type=\"email\" 和 autocomplete=\"email\"。",
+      "密码输入框使用 type=\"password\" 和 autocomplete=\"current-password\"。",
+      "提交按钮使用 button type=\"submit\"，不要用 div/span 模拟按钮。",
+      "校验错误应靠近字段显示，并通过 aria-describedby 关联。",
+      "错误字段应设置 aria-invalid=\"true\"。",
+      "动态错误区域使用 role=\"alert\" 或 aria-live。",
+      "所有交互元素应提供清晰的 :focus-visible 样式。",
+      "不要使用 outline:none，除非提供同等或更明显的替代焦点样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "语义化的登录表单",
+        "code": "<form aria-label=\"登录\"><label for=\"email\">邮箱</label><input id=\"email\" type=\"email\" autocomplete=\"email\" aria-describedby=\"email-error\"><p id=\"email-error\" role=\"alert\">请输入有效邮箱。</p><label for=\"pwd\">密码</label><input id=\"pwd\" type=\"password\" autocomplete=\"current-password\"><button type=\"submit\">登录</button></form>",
+        "why": "使用 form 语义，input 有 type 和 autocomplete，错误通过 aria-describedby 关联，按钮可提交。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无语义登录表单",
+        "code": "<div class=\"login\"><input placeholder=\"邮箱\"><input placeholder=\"密码\" type=\"password\"><div onclick=\"login()\">登录</div></div>",
+        "why": "缺少 form、label、语义按钮和错误关联，placeholder 充当 label 不持久。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘 Tab、Shift+Tab、Enter 是否能完成登录流程。",
+      "屏幕阅读器是否能读出字段名称、错误信息和提交结果。",
+      "正文、标签、按钮文字与背景的颜色对比度是否满足 WCAG AA。"
+    ],
+    "static_checks": [
+      "input_has_label",
+      "invalid_input_has_describedby",
+      "button_has_accessible_name",
+      "focus_visible_present",
+      "no_positive_tabindex"
+    ],
+    "name_zh": "登录表单"
+  },
+  {
+    "id": "pattern.modal-dialog",
+    "name": "Modal Dialog",
+    "component_type": "dialog",
+    "keywords": [
+      "弹窗",
+      "对话框",
+      "确认框",
+      "modal",
+      "dialog",
+      "popup"
+    ],
+    "related_wcag": [
+      "1.3.2",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "弹窗容器应使用 role=\"dialog\" 或原生 dialog 元素。",
+      "模态弹窗应设置 aria-modal=\"true\"。",
+      "弹窗必须有可访问标题，并通过 aria-labelledby 关联。",
+      "弹窗必须提供可键盘操作的关闭按钮。",
+      "打开弹窗后焦点应进入弹窗，关闭后焦点回到触发按钮。",
+      "Esc 键通常应关闭弹窗。",
+      "弹窗打开时，背景内容不应进入 Tab 顺序。",
+      "不要造成键盘焦点陷阱。"
+    ],
+    "good_examples": [
+      {
+        "title": "带焦点管理的可访问弹窗",
+        "code": "<dialog aria-labelledby=\"confirm-title\" aria-modal=\"true\"><h2 id=\"confirm-title\">确认删除</h2><p>此操作不可撤销，确定要删除吗？</p><button type=\"button\" autofocus>确认删除</button><button type=\"button\">取消</button></dialog>",
+        "why": "使用原生 dialog 获得免费焦点管理，aria-modal 锁定背景，autofocus 将焦点移入弹窗。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问的弹窗",
+        "code": "<div class=\"overlay\"><div class=\"popup\"><span onclick=\"close()\">X</span><p>删除？</p><a href=\"#\">确定</a></div></div>",
+        "why": "无 dialog 语义和焦点管理，关闭按钮不是 button，Tab 仍可跑到背景内容。"
+      }
+    ],
+    "manual_checks": [
+      "键盘能否打开、浏览、关闭弹窗。",
+      "焦点是否在弹窗中合理移动，并在关闭后回到触发按钮。",
+      "屏幕阅读器是否能读出弹窗标题和内容。"
+    ],
+    "static_checks": [
+      "dialog_has_accessible_name",
+      "close_button_present",
+      "focus_visible_present",
+      "no_positive_tabindex"
+    ],
+    "name_zh": "模态弹窗"
+  },
+  {
+    "id": "pattern.navigation-menu",
+    "name": "Navigation Menu",
+    "component_type": "navigation",
+    "keywords": [
+      "导航",
+      "菜单",
+      "页头",
+      "链接",
+      "nav",
+      "navigation",
+      "menu",
+      "header",
+      "link"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.1",
+      "2.4.3",
+      "2.4.4",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "主导航应使用 nav 元素，并提供清晰的 aria-label。",
+      "导航项应使用 a 或 button 等原生可交互元素。",
+      "链接文本应能说明目的，避免多个链接都叫“更多”或“点击这里”。",
+      "当前页面链接可使用 aria-current=\"page\"。",
+      "页面应提供跳过导航的 skip link，跳到 main 内容。",
+      "移动端菜单按钮应维护 aria-expanded 和 aria-controls。",
+      "菜单打开和关闭都必须可键盘操作。"
+    ],
+    "good_examples": [
+      {
+        "title": "带 skip link 的可访问导航",
+        "code": "<a href=\"#main\" class=\"skip-link\">跳到主内容</a><nav aria-label=\"主导航\"><ul><li><a href=\"/\" aria-current=\"page\">首页</a></li><li><a href=\"/products\">产品</a><button type=\"button\" aria-expanded=\"false\" aria-controls=\"sub-products\">展开</button><ul id=\"sub-products\" hidden><li><a href=\"/products/a\">产品A</a></li></ul></li></ul></nav><main id=\"main\"><h1>首页</h1></main>",
+        "why": "skip link + nav 语义 + aria-current + 子菜单按钮暴露展开状态，完整键盘流程。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "缺少 skip link 和语义的导航",
+        "code": "<div class=\"header\"><a href=\"/\">首页</a><a href=\"/products\">产品</a><div class=\"dropdown\" onmouseover=\"open()\"><a>更多</a></div></div>",
+        "why": "无 nav 语义和 skip link，子菜单只靠 hover 触发，键盘用户无法展开子菜单。"
+      }
+    ],
+    "manual_checks": [
+      "Tab 顺序是否从 skip link 到导航再到主内容。",
+      "移动端菜单是否可用 Enter/Space 打开关闭。",
+      "屏幕阅读器是否能识别导航区域和当前页面。"
+    ],
+    "static_checks": [
+      "nav_has_label",
+      "link_has_accessible_name",
+      "focus_visible_present",
+      "skip_link_present"
+    ],
+    "name_zh": "导航菜单"
+  },
+  {
+    "id": "pattern.image-card",
+    "name": "Image Card",
+    "component_type": "card",
+    "keywords": [
+      "图片卡片",
+      "商品卡片",
+      "文章卡片",
+      "头像",
+      "image card",
+      "product card",
+      "article card",
+      "avatar"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.12",
+      "2.1.1",
+      "2.4.4",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "有意义图片必须有准确 alt 文本。",
+      "装饰图片使用 alt=\"\"，避免重复朗读。",
+      "卡片标题应使用合适的 heading 元素。",
+      "详情链接文本应包含对象名称，例如“查看某商品详情”。",
+      "不要让整张卡片只有模糊的“更多”链接。",
+      "卡片内 DOM 顺序应和视觉阅读顺序一致。",
+      "链接和按钮应有清晰焦点样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问商品卡片",
+        "code": "<article><img src=\"shirt.jpg\" alt=\"白色纯棉T恤，模特穿着展示\"><h3>纯棉T恤</h3><p>¥99</p><a href=\"/product/123\" aria-label=\"查看 纯棉T恤 详情\">查看详情</a></article>",
+        "why": "article 提供语义容器，img 有准确 alt，链接名称包含商品名以区分目的。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可区分的卡片列表",
+        "code": "<div class=\"card\"><img src=\"shirt.jpg\"><span>T恤 ¥99</span><a href=\"#\">了解更多</a></div><div class=\"card\"><img src=\"pants.jpg\"><span>裤子 ¥199</span><a href=\"#\">了解更多</a></div>",
+        "why": "图片无 alt，所有链接文本相同无法区分目的，缺卡片语义结构。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器逐项浏览时，图片、标题、价格或摘要是否顺序合理。",
+      "多个卡片的链接目的是否能区分。",
+      "图片 alt 是否描述信息，而不是堆关键词。"
+    ],
+    "static_checks": [
+      "img_has_alt",
+      "link_has_accessible_name",
+      "heading_order_reasonable",
+      "focus_visible_present"
+    ],
+    "name_zh": "图片卡片"
+  },
+  {
+    "id": "pattern.search-box",
+    "name": "Search Box",
+    "component_type": "search",
+    "keywords": [
+      "搜索",
+      "搜索框",
+      "筛选",
+      "search",
+      "filter",
+      "query"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.4.3",
+      "2.4.7",
+      "3.2.2",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "搜索区域可使用 role=\"search\" 或语义明确的 form。",
+      "搜索输入框必须有 label，视觉上可隐藏但需保持可访问。",
+      "搜索按钮必须有清晰文本或 aria-label。",
+      "输入内容变化不应在无说明情况下触发重大上下文变化。",
+      "搜索结果数量更新应使用 role=\"status\" 或 aria-live。",
+      "清除按钮必须可键盘操作并有可访问名称。",
+      "焦点顺序应为输入框、清除按钮、搜索按钮、结果区域。"
+    ],
+    "manual_checks": [
+      "只用键盘是否能输入、清除、提交搜索。",
+      "搜索结果变化是否能被屏幕阅读器感知。",
+      "输入过程中焦点是否保持稳定。"
+    ],
+    "static_checks": [
+      "input_has_label",
+      "button_has_accessible_name",
+      "status_region_present",
+      "focus_visible_present"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问搜索框",
+        "code": "<form role=\"search\" aria-label=\"全站搜索\"><label for=\"q\">搜索</label><input id=\"q\" type=\"search\" aria-describedby=\"q-count\"><button type=\"submit\">搜索</button><button type=\"button\" aria-label=\"清除搜索\">✕</button><div id=\"q-count\" role=\"status\" aria-live=\"polite\">找到 12 条结果</div></form>",
+        "why": "form 标注 role=search，输入有 label，按钮有名称，结果数量动态公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问搜索框",
+        "code": "<input placeholder=\"搜索...\" oninput=\"search()\"><span onclick=\"clear()\">X</span>",
+        "why": "缺少 label、form 语义和搜索按钮，oninput 可能造成意外上下文变化，清除按钮不是 button。"
+      }
+    ],
+    "name_zh": "搜索框"
+  },
+  {
+    "id": "pattern.modal-form",
+    "name": "Modal Form",
+    "component_type": "dialog-form",
+    "keywords": [
+      "弹窗表单",
+      "模态表单",
+      "表单校验",
+      "modal form",
+      "dialog form",
+      "form validation"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "弹窗表单应使用原生 dialog 元素，或使用 role=\"dialog\"、aria-modal=\"true\" 和 aria-labelledby。",
+      "打开弹窗后，焦点应移动到弹窗标题、首个错误字段或第一个可交互控件。",
+      "关闭弹窗后，焦点必须返回打开弹窗的触发按钮。",
+      "弹窗内必须提供可键盘操作的关闭按钮，Esc 键应关闭弹窗。",
+      "弹窗打开时，背景页面内容不应进入 Tab 顺序。",
+      "表单控件必须有 label，并通过 for/id 正确关联。",
+      "校验错误应设置 aria-invalid=\"true\"，并通过 aria-describedby 关联错误说明。",
+      "提交成功、保存失败等状态消息应使用 role=\"status\"、role=\"alert\" 或 aria-live。",
+      "不要只依赖颜色表示错误状态。",
+      "所有弹窗内交互元素必须有清晰的 :focus-visible 样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问弹窗表单",
+        "code": "<dialog aria-labelledby=\"profile-title\"><h2 id=\"profile-title\">编辑资料</h2><form method=\"dialog\"><label for=\"name\">姓名</label><input id=\"name\" aria-describedby=\"name-error\"><p id=\"name-error\" role=\"alert\">请输入姓名。</p><button type=\"submit\">保存</button><button type=\"button\">关闭</button></form></dialog>",
+        "why": "弹窗有可访问标题，表单字段有 label，错误说明通过 aria-describedby 关联，并提供可键盘操作的按钮。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "缺少语义和焦点管理的弹窗表单",
+        "code": "<div class=\"modal\"><div>编辑资料</div><input placeholder=\"姓名\"><div onclick=\"save()\">保存</div></div>",
+        "why": "弹窗缺少 dialog 语义，输入框缺少 label，按钮使用 div 模拟，辅助技术难以理解和操作。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否打开弹窗、填写表单、提交、关闭弹窗。",
+      "弹窗打开后焦点是否进入弹窗，关闭后是否回到触发按钮。",
+      "Tab 和 Shift+Tab 是否不会跑到背景页面内容。",
+      "Esc 是否能关闭弹窗。",
+      "屏幕阅读器是否能读出弹窗标题、字段名称、错误信息和提交状态。"
+    ],
+    "static_checks": [
+      "dialog_has_accessible_name",
+      "dialog_has_modal_state",
+      "close_button_present",
+      "input_has_label",
+      "invalid_input_has_describedby",
+      "status_region_present",
+      "focus_visible_present"
+    ],
+    "name_zh": "弹窗表单"
+  },
+  {
+    "id": "pattern.tabs-settings",
+    "name": "Tabs Settings",
+    "component_type": "tabs",
+    "keywords": [
+      "选项卡",
+      "设置页",
+      "标签页",
+      "tabs",
+      "tablist",
+      "settings",
+      "profile settings"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "选项卡容器应使用 role=\"tablist\"。",
+      "每个选项卡按钮应使用 role=\"tab\"，并维护 aria-selected。",
+      "每个 tab 必须通过 aria-controls 指向对应的 role=\"tabpanel\"。",
+      "每个 tabpanel 应通过 aria-labelledby 指回对应 tab。",
+      "当前未显示的 tabpanel 应使用 hidden 或等价方式隐藏，避免进入 Tab 顺序。",
+      "键盘操作应支持 Tab 进入选项卡组件，左右方向键切换 tab，Home/End 跳到首尾 tab。",
+      "切换 tab 后应更新 aria-selected 和可见面板。",
+      "tab 文本应清楚说明面板目的，例如“资料”“安全”“通知”。",
+      "不要只用 div/span 和 click 事件模拟 tab。",
+      "当前 tab 和键盘焦点都应有清晰可见的视觉状态。"
+    ],
+    "good_examples": [
+      {
+        "title": "带 ARIA 语义的选项卡",
+        "code": "<div role=\"tablist\" aria-label=\"设置\"><button role=\"tab\" id=\"tab-profile\" aria-selected=\"true\" aria-controls=\"panel-profile\">资料</button></div><section role=\"tabpanel\" id=\"panel-profile\" aria-labelledby=\"tab-profile\">...</section>",
+        "why": "tab、tablist 和 tabpanel 之间有明确关系，并能暴露当前选中状态。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只用 div 模拟选项卡",
+        "code": "<div class=\"tabs\"><div onclick=\"show(1)\">资料</div><div onclick=\"show(2)\">安全</div></div>",
+        "why": "缺少 tab 语义、选中状态和键盘操作，辅助技术无法识别组件角色和值。"
+      }
+    ],
+    "manual_checks": [
+      "Tab 是否能进入选项卡组件。",
+      "左右方向键是否能切换选项卡。",
+      "Home 和 End 是否能移动到第一个和最后一个选项卡。",
+      "屏幕阅读器是否能读出当前 tab 的选中状态。",
+      "切换面板后，焦点顺序是否仍然合理。"
+    ],
+    "static_checks": [
+      "tablist_present",
+      "tab_has_aria_selected",
+      "tab_controls_panel",
+      "tabpanel_labelledby_tab",
+      "hidden_panel_not_focusable",
+      "focus_visible_present"
+    ],
+    "name_zh": "选项卡设置"
+  },
+  {
+    "id": "pattern.search-filter-live-results",
+    "name": "Search Filter Live Results",
+    "component_type": "search-results",
+    "keywords": [
+      "搜索筛选",
+      "动态结果",
+      "筛选结果",
+      "结果数量",
+      "search filter",
+      "live results",
+      "faceted search",
+      "results count"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.2.2",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "搜索区域应使用 form role=\"search\" 或带清晰标签的搜索表单。",
+      "搜索输入框、筛选下拉框、复选框等控件必须有 label。",
+      "筛选条件变化不应在未说明时触发重大上下文变化；需要自动更新时应保持焦点稳定。",
+      "结果数量、加载中、无结果、筛选已应用等动态状态应使用 role=\"status\" 或 aria-live=\"polite\"。",
+      "结果列表应使用语义列表、article 或合适的结构表达每条结果。",
+      "清除筛选、应用筛选、分页按钮都必须可键盘操作并有可访问名称。",
+      "不要只用颜色表示当前筛选状态或无结果状态。",
+      "分页和结果区域的焦点顺序应符合视觉和操作逻辑。",
+      "如果结果自动更新，不要把焦点强行移动到结果区。",
+      "所有输入、按钮、链接和分页控件应有清晰 :focus-visible 样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "带状态公告的搜索筛选结果",
+        "code": "<form role=\"search\"><label for=\"q\">搜索课程</label><input id=\"q\" name=\"q\"><button type=\"submit\">搜索</button></form><div role=\"status\" aria-live=\"polite\">找到 12 个结果</div><ul aria-label=\"搜索结果\">...</ul>",
+        "why": "搜索控件有标签，结果数量通过状态区域公告，结果列表有语义结构。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无法被辅助技术感知的动态结果",
+        "code": "<input placeholder=\"搜索\"><select onchange=\"filter()\">...</select><div class=\"count\">12</div><div class=\"cards\">...</div>",
+        "why": "输入缺少 label，筛选变化缺少说明，结果数量更新没有 aria-live 或 role=status。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否输入关键词、选择筛选条件、清除筛选和翻页。",
+      "筛选或搜索后焦点是否保持稳定。",
+      "屏幕阅读器是否能感知结果数量、加载中和无结果状态。",
+      "结果列表中每条结果的标题、摘要和操作链接是否目的清楚。",
+      "不用颜色是否也能理解当前筛选状态。"
+    ],
+    "static_checks": [
+      "search_input_has_label",
+      "filter_controls_have_labels",
+      "status_region_present",
+      "results_list_has_semantics",
+      "button_has_accessible_name",
+      "focus_visible_present"
+    ],
+    "name_zh": "搜索筛选实时结果"
+  },
+  {
+    "id": "pattern.autocomplete-combobox",
+    "name": "Autocomplete Combobox",
+    "component_type": "combobox",
+    "keywords": [
+      "自动补全",
+      "联想搜索",
+      "下拉建议",
+      "组合框",
+      "autocomplete",
+      "combobox",
+      "typeahead",
+      "suggestions"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "自动补全输入框应有持久可见的 label。",
+      "自定义组合框应暴露 role=\"combobox\"，并维护 aria-expanded、aria-controls 和 aria-autocomplete。",
+      "建议列表应使用 role=\"listbox\"，候选项使用 role=\"option\"。",
+      "键盘操作应支持输入、上下方向键浏览建议、Enter 选择、Esc 收起建议列表。",
+      "当前高亮建议应通过 aria-activedescendant 或等价方式暴露给辅助技术。",
+      "建议数量、无匹配结果、已选择结果等动态状态应使用 role=\"status\" 或 aria-live=\"polite\"。",
+      "输入时不要强行移动焦点到建议列表。",
+      "不要只依赖 placeholder 作为输入框标签。",
+      "所有输入、建议项和清除按钮都应有清晰的 :focus-visible 样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "带建议列表的可访问组合框",
+        "code": "<label for=\"city\">城市</label><input id=\"city\" role=\"combobox\" aria-autocomplete=\"list\" aria-expanded=\"true\" aria-controls=\"city-list\" aria-activedescendant=\"city-1\"><ul id=\"city-list\" role=\"listbox\"><li id=\"city-1\" role=\"option\">上海</li></ul><div role=\"status\">3 个建议</div>",
+        "why": "输入框有标签，组合框状态、建议列表和当前候选项都能被辅助技术理解。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只靠视觉显示的自动补全",
+        "code": "<input placeholder=\"城市\"><div class=\"suggestions\"><div onclick=\"pick()\">上海</div></div>",
+        "why": "输入框缺少 label，建议列表没有语义，键盘和屏幕阅读器难以操作。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能输入、浏览建议、选择建议和关闭建议列表。",
+      "屏幕阅读器是否能读出输入框名称、展开状态、建议数量和当前候选项。",
+      "无结果和已选择状态是否能被辅助技术感知。",
+      "输入过程中焦点是否保持在输入框上。",
+      "Esc 是否能关闭建议列表。"
+    ],
+    "static_checks": [
+      "combobox_has_label",
+      "combobox_has_expanded_state",
+      "combobox_controls_listbox",
+      "option_has_role",
+      "status_region_present",
+      "focus_visible_present"
+    ],
+    "name_zh": "自动补全组合框"
+  },
+  {
+    "id": "pattern.sortable-filterable-data-grid",
+    "name": "Sortable Filterable Data Grid",
+    "component_type": "data-grid",
+    "keywords": [
+      "数据表格",
+      "可排序表格",
+      "筛选表格",
+      "排序按钮",
+      "data grid",
+      "sortable table",
+      "filterable table",
+      "grid"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "普通数据优先使用 table、caption、thead、tbody、th、td 等原生表格语义。",
+      "列标题 th 应使用 scope=\"col\"，行标题可使用 scope=\"row\"。",
+      "排序控件应使用 button，并放在对应 th 内。",
+      "当前排序状态应通过 aria-sort 或按钮文本清楚表达。",
+      "筛选输入、下拉框、复选框必须有 label。",
+      "排序或筛选后，结果数量和状态变化应使用 role=\"status\" 或 aria-live=\"polite\"。",
+      "不要用 div 拼出表格，除非完整实现 grid 语义和键盘交互。",
+      "分页、排序、筛选和行内操作都必须可键盘操作。",
+      "表格在小屏或文本放大时不应丢失内容或功能。",
+      "当前排序列、选中行和键盘焦点不能只靠颜色表达。"
+    ],
+    "good_examples": [
+      {
+        "title": "带排序状态的数据表",
+        "code": "<table><caption>订单列表</caption><thead><tr><th scope=\"col\" aria-sort=\"ascending\"><button type=\"button\">日期，升序</button></th><th scope=\"col\">状态</th></tr></thead><tbody><tr><td>2026-05-19</td><td>已完成</td></tr></tbody></table><div role=\"status\">显示 24 条订单</div>",
+        "why": "表格结构、标题、排序按钮和动态结果状态都能被辅助技术理解。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "用 div 模拟的排序表",
+        "code": "<div class=\"table\"><div onclick=\"sort()\">日期 ▲</div><div>2026-05-19</div></div>",
+        "why": "缺少表格语义和键盘按钮，排序状态只靠符号表达，不利于辅助技术理解。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能排序、筛选、翻页和操作行内按钮。",
+      "屏幕阅读器是否能读出表格标题、列标题和当前排序状态。",
+      "排序或筛选后结果数量是否会被公告。",
+      "文本放大或窄屏时是否仍能理解表格内容。",
+      "不用颜色是否也能看出排序列、选中行或错误状态。"
+    ],
+    "static_checks": [
+      "table_has_caption",
+      "table_headers_have_scope",
+      "sort_button_has_accessible_name",
+      "aria_sort_present",
+      "filter_controls_have_labels",
+      "status_region_present",
+      "focus_visible_present"
+    ],
+    "name_zh": "可排序筛选数据表格"
+  },
+  {
+    "id": "pattern.multi-step-form-wizard",
+    "name": "Multi Step Form Wizard",
+    "component_type": "form-wizard",
+    "keywords": [
+      "多步骤表单",
+      "分步表单",
+      "向导",
+      "结账流程",
+      "multi step form",
+      "wizard",
+      "checkout",
+      "stepper"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.2.2",
+      "3.3.1",
+      "3.3.2",
+      "3.3.3",
+      "3.3.4",
+      "3.3.8",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "每一步应有清晰 heading，并在页面或区域中暴露当前步骤。",
+      "步骤导航应使用有序列表或语义清楚的导航结构。",
+      "当前步骤可使用 aria-current=\"step\"。",
+      "下一步、上一步、提交按钮必须使用原生 button。",
+      "进入下一步前的校验错误应以文本说明，并关联到对应字段。",
+      "错误摘要应可聚焦，或在提交失败后把焦点移动到错误摘要或第一个错误字段。",
+      "字段必须有 label，相关字段组应使用 fieldset 和 legend。",
+      "步骤切换不应让用户丢失已输入内容。",
+      "涉及订单、支付、删除等重要提交时，应提供确认、检查或撤销机制。",
+      "步骤变化、保存成功、提交失败等状态应使用 role=\"status\" 或 role=\"alert\" 公告。"
+    ],
+    "good_examples": [
+      {
+        "title": "带当前步骤和错误摘要的分步表单",
+        "code": "<nav aria-label=\"结账步骤\"><ol><li aria-current=\"step\">配送信息</li><li>付款</li></ol></nav><h2>配送信息</h2><div role=\"alert\" tabindex=\"-1\">请填写收件人姓名。</div><label for=\"receiver\">收件人</label><input id=\"receiver\" aria-invalid=\"true\" aria-describedby=\"receiver-error\"><p id=\"receiver-error\">收件人不能为空。</p><button type=\"button\">下一步</button>",
+        "why": "当前步骤、错误摘要、字段错误和按钮语义都明确，适合键盘和屏幕阅读器用户。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问的步骤向导",
+        "code": "<div class=\"steps\"><span class=\"active\">1</span><span>2</span></div><input placeholder=\"收件人\"><div onclick=\"next()\">下一步</div>",
+        "why": "步骤缺少语义，输入框缺少 label，下一步不是键盘可操作按钮，错误也无法被可靠公告。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能完成所有步骤、返回修改并提交。",
+      "屏幕阅读器是否能理解当前是第几步、步骤标题和字段分组。",
+      "提交失败后焦点是否到达错误摘要或第一个错误字段。",
+      "返回上一步后已输入内容是否保留。",
+      "重要提交前是否提供确认或检查页面。"
+    ],
+    "static_checks": [
+      "step_nav_has_label",
+      "current_step_exposed",
+      "input_has_label",
+      "fieldset_has_legend",
+      "invalid_input_has_describedby",
+      "error_summary_present",
+      "focus_visible_present"
+    ],
+    "name_zh": "多步骤表单向导"
+  },
+  {
+    "id": "pattern.drag-drop-sortable-list",
+    "name": "Drag Drop Sortable List",
+    "component_type": "drag-drop-list",
+    "keywords": [
+      "拖拽排序",
+      "可排序列表",
+      "看板",
+      "拖放",
+      "drag and drop",
+      "sortable list",
+      "kanban",
+      "reorder"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "2.5.8",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "拖拽排序不能是唯一操作方式，必须提供按钮或键盘方式上移、下移、移到开头、移到末尾。",
+      "列表应使用 ol、ul 或语义明确的结构表达顺序。",
+      "每个项目的移动按钮必须有包含项目名称的可访问名称。",
+      "排序变化应通过 role=\"status\" 或 aria-live=\"polite\" 公告，例如“已将任务 A 移到第 2 位”。",
+      "拖拽手柄、移动按钮和项目操作都必须可键盘操作。",
+      "目标区域或放置位置不能只靠颜色提示，应有文本、边框或状态说明。",
+      "触控目标应足够大，并给相邻目标留出间距。",
+      "不要使用 tabindex 大于 0 来控制排序焦点。",
+      "排序后焦点应保留在被移动项目或对应操作按钮附近。",
+      "如果实现鼠标拖拽，也要保留等价的键盘和单指针操作。"
+    ],
+    "good_examples": [
+      {
+        "title": "提供按钮替代拖拽的排序列表",
+        "code": "<ol aria-label=\"任务排序\"><li>任务 A <button type=\"button\" aria-label=\"将任务 A 上移\">上移</button><button type=\"button\" aria-label=\"将任务 A 下移\">下移</button></li></ol><div role=\"status\" aria-live=\"polite\">任务 A 已移到第 2 位</div>",
+        "why": "即使不使用拖拽，也能通过键盘按钮改变顺序，并公告排序结果。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持鼠标拖拽的列表",
+        "code": "<div class=\"item\" draggable=\"true\">任务 A</div><div class=\"drop-zone\"></div>",
+        "why": "只提供拖拽操作，没有键盘替代，也没有排序变化公告。"
+      }
+    ],
+    "manual_checks": [
+      "不使用鼠标时是否能完成排序。",
+      "屏幕阅读器是否能知道当前项目、可用移动操作和移动后的新位置。",
+      "排序后焦点是否保持在合理位置。",
+      "拖拽目标或当前位置是否不只依赖颜色表达。",
+      "触控目标大小和间距是否足够。"
+    ],
+    "static_checks": [
+      "keyboard_reorder_controls_present",
+      "reorder_button_has_accessible_name",
+      "status_region_present",
+      "no_positive_tabindex",
+      "focus_visible_present",
+      "target_size_reasonable"
+    ],
+    "name_zh": "拖拽排序列表"
+  },
+  {
+    "id": "pattern.accordion-disclosure",
+    "name": "Accordion Disclosure",
+    "name_zh": "手风琴折叠面板",
+    "component_type": "accordion",
+    "keywords": [
+      "手风琴",
+      "折叠面板",
+      "展开收起",
+      "accordion",
+      "disclosure",
+      "details"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "折叠触发器必须使用 button 或原生 summary。",
+      "触发器应维护 aria-expanded，并通过 aria-controls 指向内容区域。",
+      "面板标题应清楚描述内容主题。",
+      "隐藏面板中的可聚焦内容不应进入 Tab 顺序。",
+      "Enter 和 Space 应能展开或收起面板。",
+      "当前焦点必须有清晰 :focus-visible 样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问折叠面板",
+        "code": "<h3><button type=\"button\" aria-expanded=\"false\" aria-controls=\"faq1\">退货政策</button></h3><div id=\"faq1\" hidden>支持 7 天退货。</div>",
+        "why": "使用 button 暴露交互语义，并通过 aria-expanded 和 aria-controls 表达状态与关系。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问折叠面板",
+        "code": "<div onclick=\"toggle()\">退货政策</div><div class=\"panel\">...</div>",
+        "why": "div 不是键盘可操作按钮，也没有暴露展开状态。"
+      }
+    ],
+    "manual_checks": [
+      "Tab 是否能到达每个折叠触发器。",
+      "Enter/Space 是否能展开和收起。",
+      "屏幕阅读器是否能读出展开/收起状态。",
+      "收起面板中的链接和控件是否不会被 Tab 到。"
+    ],
+    "static_checks": [
+      "accordion_trigger_is_button",
+      "aria_expanded_present",
+      "aria_controls_present",
+      "hidden_panel_not_focusable",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.menu-button",
+    "name": "Menu Button",
+    "name_zh": "菜单按钮",
+    "component_type": "menu-button",
+    "keywords": [
+      "菜单按钮",
+      "下拉菜单",
+      "更多操作",
+      "menu button",
+      "dropdown menu",
+      "actions menu"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "菜单触发器必须是 button，并维护 aria-expanded 和 aria-controls。",
+      "菜单容器可使用 role=\"menu\"，菜单项使用 role=\"menuitem\" 或使用语义等价结构。",
+      "键盘应支持 Enter/Space 打开，Esc 关闭，上下方向键浏览菜单项。",
+      "关闭菜单后焦点应回到触发按钮。",
+      "菜单项必须有清楚文本，不要只显示图标。",
+      "菜单打开时不要造成键盘陷阱。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问菜单按钮",
+        "code": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"more-menu\">更多操作</button><ul id=\"more-menu\" role=\"menu\" hidden><li role=\"menuitem\">编辑</li></ul>",
+        "why": "触发器和菜单状态可被辅助技术理解，菜单项也有角色。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问下拉菜单",
+        "code": "<div onclick=\"openMenu()\">...</div><div class=\"menu\"><div>编辑</div></div>",
+        "why": "触发器和菜单项缺少语义，键盘用户难以操作。"
+      }
+    ],
+    "manual_checks": [
+      "键盘能否打开、浏览和关闭菜单。",
+      "Esc 关闭后焦点是否回到按钮。",
+      "屏幕阅读器是否能读出菜单按钮展开状态。"
+    ],
+    "static_checks": [
+      "menu_trigger_is_button",
+      "aria_expanded_present",
+      "menu_items_named",
+      "focus_returns_to_trigger",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.menubar-navigation",
+    "name": "Menubar Navigation",
+    "name_zh": "菜单栏导航",
+    "component_type": "menubar",
+    "keywords": [
+      "菜单栏",
+      "多级菜单",
+      "导航菜单栏",
+      "menubar",
+      "submenu",
+      "navigation menu"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.4",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "普通站点导航优先使用 nav 和链接；只有应用式菜单才使用 menubar 模式。",
+      "menubar 中的项目应有清楚角色、名称和展开状态。",
+      "方向键应能在同层菜单项之间移动。",
+      "子菜单应可通过键盘打开和关闭。",
+      "当前页面或当前项应使用 aria-current 或明确文本表达。",
+      "不要只用 hover 展开子菜单。"
+    ],
+    "good_examples": [
+      {
+        "title": "可键盘操作菜单栏",
+        "code": "<nav aria-label=\"主导航\"><ul><li><button aria-expanded=\"false\" aria-controls=\"products-menu\">产品</button></li></ul></nav>",
+        "why": "导航区域有标签，子菜单触发器可键盘操作并暴露展开状态。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持 hover 的菜单栏",
+        "code": "<div class=\"nav\"><div onmouseover=\"open()\">产品</div></div>",
+        "why": "只依赖鼠标 hover，键盘和触控用户难以使用。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否打开所有子菜单。",
+      "焦点顺序是否合理且不会陷入菜单。",
+      "当前页面状态是否能被读出。"
+    ],
+    "static_checks": [
+      "nav_has_label",
+      "submenu_trigger_is_button",
+      "aria_expanded_present",
+      "link_has_accessible_name",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.radio-checkbox-group",
+    "name": "Radio Checkbox Group",
+    "name_zh": "单选复选控件组",
+    "component_type": "choice-group",
+    "keywords": [
+      "单选",
+      "复选",
+      "选项组",
+      "checkbox",
+      "radio",
+      "fieldset",
+      "legend"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "2.1.1",
+      "2.4.6",
+      "2.4.7",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "相关单选或复选项应使用 fieldset 和 legend 分组。",
+      "每个 input 必须有 label。",
+      "单选项使用相同 name，并用原生 input type=\"radio\"。",
+      "复选项使用原生 input type=\"checkbox\"。",
+      "错误或帮助文本应通过 aria-describedby 关联到控件组或字段。",
+      "不要用 div/span 模拟勾选控件，除非完整实现角色、状态和键盘交互。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问选项组",
+        "code": "<fieldset><legend>通知方式</legend><label><input type=\"checkbox\" name=\"notice\" value=\"email\"> 邮件</label></fieldset>",
+        "why": "fieldset 和 legend 表达组关系，原生 input 暴露状态。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "模拟复选框",
+        "code": "<div class=\"checkbox\" onclick=\"toggle()\"></div><span>邮件</span>",
+        "why": "缺少原生状态、标签和键盘支持。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能读出组名、选项名和选中状态。",
+      "键盘是否能切换选项。",
+      "错误信息是否和选项组关联。"
+    ],
+    "static_checks": [
+      "fieldset_has_legend",
+      "input_has_label",
+      "choice_has_native_input",
+      "error_describedby_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.switch-toggle",
+    "name": "Switch Toggle",
+    "name_zh": "开关切换",
+    "component_type": "switch",
+    "keywords": [
+      "开关",
+      "切换",
+      "启用禁用",
+      "switch",
+      "toggle"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.10",
+      "2.1.1",
+      "2.4.6",
+      "2.4.7",
+      "2.5.3",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "二元设置优先使用 checkbox，或使用 role=\"switch\" 并维护 aria-checked。",
+      "可访问名称必须包含可见标签文本。",
+      "状态变化不能只靠颜色表达。",
+      "Space 应能切换开关。",
+      "切换后如有保存状态，应使用 role=\"status\" 公告。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问开关",
+        "code": "<label><input type=\"checkbox\" role=\"switch\"> 接收通知</label>",
+        "why": "原生输入可键盘操作，并有清楚标签和状态。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只靠颜色的开关",
+        "code": "<div class=\"switch on\" onclick=\"toggle()\"></div>",
+        "why": "没有角色、名称、状态和键盘操作。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能读出开关名称和开关状态。",
+      "Space 是否能切换。",
+      "不用颜色是否也能理解当前状态。"
+    ],
+    "static_checks": [
+      "switch_has_accessible_name",
+      "switch_has_checked_state",
+      "label_in_name",
+      "status_region_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.slider-control",
+    "name": "Slider Control",
+    "name_zh": "滑块控件",
+    "component_type": "slider",
+    "keywords": [
+      "滑块",
+      "范围选择",
+      "音量",
+      "slider",
+      "range"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.11",
+      "2.1.1",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "优先使用 input type=\"range\"，并提供 label。",
+      "滑块必须支持键盘方向键、Home/End 或等价操作。",
+      "当前值、最小值和最大值应能被辅助技术获取。",
+      "对精确输入场景应提供数字输入框替代。",
+      "不要让拖动成为唯一调整方式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问滑块",
+        "code": "<label for=\"volume\">音量</label><input id=\"volume\" type=\"range\" min=\"0\" max=\"100\" value=\"50\"><output for=\"volume\">50</output>",
+        "why": "原生 range 支持键盘和状态暴露，并有标签。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持拖动的滑块",
+        "code": "<div class=\"slider\"><div class=\"thumb\"></div></div>",
+        "why": "缺少名称、角色、值和键盘替代。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能调整数值。",
+      "屏幕阅读器是否能读出名称和当前值。",
+      "是否提供精确输入或按钮替代。"
+    ],
+    "static_checks": [
+      "slider_has_label",
+      "slider_has_value",
+      "keyboard_adjustable",
+      "drag_alternative_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.tooltip-popover",
+    "name": "Tooltip Popover",
+    "name_zh": "提示气泡和浮层",
+    "component_type": "tooltip-popover",
+    "keywords": [
+      "提示",
+      "气泡",
+      "浮层",
+      "popover",
+      "tooltip",
+      "hover content"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.13",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "hover 或 focus 触发内容必须可关闭、可悬停、持续显示。",
+      "提示触发器必须可键盘聚焦。",
+      "重要信息不要只放在 tooltip 中。",
+      "非模态浮层不应困住焦点；模态浮层应按弹窗模式管理焦点。",
+      "Esc 应能关闭可交互浮层。",
+      "触发器应通过 aria-describedby 或 aria-controls 关联提示内容。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问提示",
+        "code": "<button aria-describedby=\"tip-save\">保存</button><div id=\"tip-save\" role=\"tooltip\">保存当前设置</div>",
+        "why": "提示内容和触发器有关联，触发器可键盘聚焦。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持 hover 的提示",
+        "code": "<span onmouseover=\"showTip()\">?</span><div class=\"tip\">说明</div>",
+        "why": "键盘用户无法触发，提示也没有语义关联。"
+      }
+    ],
+    "manual_checks": [
+      "键盘聚焦是否能看到提示。",
+      "Esc 或移出是否能关闭浮层。",
+      "鼠标移动到提示上时提示是否不会立即消失。"
+    ],
+    "static_checks": [
+      "trigger_focusable",
+      "tooltip_describedby_present",
+      "dismissible_popover",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.carousel",
+    "name": "Carousel",
+    "name_zh": "轮播图",
+    "component_type": "carousel",
+    "keywords": [
+      "轮播",
+      "幻灯片",
+      "自动播放",
+      "carousel",
+      "slideshow"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.2.2",
+      "2.4.3",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "自动轮播必须提供暂停、继续、上一张、下一张按钮。",
+      "轮播不应在用户聚焦其中内容时继续自动切换。",
+      "每张幻灯片应有可访问名称或标题。",
+      "当前幻灯片状态应能被辅助技术理解。",
+      "图片必须有合适 alt。",
+      "控制按钮必须可键盘操作。"
+    ],
+    "good_examples": [
+      {
+        "title": "可暂停轮播",
+        "code": "<section aria-roledescription=\"carousel\" aria-label=\"推荐内容\"><button>暂停轮播</button><button>上一张</button><button>下一张</button></section>",
+        "why": "轮播区域有名称，并提供键盘可操作的控制按钮。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可控制自动轮播",
+        "code": "<div class=\"carousel\"><img src=\"sale.png\"></div>",
+        "why": "自动变化内容缺少暂停控制，图片也缺少替代文本。"
+      }
+    ],
+    "manual_checks": [
+      "是否能暂停自动轮播。",
+      "键盘是否能操作上一张和下一张。",
+      "屏幕阅读器是否能理解当前幻灯片。"
+    ],
+    "static_checks": [
+      "carousel_has_label",
+      "pause_button_present",
+      "slide_images_have_alt",
+      "controls_are_buttons",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.breadcrumb-pagination",
+    "name": "Breadcrumb Pagination",
+    "name_zh": "面包屑和分页导航",
+    "component_type": "navigation",
+    "keywords": [
+      "面包屑",
+      "分页",
+      "页码",
+      "breadcrumb",
+      "pagination",
+      "aria-current"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.4",
+      "2.4.5",
+      "2.4.7",
+      "2.4.8",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "面包屑和分页应使用 nav，并提供 aria-label。",
+      "当前页面或当前步骤使用 aria-current。",
+      "分页链接文本应包含页码和目的。",
+      "上一页/下一页按钮必须有清楚名称。",
+      "禁用分页控件应使用 disabled 或 aria-disabled，并避免误操作。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问分页",
+        "code": "<nav aria-label=\"分页\"><a href=\"?page=1\">第 1 页</a><a aria-current=\"page\">第 2 页</a><a href=\"?page=3\">第 3 页</a></nav>",
+        "why": "导航有标签，当前页状态清楚。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问分页",
+        "code": "<div><span>1</span><span class=\"active\">2</span><span>3</span></div>",
+        "why": "缺少导航语义、链接目的和当前页状态。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能识别分页/面包屑导航。",
+      "当前页是否能被读出。",
+      "键盘是否能按顺序访问分页链接。"
+    ],
+    "static_checks": [
+      "nav_has_label",
+      "aria_current_present",
+      "page_link_named",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.alert-toast",
+    "name": "Alert Toast",
+    "name_zh": "警告和消息提示",
+    "component_type": "status-message",
+    "keywords": [
+      "提示消息",
+      "toast",
+      "alert",
+      "status",
+      "通知"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.2.4",
+      "2.4.3",
+      "2.4.7",
+      "3.3.1",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "非紧急状态消息使用 role=\"status\" 或 aria-live=\"polite\"。",
+      "错误或紧急消息可使用 role=\"alert\"。",
+      "重要 toast 应可暂停、关闭或查看历史。",
+      "不要只用视觉位置或颜色表达消息类型。",
+      "消息中包含操作时，按钮必须可键盘操作。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问状态消息",
+        "code": "<div role=\"status\" aria-live=\"polite\">保存成功</div>",
+        "why": "状态变化可被辅助技术感知，且不强制移动焦点。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "纯视觉 toast",
+        "code": "<div class=\"toast success\">保存成功</div>",
+        "why": "辅助技术可能无法感知动态消息。"
+      }
+    ],
+    "manual_checks": [
+      "保存、删除、加载等状态是否能被读出。",
+      "消息是否不会突然抢走焦点。",
+      "重要消息是否可关闭或稍后查看。"
+    ],
+    "static_checks": [
+      "status_region_present",
+      "alert_used_for_errors",
+      "toast_dismissible",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.file-upload-dropzone",
+    "name": "File Upload Dropzone",
+    "name_zh": "文件上传和拖放区",
+    "component_type": "file-upload",
+    "keywords": [
+      "文件上传",
+      "拖放上传",
+      "上传区域",
+      "file upload",
+      "dropzone",
+      "drag upload"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.6",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "3.3.1",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "拖放上传必须提供 input type=\"file\" 或按钮选择文件作为替代。",
+      "上传区域应有清楚标签和说明。",
+      "文件类型、大小限制和错误信息应以文本说明。",
+      "上传进度和完成状态应使用 role=\"status\" 或 progress 语义。",
+      "不要让拖放成为唯一上传方式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问文件上传",
+        "code": "<label for=\"file\">上传简历</label><input id=\"file\" type=\"file\"><p id=\"file-help\">支持 PDF，最大 5MB。</p><div role=\"status\">等待上传</div>",
+        "why": "原生文件输入、帮助文本和状态消息都可被辅助技术理解。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持拖放上传",
+        "code": "<div class=\"dropzone\">把文件拖到这里</div>",
+        "why": "键盘用户无法选择文件，也缺少限制和状态说明。"
+      }
+    ],
+    "manual_checks": [
+      "不用鼠标是否能选择文件上传。",
+      "错误和进度是否能被读出。",
+      "文件限制是否在上传前可理解。"
+    ],
+    "static_checks": [
+      "file_input_present",
+      "dropzone_has_keyboard_alternative",
+      "status_region_present",
+      "error_text_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.date-picker",
+    "name": "Date Picker",
+    "name_zh": "日期选择器",
+    "component_type": "date-picker",
+    "keywords": [
+      "日期选择",
+      "日历",
+      "datepicker",
+      "calendar",
+      "date input"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "优先使用原生 input type=\"date\"；自定义日历必须提供键盘操作。",
+      "日期输入必须有 label 和格式说明。",
+      "日历弹层应有可访问名称和关闭方式。",
+      "当前日期、选中日期和禁用日期应能被辅助技术理解。",
+      "用户应能直接输入日期，不应只能点日历。",
+      "日期错误应通过 aria-describedby 关联。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问日期输入",
+        "code": "<label for=\"start\">开始日期</label><input id=\"start\" type=\"date\" aria-describedby=\"start-help\"><p id=\"start-help\">格式：年-月-日</p>",
+        "why": "原生日期输入有标签和格式说明。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只能鼠标点击的日历",
+        "code": "<input placeholder=\"选择日期\"><div class=\"calendar\"><span onclick=\"pick()\">19</span></div>",
+        "why": "缺少标签、键盘操作和日期状态。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能输入或选择日期。",
+      "屏幕阅读器是否能读出当前和选中日期。",
+      "错误日期是否有清楚提示。"
+    ],
+    "static_checks": [
+      "date_input_has_label",
+      "format_help_present",
+      "calendar_keyboard_support",
+      "invalid_date_describedby",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.tree-view",
+    "name": "Tree View",
+    "name_zh": "树形视图",
+    "component_type": "tree",
+    "keywords": [
+      "树形",
+      "目录树",
+      "层级列表",
+      "tree view",
+      "tree",
+      "hierarchy"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "层级结构应使用语义列表，或完整实现 tree/treeitem/group 角色。",
+      "可展开项应维护 aria-expanded。",
+      "当前选中项应维护 aria-selected 或 aria-current。",
+      "键盘应支持方向键展开、收起和移动。",
+      "节点名称应清楚，不要只有图标。",
+      "不要让隐藏子节点进入 Tab 顺序。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问树节点",
+        "code": "<ul role=\"tree\"><li role=\"treeitem\" aria-expanded=\"false\">项目文件</li></ul>",
+        "why": "树和树节点角色明确，展开状态可被辅助技术感知。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无语义目录树",
+        "code": "<div class=\"tree\"><div onclick=\"open()\">📁</div></div>",
+        "why": "节点缺少名称、层级、状态和键盘操作。"
+      }
+    ],
+    "manual_checks": [
+      "方向键是否能浏览树节点。",
+      "展开状态和选中状态是否能被读出。",
+      "隐藏节点是否不会被 Tab 到。"
+    ],
+    "static_checks": [
+      "tree_roles_present",
+      "treeitem_named",
+      "aria_expanded_present",
+      "hidden_nodes_not_focusable",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.toolbar",
+    "name": "Toolbar",
+    "name_zh": "工具栏",
+    "component_type": "toolbar",
+    "keywords": [
+      "工具栏",
+      "编辑器",
+      "按钮组",
+      "toolbar",
+      "editor controls"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.12",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.3",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "工具栏容器可使用 role=\"toolbar\" 并提供 aria-label。",
+      "工具按钮必须使用 button，并有可访问名称。",
+      "切换按钮应维护 aria-pressed。",
+      "图标按钮的可访问名称应包含可见含义。",
+      "键盘顺序应和视觉顺序一致。",
+      "不要只使用图标且无标签或 aria-label。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问编辑工具栏",
+        "code": "<div role=\"toolbar\" aria-label=\"文本格式\"><button type=\"button\" aria-pressed=\"false\" aria-label=\"加粗\">B</button></div>",
+        "why": "工具栏有名称，按钮有状态和可访问名称。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问图标工具栏",
+        "code": "<div class=\"toolbar\"><span onclick=\"bold()\">B</span></div>",
+        "why": "span 不是按钮，缺少键盘支持和状态。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能访问并操作所有工具按钮。",
+      "屏幕阅读器是否能读出按钮名称和按下状态。",
+      "焦点顺序是否符合视觉顺序。"
+    ],
+    "static_checks": [
+      "toolbar_has_label",
+      "toolbar_button_is_button",
+      "toggle_has_pressed_state",
+      "icon_button_named",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.command-palette",
+    "name": "Command Palette",
+    "name_zh": "命令面板",
+    "component_type": "command-palette",
+    "keywords": [
+      "命令面板",
+      "快捷命令",
+      "全局搜索",
+      "command palette",
+      "quick actions"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.1.2",
+      "2.1.4",
+      "2.4.3",
+      "2.4.7",
+      "2.5.3",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "命令面板应按模态对话框或组合框模式实现。",
+      "打开后焦点应进入搜索输入，关闭后返回触发位置。",
+      "命令输入框必须有 label。",
+      "结果列表应有语义，当前高亮项应通过 aria-activedescendant 或等价方式暴露。",
+      "键盘应支持上下方向键、Enter 执行、Esc 关闭。",
+      "结果数量和无结果状态应使用 role=\"status\" 公告。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问命令面板",
+        "code": "<div role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"cmd-title\"><h2 id=\"cmd-title\">命令</h2><label for=\"cmd\">搜索命令</label><input id=\"cmd\" role=\"combobox\" aria-controls=\"cmd-list\"><ul id=\"cmd-list\" role=\"listbox\"></ul></div>",
+        "why": "命令面板结合 dialog 和 combobox 语义，并提供标签和结果列表。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问命令面板",
+        "code": "<div class=\"palette\"><input placeholder=\"Search\"><div onclick=\"run()\">Open file</div></div>",
+        "why": "缺少弹窗语义、标签、结果角色和键盘状态。"
+      }
+    ],
+    "manual_checks": [
+      "快捷键打开后焦点是否进入输入框。",
+      "上下方向键和 Enter 是否能执行命令。",
+      "Esc 关闭后焦点是否返回原位置。",
+      "无结果状态是否能被读出。"
+    ],
+    "static_checks": [
+      "dialog_has_accessible_name",
+      "input_has_label",
+      "listbox_present",
+      "status_region_present",
+      "focus_returns_to_trigger",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.rich-text-editor",
+    "name": "Rich Text Editor (WYSIWYG)",
+    "name_zh": "富文本编辑器",
+    "component_type": "editor",
+    "keywords": [
+      "富文本编辑器",
+      "所见即所得",
+      "文本格式化",
+      "编辑器",
+      "rich text editor",
+      "WYSIWYG",
+      "text formatting",
+      "content editor"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "1.4.12",
+      "2.1.1",
+      "2.1.2",
+      "2.1.4",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.3",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "编辑区域必须有清晰 label，可使用 label 元素或 aria-label。",
+      "工具栏按钮必须使用 button 元素，每个按钮有可访问名称。",
+      "格式切换按钮（加粗、斜体、下划线等）应维护 aria-pressed 状态。",
+      "编辑区域应支持 Tab 进入和离开，不应造成键盘陷阱。",
+      "插入链接时应提供输入链接文本和 URL 的对话框，并正确管理焦点。",
+      "插入图片时必须强制填写 alt 文本，不可跳过。",
+      "列表、引用、标题等块级格式应使用语义 HTML（ol/ul/blockquote/h1-h6）。",
+      "颜色选择不应是唯一传达信息的方式；文字颜色必须满足对比度要求。",
+      "撤销/重做操作应可键盘触发，并有状态公告。",
+      "字符计数、保存状态等动态信息应使用 role=\"status\" 或 aria-live。",
+      "不要用 contenteditable 实现而不提供完整键盘支持和语义暴露。",
+      "所有工具栏按钮和编辑区域应有清晰 :focus-visible 样式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问富文本编辑器",
+        "code": "<label for=\"editor\">文章内容</label><div role=\"toolbar\" aria-label=\"文本格式\"><button type=\"button\" aria-pressed=\"false\" aria-label=\"加粗\">B</button></div><div id=\"editor\" contenteditable role=\"textbox\" aria-multiline=\"true\"></div><div role=\"status\">字数：120</div>",
+        "why": "编辑区有标签，工具栏按钮暴露按下状态和名称，动态信息通过状态区域公布。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "缺失语义和键盘支持的编辑器",
+        "code": "<div class=\"toolbar\"><span onclick=\"bold()\">B</span></div><div contenteditable class=\"editor\"></div>",
+        "why": "工具栏按钮不是 button，无键盘支持和状态暴露，编辑区缺少标签。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否完成输入、格式化、插入链接/图片、撤销重做等全部操作。",
+      "屏幕阅读器能否读出编辑区标签、工具栏按钮名称和格式状态。",
+      "插入图片时是否强制要求填写替代文本。",
+      "Tab 是否能正常进入和离开编辑区域。",
+      "文字颜色和背景是否满足对比度要求。"
+    ],
+    "static_checks": [
+      "editor_has_label",
+      "toolbar_buttons_have_accessible_name",
+      "toggle_buttons_have_pressed_state",
+      "img_insert_requires_alt",
+      "status_region_present",
+      "focus_visible_present",
+      "no_keyboard_trap"
+    ]
+  },
+  {
+    "id": "pattern.video-player",
+    "name": "Video Player",
+    "name_zh": "视频播放器",
+    "component_type": "media-player",
+    "keywords": [
+      "视频播放器",
+      "媒体播放",
+      "字幕",
+      "视频",
+      "video player",
+      "media player",
+      "captions",
+      "subtitles"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.2.1",
+      "1.2.2",
+      "1.2.3",
+      "1.2.5",
+      "1.3.4",
+      "1.4.2",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.2.2",
+      "2.3.1",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "视频必须提供字幕（captions），并允许用户开关字幕。",
+      "预录视频应提供音频描述或媒体替代文本。",
+      "播放器控件（播放/暂停、音量、进度条、全屏、字幕）必须使用 button 或原生控件。",
+      "每个控件必须有可访问名称，状态变化需反映在 aria-pressed 或等价属性中。",
+      "进度条滑块应使用 input type=\"range\" 或带 role=\"slider\" 的完整实现。",
+      "音量控制应支持键盘调整，不只有拖动。",
+      "自动播放视频必须提供暂停按钮，且不自动播放音频。",
+      "键盘应支持 Space 播放/暂停、方向键快进/快退/调音量。",
+      "全屏切换应公告当前状态。",
+      "不要使用只有鼠标能操作的控件。",
+      "视频不应包含每秒超过 3 次的闪烁内容。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问视频播放器",
+        "code": "<figure><video src=\"tutorial.mp4\" controls><track kind=\"captions\" src=\"tutorial.vtt\" srclang=\"zh\" label=\"中文字幕\"></video><figcaption>产品使用教程</figcaption></figure><button type=\"button\" aria-label=\"开关字幕\">CC</button>",
+        "why": "视频有字幕轨、回退内容和标签，额外控件有可访问名称。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "缺失字幕和键盘控件的播放器",
+        "code": "<video src=\"tutorial.mp4\" autoplay muted></video>",
+        "why": "缺少字幕、控件标签和键盘操作方式，自动播放可能干扰用户。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能完成播放/暂停、调整音量、拖动进度、开关字幕和全屏。",
+      "屏幕阅读器是否能读出每个控件的名称和状态。",
+      "字幕是否同步、准确且可开关。",
+      "自动播放是否可暂停，音频是否不会自动播放。"
+    ],
+    "static_checks": [
+      "video_has_captions",
+      "media_controls_are_buttons",
+      "controls_have_accessible_name",
+      "volume_slider_keyboard_accessible",
+      "pause_button_present",
+      "no_autoplay_audio",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.chart-data-visualization",
+    "name": "Chart Data Visualization",
+    "name_zh": "图表数据可视化",
+    "component_type": "data-visualization",
+    "keywords": [
+      "图表",
+      "数据可视化",
+      "柱状图",
+      "折线图",
+      "饼图",
+      "chart",
+      "data visualization",
+      "graph",
+      "bar chart",
+      "line chart",
+      "pie chart"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.3.3",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.7",
+      "2.5.3",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "图表必须有文本替代，例如隐藏的数据表格、描述性标题或摘要。",
+      "图表数据点应可键盘导航，使用 tabindex=\"0\" 或 focusable 元素包裹。",
+      "每个数据点应有可访问名称，包含类别和数值。",
+      "颜色不应是区分数据系列的唯-方式，应附加图案、标签或边框区分。",
+      "图表颜色必须满足非文本对比度 (3:1) 和文本对比度要求。",
+      "交互式图表应支持方向键在数据点之间移动，并公告当前数据。",
+      "图例应可键盘操作，并在点击/按键时切换数据系列可见性。",
+      "缩放和平移操作必须有键盘替代方式（如按钮缩放、输入范围选择）。",
+      "动态数据更新应使用 aria-live 公告变化。",
+      "不要只渲染 canvas 或 SVG 而不提供任何可访问层。"
+    ],
+    "good_examples": [
+      {
+        "title": "带数据表格替代的图表",
+        "code": "<figure><figcaption>2025年月度销售额</figcaption><svg role=\"img\" aria-label=\"月度销售额柱状图\"><rect role=\"img\" aria-label=\"1月：3.2万\" x=\"10\" y=\"50\" width=\"30\" height=\"100\">...</rect></svg><details><summary>查看数据表</summary><table><caption>月度销售额明细</caption><tr><th>月份</th><td>1月</td></tr><tr><th>销售额</th><td>3.2万</td></tr></table></details></figure>",
+        "why": "图表有标题和描述，数据点有名称，并提供完整的数据表替代。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "纯视觉图表无替代",
+        "code": "<canvas id=\"chart\"></canvas>",
+        "why": "canvas 内部的图形对辅助技术完全不可见，没有文本替代或键盘访问。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能获取图表标题、摘要和每个数据点的数值。",
+      "键盘是否能逐个浏览数据点和图例项。",
+      "不用颜色是否仍能区分不同数据系列。",
+      "是否提供表格或文本列表作为数据替代。"
+    ],
+    "static_checks": [
+      "chart_has_accessible_name",
+      "data_table_alternative_present",
+      "data_points_keyboard_accessible",
+      "color_not_sole_means",
+      "non_text_contrast_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.interactive-map",
+    "name": "Interactive Map",
+    "name_zh": "交互式地图",
+    "component_type": "map",
+    "keywords": [
+      "地图",
+      "交互地图",
+      "位置选择",
+      "标记点",
+      "interactive map",
+      "map marker",
+      "location picker",
+      "geolocation"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "地图必须有文本替代：提供地点列表、地址搜索或文字说明。",
+      "地图标记点应可键盘聚焦，并按 Tab 或方向键导航。",
+      "每个标记点应有可访问名称（如地点名称、地址）。",
+      "缩放和平移必须提供按钮替代（如 +/- 按钮），不能只有鼠标滚轮和拖拽。",
+      "地图搜索输入框必须有 label，搜索结果应有语义列表。",
+      "选中的标记点状态应通过 aria-selected 或等价方式暴露。",
+      "地图颜色对比度应满足非文本对比度要求（如道路、边界）。",
+      "不要依赖颜色作为唯一区分标记类别的方式。",
+      "触摸设备上标记点应有足够大的触控目标（至少 24x24 CSS 像素）。",
+      "地图焦点不能困在内部，Esc 应能退出聚焦模式。"
+    ],
+    "good_examples": [
+      {
+        "title": "带键盘操作和文本替代的地图",
+        "code": "<div role=\"application\" aria-label=\"门店地图\"><label for=\"map-search\">搜索地址</label><input id=\"map-search\"><button type=\"button\" aria-label=\"放大地图\">+</button><button type=\"button\" aria-label=\"缩小地图\">-</button><ul aria-label=\"附近门店\"><li><button aria-label=\"朝阳门店：朝阳路88号\">📌 朝阳门店</button></li></ul></div>",
+        "why": "地图有名称和搜索输入，缩放有按钮操作，标记点通过列表暴露并可通过键盘访问。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持鼠标操作的地图",
+        "code": "<div id=\"map\"></div>",
+        "why": "地图内容不可被屏幕阅读器感知，标记点不可键盘访问，缩放只能靠鼠标滚轮。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能缩放、平移和选择标记点。",
+      "屏幕阅读器是否能读出标记点名称和地址。",
+      "是否提供了地点列表或搜索输入作为地图的替代导航方式。",
+      "标记点的触控目标是否足够大。"
+    ],
+    "static_checks": [
+      "map_has_accessible_name",
+      "zoom_controls_are_buttons",
+      "markers_keyboard_accessible",
+      "location_list_alternative_present",
+      "search_input_has_label",
+      "target_size_sufficient",
+      "focus_visible_present",
+      "no_keyboard_trap"
+    ]
+  },
+  {
+    "id": "pattern.rating-input",
+    "name": "Rating Input",
+    "name_zh": "评分输入组件",
+    "component_type": "rating",
+    "keywords": [
+      "评分",
+      "星级评价",
+      "打分",
+      "评价",
+      "rating",
+      "star rating",
+      "score",
+      "feedback"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.3",
+      "2.5.8",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "评分输入应使用 radio 按钮组（原生或 role=\"radio\"），fieldset 和 legend 分组。",
+      "每个星级按钮必须有可访问名称，包含分值（如\"4星\"）。",
+      "当前评分值应通过 aria-checked 暴露。",
+      "方向键应能在星级之间移动选择。",
+      "不要只靠颜色区分已选和未选星级，应使用形状或文本差异。",
+      "只读评分应暴露当前值，例如使用 aria-label=\"评分 4.2/5\"。",
+      "评分控件在触控设备上应有足够的触控目标（至少 24x24 CSS 像素）。",
+      "已选评分的变化应通过 aria-live 公告。",
+      "不要用 span/div 的 onclick 模拟评分而缺少角色、状态和键盘支持。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问星级评分",
+        "code": "<fieldset><legend>评分</legend><div role=\"radiogroup\" aria-label=\"星级评分\"><label><input type=\"radio\" name=\"rating\" value=\"1\"><span aria-hidden=\"true\">★</span> 1星</label><label><input type=\"radio\" name=\"rating\" value=\"2\"><span aria-hidden=\"true\">★★</span> 2星</label></div><div role=\"status\" aria-live=\"polite\">已选：3星</div></fieldset>",
+        "why": "评分使用 radio 语义，每个选项有名称和值，选中状态可被公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "纯视觉评分",
+        "code": "<div class=\"stars\"><span class=\"active\" onclick=\"rate(1)\">★</span><span onclick=\"rate(2)\">★</span></div>",
+        "why": "span 不是表单控件，缺少角色、名称、值和键盘操作。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否选择评分，方向键能否切换星级。",
+      "屏幕阅读器是否能读出组件名称、当前分值和每个选项的分数。",
+      "不用颜色是否也能区分已选和未选。",
+      "触控目标是否足够大、不会误触。"
+    ],
+    "static_checks": [
+      "rating_radiogroup_present",
+      "rating_option_has_accessible_name",
+      "fieldset_has_legend",
+      "current_value_exposed",
+      "status_region_present",
+      "target_size_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.infinite-scroll",
+    "name": "Infinite Scroll / Load More",
+    "name_zh": "无限滚动加载",
+    "component_type": "content-loading",
+    "keywords": [
+      "无限滚动",
+      "加载更多",
+      "滚动加载",
+      "分页加载",
+      "infinite scroll",
+      "load more",
+      "lazy load",
+      "scroll loading"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "3.2.2",
+      "3.2.6",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "自动加载新内容时，必须使用 role=\"status\" 或 aria-live=\"polite\" 公告加载状态。",
+      "加载区域应提供\"加载更多\"按钮作为键盘可触发的替代方式。",
+      "新加载的内容应追加在已有内容之后，不要插在已有内容前面。",
+      "加载完成后焦点不应被强制移动到新内容。",
+      "加载失败或没有更多内容时应明确公告。",
+      "不要只依赖滚动事件触发加载，尤其是无法检测滚动的辅助技术场景。",
+      "加载中应提供视觉指示器（如 spinner），且该指示器有 ARIA 状态标记。",
+      "提供跳过已加载内容的导航方式（如回到顶部或跳转到加载按钮）。",
+      "新内容追加前后的 DOM 顺序必须与视觉阅读顺序一致。"
+    ],
+    "good_examples": [
+      {
+        "title": "带加载按钮和状态公告的无限滚动",
+        "code": "<ul aria-label=\"文章列表\"><li>文章1</li><li>文章2</li></ul><button type=\"button\">加载更多</button><div role=\"status\" aria-live=\"polite\">正在加载...</div>",
+        "why": "提供键盘可操作的显式加载按钮，加载状态可被辅助技术感知。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "纯滚动触发的加载",
+        "code": "<div class=\"list\" onscroll=\"loadMore()\"><div>文章1</div></div>",
+        "why": "缺少显式加载控制、状态公告和键盘可达方式，屏幕阅读器用户可能无法触发加载。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能触发加载更多（通过按钮而非滚动）。",
+      "屏幕阅读器是否能感知\"正在加载\"\"加载完成\"\"没有更多\"等状态。",
+      "加载后焦点是否保持合理位置，不会被强制移动。",
+      "新内容是否按正确的 DOM 顺序追加。"
+    ],
+    "static_checks": [
+      "load_more_button_present",
+      "loading_status_announced",
+      "no_autofocus_on_load",
+      "dom_order_matches_visual",
+      "content_append_not_prepend",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.chat-messaging",
+    "name": "Chat Messaging Interface",
+    "name_zh": "即时通讯聊天界面",
+    "component_type": "messaging",
+    "keywords": [
+      "聊天",
+      "即时通讯",
+      "消息",
+      "在线客服",
+      "chat",
+      "messaging",
+      "instant message",
+      "live chat",
+      "customer service"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "3.2.2",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "消息列表应有语义结构，每条消息可用 article 或 listitem 包裹。",
+      "消息列表区域应有 aria-label 或 aria-labelledby，且标记为 aria-live=\"polite\"。",
+      "新消息到来时应公告发送者和消息摘要，但不能强制移动焦点。",
+      "消息输入框必须有 label，发送按钮必须有可访问名称。",
+      "在线状态、对方正在输入等动态状态应使用 aria-live 公告。",
+      "消息时间戳、发送状态不应只依赖颜色表达。",
+      "提供跳转到消息列表开头的快捷操作。",
+      "文件/图片附件必须有文本说明。",
+      "键盘应支持 Enter 发送消息（在中文输入法组合输入期间不应触发发送）。",
+      "不要在没有用户确认的情况下自动滚动到旧消息。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问聊天界面",
+        "code": "<section aria-label=\"聊天\"><ul aria-label=\"消息列表\" aria-live=\"polite\"><li>客服：您好，请问有什么可以帮助您的？</li><li>我：想咨询退货政策</li></ul><form><label for=\"msg\">输入消息</label><input id=\"msg\"><button type=\"submit\">发送</button></form><div role=\"status\">客服正在输入...</div></section>",
+        "why": "消息区有标签和动态公告，输入有标签，按钮语义明确。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无语义聊天界面",
+        "code": "<div class=\"chat\"><div class=\"bubble bot\">你好</div></div><input placeholder=\"输入...\"><div onclick=\"send()\">发送</div>",
+        "why": "缺少区域标签、消息列表语义和动态公告，发送按钮不是原生 button。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能阅读消息、输入内容和发送消息。",
+      "屏幕阅读器是否能感知新消息到来和对方正在输入。",
+      "焦点在新消息到来时是否保持稳定。",
+      "组合输入法时 Enter 是否会误发送。"
+    ],
+    "static_checks": [
+      "message_area_has_label",
+      "message_list_aria_live",
+      "input_has_label",
+      "send_button_is_submit",
+      "attachment_has_text_alternative",
+      "ime_composition_safe",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.cart-drawer",
+    "name": "Shopping Cart Drawer",
+    "name_zh": "购物车侧边抽屉",
+    "component_type": "drawer-panel",
+    "keywords": [
+      "购物车",
+      "侧边栏",
+      "抽屉面板",
+      "购物车面板",
+      "cart drawer",
+      "slide panel",
+      "side panel",
+      "shopping cart"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "抽屉面板应使用 role=\"dialog\" 或 region，并提供 aria-label=\"购物车\" 等描述性名称。",
+      "打开抽屉后焦点应移到抽屉内第一个可交互元素。",
+      "关闭抽屉后焦点必须返回触发按钮（如导航栏的购物车图标按钮）。",
+      "抽屉内商品数量、总价变化应使用 role=\"status\" 或 aria-live=\"polite\" 公告。",
+      "关闭按钮、删除商品按钮、增减数量按钮必须使用原生 button 并有可访问名称。",
+      "每个商品应有图像 alt 文本、名称、价格、数量和操作按钮。",
+      "Esc 应可关闭抽屉。",
+      "抽屉打开时其余页面内容不应进入 Tab 顺序。",
+      "总价区域应有明确 heading 或等价标记。",
+      "不要用 div 模拟按钮，不要缺失关闭后的焦点回归。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问购物车抽屉",
+        "code": "<section role=\"dialog\" aria-modal=\"true\" aria-label=\"购物车\"><h2>购物车 (2件)</h2><button type=\"button\" aria-label=\"关闭购物车\">✕</button><ul><li><img src=\"shirt.jpg\" alt=\"白色T恤\"><span>T恤</span><button type=\"button\" aria-label=\"移除T恤\">删除</button></li></ul><p>合计：¥298</p><div role=\"status\" aria-live=\"polite\">已移除T恤</div></section>",
+        "why": "抽屉有名称和标题，焦点管理正确，商品操作有名称，状态变化有公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问购物车面板",
+        "code": "<div class=\"cart-panel\"><div class=\"close\" onclick=\"closeCart()\">X</div><div>2件商品</div><span onclick=\"remove()\">删除</span></div>",
+        "why": "缺少 dialog 语义和标签，关闭和删除操作不是按钮，缺失焦点管理和状态公告。"
+      }
+    ],
+    "manual_checks": [
+      "键盘打开抽屉后焦点是否进入抽屉。",
+      "Tab 是否不会跑到背景页面。",
+      "Esc 是否能关闭抽屉且焦点回到触发按钮。",
+      "屏幕阅读器是否能读出商品名、数量、单价和总价。",
+      "删除或修改数量时的状态变化是否能被感知。"
+    ],
+    "static_checks": [
+      "drawer_has_accessible_name",
+      "dialog_role_present",
+      "close_button_present",
+      "item_actions_are_buttons",
+      "status_region_present",
+      "focus_returns_to_trigger",
+      "product_images_have_alt",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.faceted-filter-panel",
+    "name": "Faceted Filter Panel",
+    "name_zh": "分面筛选面板",
+    "component_type": "filter-panel",
+    "keywords": [
+      "分面筛选",
+      "多条件筛选",
+      "筛选侧栏",
+      "高级筛选",
+      "faceted filter",
+      "filter panel",
+      "advanced filter",
+      "filter sidebar"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.2.2",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "筛选面板应使用 form 包裹，并用 fieldset 和 legend 分组每类筛选条件。",
+      "每类筛选（价格区间、品牌、类别等）的控件必须有 label。",
+      "已应用的筛选条件应在顶部展示为可移除的标签/chip，并有关联说明。",
+      "筛选结果数量变化应使用 role=\"status\" 或 aria-live=\"polite\" 公告。",
+      "每个可移除筛选标签应有可访问名称（如\"移除 品牌：苹果 筛选\"）。",
+      "清除全部筛选按钮必须可键盘操作并有清楚名称。",
+      "筛选变化不应在没有预先说明的情况下自动刷新页面；如自动刷新则保持焦点。",
+      "价格滑块的当前范围应有数字输入替代。",
+      "复选框、单选按钮应使用原生控件。",
+      "不要只依赖颜色表示已选筛选条件。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问分面筛选面板",
+        "code": "<form aria-label=\"商品筛选\"><fieldset><legend>品牌</legend><label><input type=\"checkbox\" name=\"brand\" value=\"apple\"> 苹果 (12)</label></fieldset><fieldset><legend>价格区间</legend><label for=\"price-min\">最低价</label><input id=\"price-min\" type=\"number\"><label for=\"price-max\">最高价</label><input id=\"price-max\" type=\"number\"></fieldset><div aria-label=\"已选筛选条件\"><button type=\"button\" aria-label=\"移除 品牌：苹果\">品牌：苹果 ✕</button></div><button type=\"button\">清除全部筛选</button><div role=\"status\" aria-live=\"polite\">找到 24 件商品</div></form>",
+        "why": "筛选条件分组有语义，控件有标签，结果数量动态公布，已选条件可操作。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无语义筛选面板",
+        "code": "<div class=\"filters\"><span>品牌</span><div class=\"chip\" onclick=\"toggle()\">苹果</div><div class=\"count\">24</div></div>",
+        "why": "筛选条件缺少 fieldset/legend 分组和表单语义，数量变化无语义公告。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否勾选品牌、调节价格范围、移除单个筛选和清除全部。",
+      "屏幕阅读器是否能理解筛选分组、当前已选条件和结果数量变化。",
+      "筛选变化后焦点是否保持稳定。",
+      "不用颜色是否也能看出哪些筛选已生效。"
+    ],
+    "static_checks": [
+      "filter_form_has_label",
+      "filter_groups_use_fieldset_legend",
+      "filter_controls_have_labels",
+      "applied_filters_displayed",
+      "clear_all_button_present",
+      "status_region_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.context-menu",
+    "name": "Context Menu (Right-Click)",
+    "name_zh": "右键上下文菜单",
+    "component_type": "context-menu",
+    "keywords": [
+      "右键菜单",
+      "上下文菜单",
+      "长按菜单",
+      "context menu",
+      "right-click menu",
+      "long press menu"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.5.1",
+      "2.5.2",
+      "3.2.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "右键菜单不能是触发操作的唯一方式，必须提供工具栏按钮或更多操作按钮作为替代。",
+      "菜单打开时焦点应移到菜单内第一项。",
+      "菜单应支持方向键浏览，Enter/Space 执行，Esc 关闭。",
+      "关闭菜单后焦点应回到触发元素（或触发时的位置）。",
+      "菜单容器使用 role=\"menu\"，菜单项使用 role=\"menuitem\"。",
+      "禁用菜单项应使用 aria-disabled=\"true\"，而非仅视觉变灰。",
+      "分隔线应使用 role=\"separator\" 或 hr。",
+      "菜单不应超出视口或遮挡关键内容。",
+      "对于复杂菜单项可包含 role=\"menuitemcheckbox\" 或 role=\"menuitemradio\"。",
+      "不要在触控设备上把长按菜单作为唯一入口，应提供显式菜单按钮。"
+    ],
+    "good_examples": [
+      {
+        "title": "带显式菜单按钮的上下文菜单",
+        "code": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"ctx-menu\" aria-label=\"文件操作\">⋯</button><ul id=\"ctx-menu\" role=\"menu\" hidden><li role=\"menuitem\">打开</li><li role=\"menuitem\">重命名</li><li role=\"separator\"></li><li role=\"menuitem\" aria-disabled=\"true\">删除</li></ul>",
+        "why": "菜单有显式按钮触发，菜单项有语义角色和禁用状态，键盘可完整操作。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只有右键触发的菜单",
+        "code": "<div oncontextmenu=\"showMenu(event)\">文件.txt</div><div class=\"menu\"><div onclick=\"openFile()\">打开</div></div>",
+        "why": "缺少键盘可操作的触发方式，菜单项无语义，关闭后焦点不回归。"
+      }
+    ],
+    "manual_checks": [
+      "不用鼠标（通过按钮替代）是否也能打开上下文菜单。",
+      "键盘方向键能否浏览菜单项，Enter/Space 执行，Esc 关闭。",
+      "禁用菜单项是否被跳过或正确暴露。",
+      "关闭菜单后焦点是否回到合理位置。"
+    ],
+    "static_checks": [
+      "context_menu_has_button_trigger",
+      "menu_roles_present",
+      "disabled_items_aria_disabled",
+      "separator_has_role",
+      "focus_returns_after_close",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.color-picker",
+    "name": "Color Picker",
+    "name_zh": "颜色选择器",
+    "component_type": "color-picker",
+    "keywords": [
+      "颜色选择",
+      "取色器",
+      "调色板",
+      "颜色输入",
+      "color picker",
+      "palette",
+      "color input",
+      "color selector"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "优先使用原生 input type=\"color\"；自定义取色器必须提供完整键盘支持。",
+      "颜色输入必须有 label。",
+      "自定义取色器应支持方向键在色板中移动、Enter 确认、Esc 取消。",
+      "当前选中颜色应通过 aria-label 或状态区域公告（如\"已选 #3366FF\"）。",
+      "应同时提供十六进制 (HEX)、RGB 或 HSL 文本输入框，满足精确输入需求。",
+      "颜色预览区应有非文本对比度（与背景至少 3:1）。",
+      "预设色板中的颜色块应有可访问名称。",
+      "不要只靠视觉色块显示颜色值，始终附带文本色值。",
+      "透明度和不透明度控件应可键盘调整。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问颜色选择器",
+        "code": "<label for=\"bg-color\">背景颜色</label><input id=\"bg-color\" type=\"color\" value=\"#3366FF\"><label for=\"bg-hex\">十六进制</label><input id=\"bg-hex\" value=\"#3366FF\"><div role=\"status\" aria-live=\"polite\">已选：#3366FF</div>",
+        "why": "原生颜色输入有标签，并提供文本输入和状态公告作为补充。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "纯视觉取色器",
+        "code": "<div class=\"picker\"><canvas id=\"palette\"></canvas></div>",
+        "why": "canvas 内颜色对辅助技术不可见，缺少标签、键盘操作和文本色值。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能选择颜色、输入色值。",
+      "屏幕阅读器是否能读出当前颜色值。",
+      "预设色块是否有文本色值。"
+    ],
+    "static_checks": [
+      "color_input_has_label",
+      "hex_text_input_present",
+      "current_color_exposed",
+      "preset_colors_have_names",
+      "non_text_contrast_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.tag-chip-input",
+    "name": "Tag / Chip Input",
+    "name_zh": "标签输入组件",
+    "component_type": "tag-input",
+    "keywords": [
+      "标签输入",
+      "标签",
+      "多值输入",
+      "chip",
+      "tag input",
+      "multi-value",
+      "token input"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "标签输入区域应有 label，可通过 label 元素或 aria-label 提供。",
+      "每个已添加的标签应有可访问名称和删除按钮。",
+      "删除按钮应有包含标签文本的名称（如\"删除 前端\"）。",
+      "标签应可通过 Backspace/Delete 键删除最后一项。",
+      "添加标签时应公告\"已添加 XX\"，删除时公告\"已移除 XX\"。",
+      "建议列表（如有）应使用 role=\"listbox\"，每项使用 role=\"option\"。",
+      "输入框和标签区域之间应有清晰焦点顺序。",
+      "标签颜色与背景应满足非文本对比度 (3:1)，且不应仅靠颜色区分标签类别。",
+      "不要用 div 模拟删除按钮，必须使用 button 或带角色和名称的元素。",
+      "标签数量变化应使用 role=\"status\" 或 aria-live=\"polite\" 公告。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问标签输入",
+        "code": "<label for=\"tags\">技能标签</label><div role=\"group\" aria-label=\"已选标签\"><span>前端 <button type=\"button\" aria-label=\"删除 前端\">✕</button></span></div><input id=\"tags\" aria-describedby=\"tags-help\"><p id=\"tags-help\">输入后按回车添加</p><div role=\"status\" aria-live=\"polite\">已添加：前端</div>",
+        "why": "输入区有标签和帮助文本，每个标签有删除按钮和名称，操作有动态公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问标签输入",
+        "code": "<input placeholder=\"添加标签\"><div class=\"chips\"><span class=\"chip\">前端 <span onclick=\"remove()\">x</span></span></div>",
+        "why": "输入和标签缺少 label，删除不是按钮，操作无公告。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否添加标签、浏览已添加标签、删除标签。",
+      "屏幕阅读器是否能读出已添加的标签和删除按钮名称。",
+      "添加和删除是否被动态公告。",
+      "标签颜色的对比度是否足够。"
+    ],
+    "static_checks": [
+      "tag_input_has_label",
+      "tag_remove_button_named",
+      "status_region_present",
+      "delete_button_is_button",
+      "non_text_contrast_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.password-field",
+    "name": "Password Field with Visibility Toggle and Strength",
+    "name_zh": "密码输入框（含显示切换与强度指示）",
+    "component_type": "form-field",
+    "keywords": [
+      "密码",
+      "显示隐藏",
+      "密码强度",
+      "注册",
+      "password",
+      "show password",
+      "visibility toggle",
+      "password strength"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.1",
+      "1.4.3",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.1",
+      "3.3.2",
+      "3.3.3",
+      "3.3.7",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "密码输入框必须有持久可见的 label。",
+      "显示/隐藏密码按钮必须使用 button，并维护 aria-pressed 状态。",
+      "按钮的可访问名称应在\"显示密码\"和\"隐藏密码\"之间切换。",
+      "密码强度指示器应有文本说明（弱/中/强），而不只靠颜色条。",
+      "强度条颜色必须满足非文本对比度，且辅以文本标签。",
+      "密码要求（长度、字符类型等）应在输入前以文本形式说明，并通过 aria-describedby 关联。",
+      "密码不匹配错误应靠近字段显示并关联。",
+      "不要使用 placeholder 作为唯一的 label。",
+      "允许密码管理器自动填充，使用 autocomplete=\"new-password\" 或 \"current-password\"。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问密码输入",
+        "code": "<label for=\"pwd\">密码</label><input id=\"pwd\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"pwd-help pwd-strength\"><button type=\"button\" aria-pressed=\"false\" aria-label=\"显示密码\">👁</button><p id=\"pwd-help\">至少8位，包含字母和数字。</p><p id=\"pwd-strength\">强度：弱</p>",
+        "why": "密码有 label 和要求说明，切换按钮有名称和状态，强度有文本而非仅颜色。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "缺少标签和强度说明的密码框",
+        "code": "<input type=\"password\" placeholder=\"请输入密码\"><span onclick=\"togglePwd()\">👁</span><div class=\"bar weak\"></div>",
+        "why": "缺少 label、切换按钮无状态、强度只用颜色条表达，辅助技术无法理解。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能切换密码可见性。",
+      "屏幕阅读器是否能读出 password 字段、切换按钮状态和密码强度等级。",
+      "不用颜色是否也能理解密码强度。",
+      "密码要求是否在输入前明确可读。"
+    ],
+    "static_checks": [
+      "password_input_has_label",
+      "visibility_toggle_has_pressed_state",
+      "password_requirements_text_present",
+      "strength_indicator_has_text",
+      "color_not_sole_indicator",
+      "autocomplete_attribute_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.progress-indicator",
+    "name": "Progress Indicator",
+    "name_zh": "进度指示器",
+    "component_type": "progress",
+    "keywords": [
+      "进度条",
+      "加载指示",
+      "进度指示",
+      "spinner",
+      "progress bar",
+      "loading indicator",
+      "determinate progress"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.2.1",
+      "2.2.2",
+      "2.4.7",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "确定型进度条使用 progress 元素，设置 max 和 value。",
+      "不确定型等待指示器使用 role=\"progressbar\" 且不设 value，并设置 aria-label。",
+      "加载完成、出错或超时等状态变化应通过 role=\"status\" 或 aria-live 公告。",
+      "不要只用无限旋转的动画表达加载状态，应附带文本（如\"正在加载...\"）。",
+      "加载超时后应提供取消或重试按钮。",
+      "进度条颜色必须满足非文本对比度 (3:1)。",
+      "页面级加载不要阻塞键盘焦点和辅助技术导航。",
+      "对于超过 5 秒的加载过程，应让用户可暂停或取消。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问进度条",
+        "code": "<label for=\"upload-progress\">上传进度</label><progress id=\"upload-progress\" max=\"100\" value=\"65\">65%</progress><div role=\"status\" aria-live=\"polite\">已上传 65%</div>",
+        "why": "progress 元素暴露当前值和最大值，加载状态可被公布。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "纯动画加载指示器",
+        "code": "<div class=\"spinner\"></div>",
+        "why": "缺少进度语义和文本说明，辅助技术用户无法知道发生什么。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能读出当前进度百分比。",
+      "加载完成或出错是否能被感知。",
+      "长时间加载是否有取消或暂停控制。"
+    ],
+    "static_checks": [
+      "progress_has_label",
+      "progress_value_present",
+      "loading_text_supplement",
+      "status_region_present",
+      "cancel_or_retry_for_timeout",
+      "non_text_contrast_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.notification-center",
+    "name": "Notification Center",
+    "name_zh": "通知中心",
+    "component_type": "notification-center",
+    "keywords": [
+      "通知",
+      "消息中心",
+      "提醒",
+      "铃铛",
+      "notification center",
+      "notification bell",
+      "alerts"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.4",
+      "2.4.7",
+      "2.4.11",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "通知铃铛按钮必须有可访问名称，包含未读数量（如\"通知，3条未读\"）。",
+      "通知按钮应维护 aria-expanded 并关联到通知面板。",
+      "通知面板展开后焦点应移到面板内。",
+      "每条通知应有可区分的文本说明（内容摘要和时间）。",
+      "未读/已读状态不能只靠颜色或加粗区分，应附加 visual text 或 aria 状态。",
+      "一键全部已读或清空按钮必须可键盘操作。",
+      "新通知到来时应使用 aria-live 或 role=\"status\" 公告摘要。",
+      "Esc 应可关闭通知面板，关闭后焦点回归铃铛按钮。",
+      "不要只显示通知数量而不让用户查看详情。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问通知中心",
+        "code": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"notif-panel\" aria-label=\"通知，5条未读\">🔔 <span aria-hidden=\"true\">5</span></button><section id=\"notif-panel\" role=\"dialog\" aria-label=\"通知列表\" hidden><h2>通知</h2><ul><li><button>【新评论】您的文章收到一条评论 — 3分钟前</button></li></ul><button type=\"button\">全部标为已读</button></section>",
+        "why": "铃铛按钮暴露未读数，面板有标签，通知内容可区分，操作可键盘进行。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无标签通知入口",
+        "code": "<div class=\"bell\" onclick=\"toggle()\">🔔<span class=\"badge\">5</span></div><div class=\"panel\"><div>新评论</div></div>",
+        "why": "铃铛不是按钮，缺少名称和状态，面板无语义，通知内容无详述。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能读出未读通知数量和每条通知内容。",
+      "键盘是否能打开面板、浏览通知、执行操作和关闭。",
+      "新通知是否能被动态公告。",
+      "未读和已读能否以非视觉方式区分。"
+    ],
+    "static_checks": [
+      "bell_button_has_accessible_name",
+      "unread_count_exposed",
+      "aria_expanded_present",
+      "notification_panel_has_label",
+      "individual_notifications_named",
+      "status_region_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.inline-edit",
+    "name": "Inline Edit",
+    "name_zh": "行内即时编辑",
+    "component_type": "inline-edit",
+    "keywords": [
+      "行内编辑",
+      "即时编辑",
+      "点击编辑",
+      "inline edit",
+      "edit in place",
+      "click to edit"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.2.2",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "行内编辑触发器必须是 button，并有可访问名称（如\"编辑 姓名，当前值：张三\"）。",
+      "进入编辑模式后焦点应移到输入框。",
+      "输入框必须有 label（可视觉隐藏但辅助技术可见）。",
+      "Enter 保存、Esc 取消、Tab/Shift+Tab 在字段间移动。",
+      "保存成功或失败应使用 role=\"status\" 或 aria-live 公告。",
+      "取消编辑后焦点应返回触发按钮。",
+      "输入框长度应根据内容类型合理设置。",
+      "不要直接使用 contenteditable 切换而缺少字段标签和键盘支持。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问行内编辑",
+        "code": "<span>姓名：张三</span> <button type=\"button\" aria-label=\"编辑 姓名，当前值：张三\">编辑</button>",
+        "why": "编辑按钮有包含字段和当前值的名称，触发编辑后焦点可移到输入框。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "缺失语义的行内编辑",
+        "code": "<span ondblclick=\"edit(this)\">张三</span>",
+        "why": "双击才能触发，键盘用户无法操作，且无标签和状态管理。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能触发编辑、输入内容、保存和取消。",
+      "屏幕阅读器是否能理解当前值、编辑状态和保存/取消操作。",
+      "保存失败是否有错误信息传达。"
+    ],
+    "static_checks": [
+      "edit_trigger_is_button",
+      "edit_button_has_accessible_name",
+      "edit_input_has_label",
+      "status_region_present",
+      "focus_moves_to_input_on_edit",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.otp-2fa-input",
+    "name": "OTP / 2FA Verification Code Input",
+    "name_zh": "验证码/双因素认证输入",
+    "component_type": "form-field",
+    "keywords": [
+      "验证码",
+      "双因素认证",
+      "一次性密码",
+      "OTP",
+      "2FA",
+      "verification code",
+      "one-time password",
+      "SMS code"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.5",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.1",
+      "3.3.2",
+      "3.3.7",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "验证码输入必须有 label，说明输入内容和格式（如\"6位数字验证码\"）。",
+      "多个独立输入框应分组并关联（如使用 fieldset 或 role=\"group\"）。",
+      "每个独立数字框应有 aria-label（如\"第1位\"）。",
+      "输入时应自动移动焦点到下一位，但不强制（用户可自行导航）。",
+      "退格键应可回到上一位并清除。",
+      "应支持粘贴整段验证码并自动分配到各框。",
+      "倒计时和过期状态应使用 role=\"timer\" 或 aria-live 公告。",
+      "重新发送按钮必须可键盘操作并有清楚标签。",
+      "错误状态（验证码错误、过期）应通过 aria-describedby 关联并文字说明。",
+      "允许通过其他方式验证（如邮件链接、认证器 App）。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问验证码输入",
+        "code": "<fieldset><legend>输入 6 位验证码</legend><p id=\"otp-desc\">已发送至 tail***@email.com</p><label for=\"otp-1\"><span class=\"sr-only\">第1位</span></label><input id=\"otp-1\" type=\"text\" inputmode=\"numeric\" maxlength=\"1\" aria-describedby=\"otp-desc\"><label for=\"otp-2\"><span class=\"sr-only\">第2位</span></label><input id=\"otp-2\" type=\"text\" inputmode=\"numeric\" maxlength=\"1\"><div role=\"timer\" aria-live=\"polite\">剩余 45 秒</div><button type=\"button\">重新发送验证码</button></fieldset>",
+        "why": "使用 fieldset，每个输入框有标签，倒计时可被公告，具备完整键盘流程。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问验证码输入",
+        "code": "<div class=\"otp\"><input maxlength=\"1\"><input maxlength=\"1\"><input maxlength=\"1\"></div><span class=\"timer\">45s</span>",
+        "why": "输入框缺少 label，组关系无表达，倒计时无 ARIA 支持。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否输入验证码、在各框间移动、粘贴和提交。",
+      "屏幕阅读器能否读出每个输入框的位置、倒计时和错误信息。",
+      "重新发送按钮是否可键盘触发。",
+      "验证码过期或错误是否有清晰文本说明。"
+    ],
+    "static_checks": [
+      "otp_group_has_label",
+      "each_otp_input_has_label",
+      "paste_supported",
+      "timer_aria_live",
+      "resend_button_is_button",
+      "error_text_associated",
+      "autocomplete_otp",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.cookie-consent-banner",
+    "name": "Cookie Consent Banner",
+    "name_zh": "Cookie 同意横幅",
+    "component_type": "consent-banner",
+    "keywords": [
+      "Cookie 同意",
+      "隐私提示",
+      "弹窗",
+      "cookie consent",
+      "privacy banner",
+      "GDPR"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.4.11",
+      "3.2.2",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "横幅区域应使用 role=\"region\" 并有 aria-label（如\"Cookie 设置\"）。",
+      "横幅出现后焦点应移到横幅内第一个可交互控件。",
+      "必须提供\"接受全部\"和\"仅必要\"两种明确选择，不能只有\"接受\"按钮。",
+      "设置弹窗应按模态弹窗模式管理焦点。",
+      "每个 Cookie 类别的开关应有 label 和 aria-checked 状态。",
+      "详细说明链接应有明确文本目的。",
+      "关闭横幅后焦点应返回页面主要内容。",
+      "横幅不应在用户确认前阻挡整个页面阅读。",
+      "不要通过遮盖或模糊内容来迫使选择。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问 Cookie 横幅",
+        "code": "<section role=\"region\" aria-label=\"Cookie 设置\" tabindex=\"-1\"><h2>本网站使用 Cookie</h2><p>我们使用 Cookie 来改善体验。<a href=\"/privacy\">了解更多</a></p><button type=\"button\">接受全部</button><button type=\"button\">仅必要 Cookie</button><button type=\"button\" aria-label=\"自定义Cookie设置\">设置</button></section>",
+        "why": "横幅有标题和语义区域，提供多种选择按钮，焦点在打开时可进入横幅。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无可访问性的 Cookie 弹窗",
+        "code": "<div class=\"cookie-bar\">我们使用 Cookie。<a href=\"#\">好</a></div>",
+        "why": "只有模糊的\"好\"链接，没有真实选择，缺少区域语义和焦点管理。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能到达横幅并操作所有按钮。",
+      "屏幕阅读器是否能感知横幅出现和标题内容。",
+      "焦点是否合理进入和离开横幅。",
+      "遮盖的内容是否仍可被辅助技术访问。"
+    ],
+    "static_checks": [
+      "consent_region_has_label",
+      "accept_all_button_present",
+      "reject_or_essential_only_button_present",
+      "settings_link_named",
+      "focus_management_on_open",
+      "no_content_blocking",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.sticky-scrollspy",
+    "name": "Sticky Header with Scroll Spy",
+    "name_zh": "粘性导航与滚动监听",
+    "component_type": "navigation",
+    "keywords": [
+      "粘性导航",
+      "滚动监听",
+      "当前章节",
+      "目录导航",
+      "sticky header",
+      "scroll spy",
+      "table of contents",
+      "active section"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.4.1",
+      "2.4.4",
+      "2.4.7",
+      "2.4.10",
+      "2.4.11",
+      "2.4.13",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "粘性导航栏必须保持可键盘访问，不应被其他内容遮挡。",
+      "粘性导航应满足焦点不被遮挡 (2.4.11) 的要求，被固定定位元素覆盖时向上滚动暴露。",
+      "当前激活的导航项应使用 aria-current=\"true\" 或 aria-current=\"location\"。",
+      "激活状态不能只靠颜色或加粗区分，应配合下划线或图标。",
+      "导航链接文本应清楚表达目标章节名称。",
+      "粘性导航不应占用过多屏幕空间，在放大 400% 时仍可用。",
+      "滚动到目标章节后的焦点管理应合理，不要强制移动。",
+      "避免高频率滚动事件触发性能问题导致键盘导航卡顿。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问粘性滚动导航",
+        "code": "<nav aria-label=\"页面章节\" style=\"position:sticky;top:0\"><ul><li><a href=\"#intro\" aria-current=\"true\">简介</a></li><li><a href=\"#features\">功能</a></li></ul></nav><main><section id=\"intro\"><h2>简介</h2></section><section id=\"features\"><h2>功能</h2></section></main>",
+        "why": "使用 nav 语义，当前章节用 aria-current 标记，链接含义清楚。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问粘性导航",
+        "code": "<div class=\"sticky\"><span class=\"active\">简介</span></div>",
+        "why": "缺少导航语义和 aria-current，span 不可键盘聚焦，激活状态只靠视觉。"
+      }
+    ],
+    "manual_checks": [
+      "键盘 Tab 是否能到达粘性导航中的链接。",
+      "粘性导航是否在放大或小屏时遮挡内容。",
+      "屏幕阅读器是否能读出当前活动章节。",
+      "不用颜色是否能识别当前激活的导航项。"
+    ],
+    "static_checks": [
+      "sticky_nav_is_nav_element",
+      "current_section_exposed",
+      "not_obscured_by_sticky",
+      "link_text_descriptive",
+      "color_not_sole_indicator",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.virtual-scroller",
+    "name": "Virtual Scroller / Virtualized List",
+    "name_zh": "虚拟滚动列表",
+    "component_type": "virtual-list",
+    "keywords": [
+      "虚拟滚动",
+      "长列表",
+      "虚拟列表",
+      "大量数据",
+      "virtual scroll",
+      "virtualized list",
+      "windowing",
+      "large list"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.10",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.5.8",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "虚拟列表必须保持逻辑顺序与视觉顺序一致，列表项的 DOM 顺序应反映数据顺序。",
+      "当前可见项的范围和总数应通过 role=\"status\" 或 aria-live 公告。",
+      "每个列表项必须可键盘聚焦或通过方向键导航。",
+      "列表的当前索引和项目数应暴露给辅助技术。",
+      "虚拟列表滚动条必须可用键盘操作。",
+      "列表项的内容变化（加载、删除等）应公告。",
+      "不要造成焦点的意外丢失或跳到不可见区域。",
+      "项目高度变化时应保持焦点在合理位置。",
+      "触控目标的尺寸不应因虚拟化而缩小。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问虚拟滚动列表",
+        "code": "<div role=\"list\" aria-label=\"联系人\"><div role=\"listitem\" tabindex=\"0\">张三</div><div role=\"listitem\" tabindex=\"-1\">李四</div></div><div role=\"status\" aria-live=\"polite\">显示第 1-50 项，共 5230 项</div>",
+        "why": "列表使用明确角色，可见范围被暴露，项目可键盘访问。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "基础虚拟滚动列表",
+        "code": "<div class=\"scroller\" style=\"overflow:auto;height:400px\"><div class=\"item\">张三</div><div class=\"item\">李四</div></div>",
+        "why": "无列表语义和范围公告，不可见项目仍占据 DOM 但无键盘方式访问。"
+      }
+    ],
+    "manual_checks": [
+      "方向键或 Tab 是否可导航列表项，滚动后焦点是否保持有效。",
+      "屏幕阅读器是否能理解列表总项数和当前范围。",
+      "页面放大或文本缩放时列表项是否仍可访问。"
+    ],
+    "static_checks": [
+      "list_has_role",
+      "visible_range_exposed",
+      "total_count_exposed",
+      "items_keyboard_accessible",
+      "no_focus_loss_on_scroll",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.time-picker",
+    "name": "Time Picker",
+    "name_zh": "时间选择器",
+    "component_type": "time-picker",
+    "keywords": [
+      "时间选择",
+      "时间输入",
+      "小时分钟",
+      "time picker",
+      "time input",
+      "clock"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.10",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "优先使用原生 input type=\"time\"；自定义时间选择器必须提供完整键盘支持。",
+      "时间输入必须有 label 和格式说明（如\"HH:MM 24小时制\"）。",
+      "自定义时间选择器中的小时和分钟输入应有分别的 label。",
+      "上下方向键应能调整小时/分钟值。",
+      "Enter 确认时间、Esc 关闭选择器。",
+      "时间范围错误（如结束早于开始）应通过 aria-describedby 关联错误说明。",
+      "提供直接输入时间文本的能力，不只依赖可视化选择器。",
+      "AM/PM 切换应可键盘操作。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问时间输入",
+        "code": "<label for=\"start-time\">开始时间</label><input id=\"start-time\" type=\"time\" aria-describedby=\"time-help\"><p id=\"time-help\">格式：HH:MM，24小时制</p>",
+        "why": "原生时间输入有标签和格式说明，辅助技术可理解。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问时间选择器",
+        "code": "<div class=\"clock\"><div class=\"hand\" style=\"transform:rotate(90deg)\"></div></div>",
+        "why": "完全依赖视觉旋转表达时间，没有文本值、键盘操作和标签。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能输入时间、调整时/分和选择 AM/PM。",
+      "屏幕阅读器是否能读出当前选择的时间。",
+      "错误时间范围是否有清楚提示。"
+    ],
+    "static_checks": [
+      "time_input_has_label",
+      "format_help_present",
+      "hour_minute_separate_labels",
+      "invalid_time_describedby",
+      "keyboard_adjustable",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.split-view-panels",
+    "name": "Split View / Resizable Panels",
+    "name_zh": "可拖拽分割面板",
+    "component_type": "split-panel",
+    "keywords": [
+      "分割面板",
+      "左右面板",
+      "拖拽分割",
+      "可调整面板",
+      "split view",
+      "resizable panel",
+      "splitter"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "2.5.8",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "分割条必须有键盘可操作的按钮或滑块，用于调整两侧大小。",
+      "拖拽不能是调整面板大小的唯一方式，必须提供方向键操作。",
+      "分割条应有可访问名称（如\"调整左右面板宽度\"）。",
+      "每个面板应有 aria-label 标示区域用途。",
+      "分割条应满足触控目标最小尺寸 (24x24 CSS 像素)。",
+      "拖拽时的即时尺寸变化应按需节制，避免连续触发滚动。",
+      "键盘调整时每次按键移动应有公告或合理间距。",
+      "不要只依赖鼠标拖拽实现面板大小调整。"
+    ],
+    "good_examples": [
+      {
+        "title": "可键盘调整的分割面板",
+        "code": "<div><section aria-label=\"文件列表\">...</section><button type=\"button\" aria-label=\"调整面板宽度，当前 300px\" aria-valuenow=\"300\" aria-valuemin=\"200\" aria-valuemax=\"600\"></button><section aria-label=\"文件内容\">...</section></div>",
+        "why": "分割条用 button 实现，暴露当前值和范围，两侧面板有名，可键盘调整。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持拖拽的分割面板",
+        "code": "<div class=\"left\">...</div><div class=\"splitter\" onmousedown=\"drag()\"></div><div class=\"right\">...</div>",
+        "why": "分割条不是键盘可达的控件，只能通过鼠标拖拽操作。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能通过分割条调整面板大小。",
+      "屏幕阅读器是否能读出分割条的名称和当前值。",
+      "触控目标是否足够大。"
+    ],
+    "static_checks": [
+      "splitter_is_keyboard_control",
+      "splitter_has_accessible_name",
+      "panels_have_labels",
+      "splitter_has_value_range",
+      "target_size_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.skeleton-loading",
+    "name": "Skeleton Loading Placeholder",
+    "name_zh": "骨架屏加载占位",
+    "component_type": "loading",
+    "keywords": [
+      "骨架屏",
+      "加载占位",
+      "内容占位",
+      "skeleton",
+      "loading placeholder",
+      "content placeholder"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.2.1",
+      "2.2.2",
+      "2.3.3",
+      "2.4.7",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "骨架屏区域应使用 aria-busy=\"true\" 标记。",
+      "内容加载完成后必须将 aria-busy 更新为 false。",
+      "骨架屏区域应有 aria-label 说明加载意图（如\"正在加载订单列表\"）。",
+      "骨架屏的闪烁/脉冲动画应受 prefers-reduced-motion 控制。",
+      "加载完成后应公告内容已就绪，使用 role=\"status\" 或 aria-live。",
+      "不要在骨架屏中放置可聚焦的交互元素。",
+      "骨架屏颜色与背景至少满足 3:1 对比度。",
+      "不要只依赖 skeleton 动画而不提供任何文本说明。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问骨架屏",
+        "code": "<div aria-busy=\"true\" aria-label=\"正在加载文章列表\"><div class=\"skeleton\" aria-hidden=\"true\" style=\"animation: pulse 1.5s\">...</div></div><div role=\"status\" aria-live=\"polite\">文章列表已加载</div>",
+        "why": "骨架屏标记 busy 状态和意图，装饰性动画对辅助技术隐藏，完成后公布状态。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问骨架屏",
+        "code": "<div class=\"skeleton\"><div class=\"line\"></div><div class=\"line\"></div></div>",
+        "why": "没有 busy 状态标注和加载意图说明，辅助技术无法理解当前状态。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器是否能感知正在加载状态和加载完成。",
+      "动画是否受 prefers-reduced-motion 控制。",
+      "骨架屏内部是否有意外可聚焦元素。"
+    ],
+    "static_checks": [
+      "aria_busy_present",
+      "skeleton_has_label",
+      "aria_busy_cleared_on_load",
+      "prefers_reduced_motion_respected",
+      "status_region_present",
+      "no_focusable_in_skeleton"
+    ]
+  },
+  {
+    "id": "pattern.onboarding-tour",
+    "name": "Onboarding Product Tour",
+    "name_zh": "产品引导漫游",
+    "component_type": "onboarding",
+    "keywords": [
+      "引导",
+      "产品漫游",
+      "新手引导",
+      "功能引导",
+      "onboarding",
+      "product tour",
+      "walkthrough"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "1.4.13",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.4.11",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "引导每一步应使用 dialog 语义，标题描述当前步骤目的。",
+      "应暴露当前步骤（如\"第 2 步 / 共 5 步\"），使用 aria-current 或纯文本。",
+      "引导弹出层不应遮挡正在说明的 UI 元素。",
+      "提供跳过引导、上一步、下一步和完成按钮，全部可键盘操作。",
+      "引导弹出时焦点应进入弹出层，引导结束后返回主界面。",
+      "引导说明文字应简洁明确，并为所指 UI 提供可访问描述。",
+      "高亮或聚光灯效果不应是传达信息的唯一方式，应配文字说明。",
+      "自动进入下一步应有合理时间或提供暂停控制。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问引导漫游",
+        "code": "<div role=\"dialog\" aria-modal=\"false\" aria-label=\"功能介绍 第2步/共4步\"><h3>搜索功能</h3><p>在顶部搜索框中输入关键词即可搜索全部内容。</p><button type=\"button\">上一步</button><button type=\"button\">下一步</button><button type=\"button\">跳过</button></div>",
+        "why": "使用 dialog 语义，步骤清晰，操作按钮完整且可键盘操作。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问引导",
+        "code": "<div class=\"tour-tip\">点击这里搜索</div>",
+        "why": "缺少语义、步骤指示、跳过和导航按钮，键盘和辅助技术难以应对。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能完成整个引导流程，包括跳过和上一步。",
+      "屏幕阅读器是否能理解当前步骤和引导内容。",
+      "引导是否遮挡目标 UI 或关键内容。",
+      "焦点是否在引导结束后正常回到界面。"
+    ],
+    "static_checks": [
+      "tour_step_has_dialog_role",
+      "step_count_exposed",
+      "skip_button_present",
+      "prev_next_buttons_present",
+      "target_not_obscured",
+      "focus_management_in_tour",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.language-switcher",
+    "name": "Language / Locale Switcher",
+    "name_zh": "语言切换器",
+    "component_type": "language-selector",
+    "keywords": [
+      "语言切换",
+      "多语言",
+      "国际化",
+      "语言选择",
+      "language switcher",
+      "locale selector",
+      "i18n"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.4.3",
+      "2.4.4",
+      "2.4.7",
+      "3.1.1",
+      "3.1.2",
+      "3.2.3",
+      "3.2.4",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "html 元素的 lang 属性必须随语言切换更新。",
+      "语言选择器应使用原生 select 或语义菜单/按钮组。",
+      "控件应有 label，例如\"选择语言\"或\"Switch language\"。",
+      "当前语言应暴露（如 aria-current=\"true\" 或 select 的默认选中项）。",
+      "语言名称应使用对应语言的自称（如\"中文\"\"English\"\"日本語\"），而非统一用英文。",
+      "不应在语言切换时产生页面级闪烁或全页刷新。",
+      "切换语言的键盘操作应清晰，不应依赖 hover。",
+      "语言切换控件在所有页面中的位置和标识应一致。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问语言选择器",
+        "code": "<label for=\"lang\">语言/Language</label><select id=\"lang\" onchange=\"switchLang()\"><option value=\"zh\" selected>中文</option><option value=\"en\">English</option><option value=\"ja\">日本語</option></select>",
+        "why": "使用原生 select 和 label，语言名称以自称展示，切换后更新 lang 属性。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问语言切换",
+        "code": "<div class=\"flags\"><img src=\"cn.png\" onclick=\"lang('zh')\"><img src=\"us.png\" onclick=\"lang('en')\"></div>",
+        "why": "国旗图标缺少 alt，没有标签和语义，键盘无法操作，仅靠视觉识别。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否可切换语言。",
+      "屏幕阅读器是否能读出当前和可用语言。",
+      "切换后页面语言属性是否正确更新。",
+      "语言切换器在所有页面上位置是否一致。"
+    ],
+    "static_checks": [
+      "html_lang_attribute_updated",
+      "lang_selector_has_label",
+      "current_lang_exposed",
+      "selector_is_semantic_control",
+      "consistent_across_pages",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.lightbox-gallery",
+    "name": "Image Gallery / Lightbox",
+    "name_zh": "图片灯箱画廊",
+    "component_type": "lightbox",
+    "keywords": [
+      "灯箱",
+      "图片画廊",
+      "图片查看器",
+      "全屏图片",
+      "lightbox",
+      "image gallery",
+      "photo viewer",
+      "fullscreen image"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.4.11",
+      "2.5.1",
+      "2.5.7",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "灯箱打开后应按模态弹窗模式管理焦点：焦点移入灯箱，关闭后回归触发图片。",
+      "每张图片必须有准确的 alt 文本。",
+      "灯箱容器应使用 role=\"dialog\" 和 aria-modal=\"true\"，并有标题。",
+      "图片切换（上一张/下一张）必须可键盘操作，方向键左右切换，Home/End 跳到首尾。",
+      "关闭按钮必须可键盘操作，Esc 可关闭灯箱。",
+      "缩放控件应有 button，不可只靠鼠标滚轮或双指捏合。",
+      "图片的当前索引和总数应暴露（如\"第 3 张 / 共 8 张\"），并通过 aria-live 公告切换。",
+      "缩略图导航应可键盘遍历并与主图同步。",
+      "灯箱打开时背景页面内容不应进入 Tab 顺序。",
+      "触控设备上滑动手势应有按钮替代。",
+      "不要只依赖鼠标点击和滑动手势操作灯箱。"
+    ],
+    "good_examples": [
+      {
+        "title": "可键盘操作的灯箱画廊",
+        "code": "<button type=\"button\" aria-label=\"查看大图：日落海滩\"><img src=\"beach-thumb.jpg\" alt=\"日落海滩缩略图\"></button><div role=\"dialog\" aria-modal=\"true\" aria-label=\"图片灯箱\"><h2>日落海滩</h2><img src=\"beach-full.jpg\" alt=\"日落时分的金色海滩，海浪轻拍沙滩\"><p role=\"status\" aria-live=\"polite\">第 3 张 / 共 8 张</p><button type=\"button\" aria-label=\"上一张\">◀</button><button type=\"button\" aria-label=\"下一张\">▶</button><button type=\"button\" aria-label=\"关闭灯箱\">✕</button></div>",
+        "why": "图片有 alt，灯箱有 dialog 语义和标题，控件有名称，位置信息可公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持点击的灯箱",
+        "code": "<img src=\"thumb.jpg\" onclick=\"openLightbox()\"><div class=\"lightbox\" onclick=\"close()\"><img src=\"full.jpg\"><span class=\"next\" onclick=\"next()\">></span></div>",
+        "why": "图片无 alt，灯箱缺 dialog 语义和焦点管理，操作按钮不是 button 无键盘支持。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘能否打开灯箱、切换图片、缩放和关闭。",
+      "Esc 关闭灯箱后焦点是否回到触发图片。",
+      "屏幕阅读器是否能读出每张图片的 alt、当前位置和总数。",
+      "灯箱打开时背景页面是否被锁定不被 Tab 到。"
+    ],
+    "static_checks": [
+      "lightbox_has_dialog_role",
+      "lightbox_has_accessible_name",
+      "images_have_alt",
+      "navigation_buttons_named",
+      "current_position_exposed",
+      "focus_returns_to_trigger",
+      "close_button_present",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.dual-range-slider",
+    "name": "Dual Range Slider",
+    "name_zh": "双滑块范围选择器",
+    "component_type": "range-slider",
+    "keywords": [
+      "范围滑块",
+      "价格区间",
+      "双滑块",
+      "最小值最大值",
+      "range slider",
+      "dual slider",
+      "price range",
+      "min max"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "2.5.8",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "范围滑块必须有两个可独立操作的滑块控件，每个有 label（如\"最低价格\"\"最高价格\"）。",
+      "每个滑块使用 input type=\"range\" 或带 role=\"slider\" 的完整实现。",
+      "当前范围值应实时显示并通过 aria-valuenow、aria-valuemin、aria-valuemax 暴露。",
+      "键盘应支持方向键调整每个滑块，Tab 切换滑块，Home/End 跳到边界。",
+      "同时提供数字输入框作为精确输入的替代方式。",
+      "范围变化应使用 role=\"status\" 或 aria-live 公告（如\"价格范围：¥100 - ¥500\"）。",
+      "滑块轨道颜色不能是区分范围的唯一方式，应附带数值文本。",
+      "两个滑块的触控目标应足够大且互不重叠（至少 24x24 CSS 像素）。",
+      "不要只用鼠标拖拽作为调整滑块的方式。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问双滑块范围选择",
+        "code": "<fieldset><legend>价格区间</legend><label for=\"price-min\">最低价</label><input id=\"price-min\" type=\"range\" min=\"0\" max=\"1000\" value=\"100\" aria-valuetext=\"¥100\"><label for=\"price-max\">最高价</label><input id=\"price-max\" type=\"range\" min=\"0\" max=\"1000\" value=\"500\" aria-valuetext=\"¥500\"><label for=\"min-val\">最低</label><input id=\"min-val\" type=\"number\" value=\"100\"><label for=\"max-val\">最高</label><input id=\"max-val\" type=\"number\" value=\"500\"><output role=\"status\" aria-live=\"polite\">¥100 — ¥500</output></fieldset>",
+        "why": "两个滑块有独立 label 和数字输入替代，范围值通过 output+status 公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持拖拽的范围滑块",
+        "code": "<div class=\"range-slider\"><div class=\"track\"><div class=\"thumb-min\" onmousedown=\"drag()\"></div><div class=\"thumb-max\" onmousedown=\"drag()\"></div></div></div>",
+        "why": "滑块缺少语义、名称、值和键盘操作，也没有数字输入替代。"
+      }
+    ],
+    "manual_checks": [
+      "键盘 Tab 能否在两个滑块间切换，方向键调整每个滑块。",
+      "屏幕阅读器是否能读出每个滑块的名称、当前值和范围。",
+      "是否提供数字输入框作为替代。",
+      "不用颜色是否也能区分选中范围。"
+    ],
+    "static_checks": [
+      "each_slider_has_label",
+      "each_slider_has_value_range",
+      "numeric_input_alternative_present",
+      "status_region_present",
+      "color_not_sole_indicator",
+      "target_size_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.numeric-stepper",
+    "name": "Numeric Stepper Input",
+    "name_zh": "数字步进输入器",
+    "component_type": "stepper",
+    "keywords": [
+      "数字输入",
+      "加减按钮",
+      "数量选择",
+      "步进器",
+      "numeric stepper",
+      "number input",
+      "increment decrement",
+      "quantity selector"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.8",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "数字输入必须有 label，如\"数量\"或\"份数\"。",
+      "递增/递减按钮必须使用 button 元素，并有包含操作和对象名称的可访问名称（如\"增加数量\"）。",
+      "按钮应使用 aria-label 且不要在名称中只使用符号（+/-）。",
+      "输入值变化应使用 role=\"status\" 或 aria-live 公告（如\"数量已更新为 3\"）。",
+      "到达最小值或最大值时按钮应 disabled 并暴露状态。",
+      "用户应可直接在输入框中输入数值，不只能点按钮。",
+      "增减按钮的触控目标应至少 24x24 CSS 像素。",
+      "步进值和有效范围应以文本方式说明。",
+      "不要使用不可聚焦的 div/span 模拟按钮。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问数量选择器",
+        "code": "<label for=\"qty\">数量</label><button type=\"button\" aria-label=\"减少数量\" disabled>-</button><input id=\"qty\" type=\"number\" value=\"1\" min=\"1\" max=\"10\" aria-describedby=\"qty-help\"><button type=\"button\" aria-label=\"增加数量\">+</button><p id=\"qty-help\">最少 1 件，最多 10 件</p><div role=\"status\" aria-live=\"polite\">数量：1</div>",
+        "why": "input 有 label 和范围限制，按钮有描述性名称并暴露禁用态，值变化有公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问的加减按钮",
+        "code": "<span>数量</span><span onclick=\"dec()\">-</span><input value=\"1\" readonly><span onclick=\"inc()\">+</span>",
+        "why": "按钮使用 span 不可键盘操作，输入框缺少 label 且只读，无法直接输入。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否可点按增减按钮和直接输入数值。",
+      "屏幕阅读器是否能读出字段名称、当前值、范围和按钮名称。",
+      "触控目标是否足够大、不误触。",
+      "到达边界时按钮是否禁用并被正确暴露。"
+    ],
+    "static_checks": [
+      "stepper_input_has_label",
+      "increment_button_is_button",
+      "decrement_button_is_button",
+      "button_has_accessible_name",
+      "range_limits_exposed",
+      "status_region_present",
+      "target_size_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.mega-menu",
+    "name": "Mega Menu",
+    "name_zh": "大型多列菜单",
+    "component_type": "mega-menu",
+    "keywords": [
+      "大菜单",
+      "多列菜单",
+      "超级菜单",
+      "分类导航",
+      "mega menu",
+      "dropdown navigation",
+      "category menu",
+      "multi-column menu"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.4",
+      "2.4.6",
+      "2.4.7",
+      "2.4.11",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "菜单触发器必须是 button，维护 aria-expanded 和 aria-controls。",
+      "菜单面板应有 aria-label 或 aria-labelledby 标题。",
+      "Enter/Space 展开菜单，Esc 关闭菜单，关闭后焦点回归触发器。",
+      "菜单内分组应使用 role=\"group\" 或分组标题，每组有可访问名称。",
+      "所有链接文本必须清楚描述目的，不可多个栏目使用相同模糊文本。",
+      "菜单展开时焦点可移动到菜单内第一项，或保持在触发器让用户 Tab 进入。",
+      "菜单不应在 hover 时意外关闭，也不应仅靠 hover 展开。",
+      "菜单在大屏下不应遮挡关键页面内容（满足 2.4.11）。",
+      "移动端菜单应有等价的展开/折叠行为。",
+      "不要在菜单内放置无法键盘操作的内容。"
+    ],
+    "good_examples": [
+      {
+        "title": "可键盘操作的大菜单",
+        "code": "<nav aria-label=\"产品分类\"><button type=\"button\" aria-expanded=\"false\" aria-controls=\"mega-products\">产品</button><div id=\"mega-products\" role=\"region\" aria-label=\"产品分类\" hidden><div role=\"group\" aria-labelledby=\"cat-phone\"><h3 id=\"cat-phone\">手机</h3><ul><li><a href=\"/phone/a\">旗舰系列</a></li></ul></div><div role=\"group\" aria-labelledby=\"cat-laptop\"><h3 id=\"cat-laptop\">笔记本</h3><ul><li><a href=\"/laptop/a\">轻薄本</a></li></ul></div></div></nav>",
+        "why": "触发器暴露展开状态，菜单内分组清晰有标题，链接文本目的明确。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只靠 hover 展示的大菜单",
+        "code": "<div class=\"nav\"><a href=\"#\">产品</a><div class=\"mega\" onmouseover=\"show()\" onmouseout=\"hide()\"><div class=\"col\"><a href=\"#\">查看全部</a></div></div></div>",
+        "why": "缺少 button 触发器和 aria-expanded，只靠 hover 展示和隐藏，键盘用户无法操作。"
+      }
+    ],
+    "manual_checks": [
+      "只用键盘是否能展开、浏览所有菜单分组和关闭菜单。",
+      "Esc 关闭后焦点是否回到触发按钮。",
+      "屏幕阅读器能否理解菜单分组和各组标题。",
+      "移动端是否仍可键盘操作菜单。"
+    ],
+    "static_checks": [
+      "mega_menu_trigger_is_button",
+      "aria_expanded_present",
+      "menu_groups_have_labels",
+      "links_have_accessible_name",
+      "focus_returns_to_trigger",
+      "hover_not_only_trigger",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.audio-player",
+    "name": "Audio Player",
+    "name_zh": "音频播放器",
+    "component_type": "media-player",
+    "keywords": [
+      "音频播放器",
+      "播客",
+      "音乐播放",
+      "audio player",
+      "podcast",
+      "music player"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.2.1",
+      "1.4.2",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.2.2",
+      "2.4.3",
+      "2.4.7",
+      "3.1.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "音频必须提供文字稿（transcript）链接或内嵌文字稿。",
+      "播放器控件（播放/暂停、音量、进度、速度）必须使用 button 或 input type=\"range\"。",
+      "每个控件有可访问名称，状态变化反映在 aria-pressed 或等价属性。",
+      "自动播放必须提供暂停按钮，且初始应静音或低音量。",
+      "键盘应支持 Space 播放/暂停，左右方向键快退/快进（如 10 秒），上下方向键调音量。",
+      "进度条应可通过方向键调整。",
+      "播放速度调节应有 button 或 select，不可只靠滑块。",
+      "当前播放时间和总时长应能被辅助技术获取。",
+      "如有外语内容，应正确标注语言切换。",
+      "不要使用只有图标没有标签的控件。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问音频播放器",
+        "code": "<figure aria-label=\"播客播放器\"><audio src=\"episode.mp3\" controls></audio><figcaption>第5期：无障碍设计实践</figcaption><a href=\"transcript.txt\">查看文字稿</a><button type=\"button\" aria-label=\"播放\" aria-pressed=\"false\">▶</button><label for=\"vol\">音量</label><input id=\"vol\" type=\"range\" min=\"0\" max=\"100\" value=\"80\"></figure>",
+        "why": "提供文字稿，控件有标签和状态，进度可键盘调整。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "没有文字稿的音频播放器",
+        "code": "<audio src=\"episode.mp3\" autoplay></audio>",
+        "why": "自动播放音频干扰用户，缺少文字稿、可控控件和标签。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能控制播放/暂停、音量、进度和播放速度。",
+      "屏幕阅读器是否能读出控件名称、当前时间和总时长。",
+      "是否提供文字稿链接。",
+      "自动播放是否可暂停。"
+    ],
+    "static_checks": [
+      "audio_has_transcript",
+      "controls_are_buttons",
+      "controls_have_accessible_name",
+      "volume_keyboard_accessible",
+      "pause_button_present",
+      "no_autoplay_audio",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.bottom-navigation",
+    "name": "Bottom Navigation Bar",
+    "name_zh": "底部导航栏（移动端）",
+    "component_type": "navigation",
+    "keywords": [
+      "底部导航",
+      "移动导航",
+      "标签栏",
+      "Tab Bar",
+      "bottom navigation",
+      "mobile nav",
+      "tab bar"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.3",
+      "1.3.4",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "2.1.1",
+      "2.4.1",
+      "2.4.4",
+      "2.4.7",
+      "2.4.11",
+      "2.5.3",
+      "2.5.8",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "底部导航应使用 nav 元素，提供 aria-label（如\"底部导航\"）。",
+      "当前激活项使用 aria-current=\"page\"，不可只靠颜色区分。",
+      "每个导航项必须有可区分的可访问名称，图标+文字都应有对应名称。",
+      "每个导航项的触控目标至少 24x24 CSS 像素（推荐 44x44）。",
+      "导航项不能只使用图标而缺少文字标签（或至少提供 aria-label）。",
+      "底部导航栏不应在键盘 Tab 顺序中不可达，且不应被固定定位元素遮挡。",
+      "导航栏在横屏或 400% 放大时不应占用过多屏幕高度。",
+      "不要超过 5 个导航项以保证触控目标间距。",
+      "提供跳过导航的选项（如在页面顶部设 skip link）。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问底部导航栏",
+        "code": "<nav aria-label=\"底部导航\"><ul><li><a href=\"/\" aria-current=\"page\"><span aria-hidden=\"true\">🏠</span>首页</a></li><li><a href=\"/search\"><span aria-hidden=\"true\">🔍</span>搜索</a></li><li><a href=\"/profile\"><span aria-hidden=\"true\">👤</span>我的</a></li></ul></nav>",
+        "why": "使用 nav 语义，当前页用 aria-current，每个链接有文字标签且图标标记为装饰性。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无文字标签的底部导航",
+        "code": "<div class=\"bottom-bar\"><span class=\"active\" onclick=\"go('/')\">🏠</span><span onclick=\"go('/search')\">🔍</span><span onclick=\"go('/profile')\">👤</span></div>",
+        "why": "缺少 nav 语义、文字标签和 aria-current，span 不可键盘聚焦，无焦点样式。"
+      }
+    ],
+    "manual_checks": [
+      "键盘 Tab 是否能到达所有导航项。",
+      "屏幕阅读器是否能读出每个导航项名称和当前页状态。",
+      "触控目标是否足够大（至少 24px）。",
+      "导航栏在横屏或文本放大后是否仍可用。"
+    ],
+    "static_checks": [
+      "nav_has_label",
+      "current_page_exposed",
+      "each_nav_item_has_text_label",
+      "target_size_sufficient",
+      "icon_has_aria_hidden",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.pull-to-refresh",
+    "name": "Pull to Refresh",
+    "name_zh": "下拉刷新",
+    "component_type": "pull-to-refresh",
+    "keywords": [
+      "下拉刷新",
+      "刷新",
+      "重新加载",
+      "pull to refresh",
+      "swipe refresh",
+      "reload"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "2.1.1",
+      "2.2.2",
+      "2.4.3",
+      "2.4.7",
+      "2.5.1",
+      "2.5.7",
+      "3.2.2",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "下拉刷新手势必须提供\"刷新\"按钮作为键盘和辅助技术的等价替代。",
+      "刷新过程应使用 role=\"status\" 或 aria-live=\"polite\" 公告状态（\"正在刷新\"\"刷新完成\"）。",
+      "刷新按钮必须可键盘操作并有可访问名称（如\"刷新列表\"）。",
+      "刷新不应在无用户确认时导致数据丢失或上下文变化。",
+      "刷新过程中焦点应保持稳定，不要被强制移动。",
+      "不要使下拉刷新手势成为内容更新的唯一触发方式。",
+      "如有自动刷新计时器，应提供暂停按钮。"
+    ],
+    "good_examples": [
+      {
+        "title": "带刷新按钮的下拉刷新区域",
+        "code": "<section aria-label=\"消息列表\"><button type=\"button\" aria-label=\"刷新消息\">刷新</button><ul aria-live=\"polite\"><li>消息1</li></ul><div role=\"status\" aria-live=\"polite\">刷新完成</div></section>",
+        "why": "提供显式刷新按钮作为手势替代，状态变化可被公告。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "只支持手势刷新的列表",
+        "code": "<div class=\"list\" onpull=\"refresh()\"><div>消息1</div></div>",
+        "why": "缺少刷新按钮替代，键盘用户无法触发刷新，也没有状态公告。"
+      }
+    ],
+    "manual_checks": [
+      "不靠手势（用键盘）是否能触发刷新。",
+      "屏幕阅读器是否能感知刷新状态。",
+      "刷新过程中焦点是否保持稳定。"
+    ],
+    "static_checks": [
+      "refresh_button_present",
+      "refresh_button_is_button",
+      "status_region_present",
+      "no_autofocus_on_refresh",
+      "gesture_not_only_trigger",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.emoji-picker",
+    "name": "Emoji Picker",
+    "name_zh": "表情选择器",
+    "component_type": "emoji-picker",
+    "keywords": [
+      "表情",
+      "表情选择",
+      "emoji",
+      "emoji picker",
+      "smiley"
+    ],
+    "related_wcag": [
+      "1.1.1",
+      "1.3.1",
+      "1.3.3",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.5.3",
+      "2.5.8",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "表情面板触发器必须是 button，维护 aria-expanded 和 aria-controls。",
+      "每类表情应有分组标题（如\"笑脸\"\"手势\"\"动物\"），可使用 role=\"group\"。",
+      "每个 emoji 按钮必须有包含表情描述的 aria-label（如\"笑脸\"\"点赞\"\"心\"），不可只有 emoji 字符。",
+      "最近使用的表情区域应有可访问名称。",
+      "面板应支持方向键在网格中导航，Enter 选择，Esc 关闭。",
+      "Emoji 按钮的触控目标至少 24x24 CSS 像素。",
+      "面板关闭后焦点回归触发器。",
+      "搜索表情功能应有 label 并支持键盘输入。",
+      "不要只靠 emoji 字符作为按钮的唯一可访问名称。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问表情选择器",
+        "code": "<button type=\"button\" aria-expanded=\"false\" aria-controls=\"emoji-panel\" aria-label=\"选择表情\">😀</button><div id=\"emoji-panel\" role=\"region\" aria-label=\"表情面板\" hidden><div role=\"group\" aria-labelledby=\"cat-smile\"><h3 id=\"cat-smile\">笑脸</h3><button type=\"button\" aria-label=\"大笑\">😆</button><button type=\"button\" aria-label=\"微笑\">😊</button></div><div role=\"status\" aria-live=\"polite\">已插入：😊</div></div>",
+        "why": "触发器暴露状态，面板有标签，表情分组有标题，每个 emoji 有描述性名称。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "无标签的表情面板",
+        "code": "<div onclick=\"openEmoji()\">😀</div><div class=\"picker\"><span onclick=\"pick()\">😆</span><span onclick=\"pick()\">😊</span></div>",
+        "why": "触发器和 emoji 都不是 button，无可访问名称，无分组和键盘导航。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能打开表情面板、在各组间导航、选择后关闭。",
+      "屏幕阅读器是否能读出每个 emoji 的描述名称。",
+      "触控目标是否足够大。",
+      "关闭后焦点是否回到触发按钮。"
+    ],
+    "static_checks": [
+      "emoji_trigger_is_button",
+      "aria_expanded_present",
+      "emoji_buttons_have_accessible_name",
+      "emoji_groups_have_labels",
+      "grid_keyboard_navigation",
+      "target_size_sufficient",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.expandable-text",
+    "name": "Expandable Text / Read More",
+    "name_zh": "可展开文本（查看更多）",
+    "component_type": "expandable-text",
+    "keywords": [
+      "展开文本",
+      "查看更多",
+      "收起",
+      "截断文本",
+      "read more",
+      "expand text",
+      "collapsed text",
+      "show more"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "2.1.1",
+      "2.2.2",
+      "2.4.3",
+      "2.4.4",
+      "2.4.6",
+      "2.4.7",
+      "3.2.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "generation_constraints": [
+      "展开/收起触发器必须使用 button，并维护 aria-expanded。",
+      "按钮通过 aria-controls 指向可展开内容区域。",
+      "按钮文本应明确操作（\"展开更多\"），并在展开后更新为\"收起\"。",
+      "收起内容中的可聚焦元素不应进入 Tab 顺序。",
+      "展开后焦点不应被强制移动，用户可继续阅读。",
+      "不要只靠省略号或颜色表达有更多内容。",
+      "如有自动动画展开，应受 prefers-reduced-motion 控制。",
+      "内容截断点应在完整句子或段落边界，不应在单词中间截断。"
+    ],
+    "good_examples": [
+      {
+        "title": "可访问展开文本",
+        "code": "<p>这是一个很长的产品描述...</p><button type=\"button\" aria-expanded=\"false\" aria-controls=\"full-desc\">查看完整描述</button><div id=\"full-desc\" hidden>这是完整的详细描述，包含所有规格参数和使用说明。</div>",
+        "why": "使用 button 和 aria-expanded/controls，折叠内容中无活跃 focusable 元素。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "不可访问的展开文本",
+        "code": "<p>产品描述...</p><span class=\"more\" onclick=\"expand()\">更多</span><div class=\"full\" style=\"display:none\"><a href=\"/specs\">详细规格</a></div>",
+        "why": "触发器不是 button，无扩展状态，隐藏内容中的链接仍可能被 Tab 到。"
+      }
+    ],
+    "manual_checks": [
+      "键盘是否能展开和收起文本。",
+      "屏幕阅读器是否能读出展开/收起按钮状态。",
+      "收起状态下隐藏的链接是否不会被 Tab 到。",
+      "展开后焦点是否保持在合理位置。"
+    ],
+    "static_checks": [
+      "expand_trigger_is_button",
+      "aria_expanded_present",
+      "aria_controls_present",
+      "hidden_content_not_focusable",
+      "button_text_descriptive",
+      "focus_visible_present"
+    ]
+  },
+  {
+    "id": "pattern.sticky-table-header",
+    "name": "Sticky Table Header",
+    "name_zh": "粘性表头数据表格",
+    "component_type": "data-table",
+    "keywords": [
+      "粘性表头",
+      "固定表头",
+      "滚动表格",
+      "大数据表",
+      "sticky header",
+      "fixed table header",
+      "scrollable table"
+    ],
+    "related_wcag": [
+      "1.3.1",
+      "1.3.2",
+      "1.4.3",
+      "1.4.10",
+      "1.4.11",
+      "1.4.12",
+      "2.1.1",
+      "2.4.3",
+      "2.4.6",
+      "2.4.7",
+      "2.4.11",
+      "4.1.2"
+    ],
+    "generation_constraints": [
+      "表格必须使用 table、caption、thead、tbody、th、td 等语义元素。",
+      "每个 th 应设置 scope=\"col\"（或 scope=\"row\"），并通过 id/headers 处理复杂关联。",
+      "粘性表头不应遮挡键盘焦点的可见性（满足 2.4.11）。",
+      "表头固定时，Tab 顺序仍应在表头和表体之间合理移动。",
+      "在放大 400% 或文本间距调整后表格内容仍可阅读且不丢失功能。",
+      "应提供表头排序、筛选的操作按钮，并可键盘操作。",
+      "表格滚动时应公告当前可见行范围（\"显示第1-20行，共200行\"）。",
+      "不要用 div 模拟表格而忽略语义和键盘交互。"
+    ],
+    "good_examples": [
+      {
+        "title": "带粘性表头的可访问表格",
+        "code": "<div role=\"region\" aria-label=\"可滚动订单表\" tabindex=\"0\"><table><caption>本月订单</caption><thead><tr><th scope=\"col\">订单号</th><th scope=\"col\"><button>日期</button></th></tr></thead><tbody><tr><td>#001</td><td>2026-05-20</td></tr></tbody></table></div>",
+        "why": "表格语义完整，滚动区域有名称且可通过键盘聚焦滚动。"
+      }
+    ],
+    "bad_examples": [
+      {
+        "title": "用 div 的粘性表头",
+        "code": "<div class=\"sticky-header\"><div>订单号</div><div>日期</div></div><div class=\"body\"><div>#001</div><div>2026-05-20</div></div>",
+        "why": "完全缺少表格语义，表头与单元格无关联，排序按钮不可操作。"
+      }
+    ],
+    "manual_checks": [
+      "屏幕阅读器能否理解表头与数据单元格的关联。",
+      "键盘 Tab 能否在表头控件和表体之间切换。",
+      "400% 放大后表格内容是否仍可阅读。",
+      "粘性表头是否遮挡键盘焦点。"
+    ],
+    "static_checks": [
+      "table_semantics_present",
+      "th_has_scope",
+      "scrollable_region_has_label",
+      "not_obscured_by_sticky",
+      "reflow_at_400_percent",
+      "focus_visible_present"
+    ]
+  }
+]

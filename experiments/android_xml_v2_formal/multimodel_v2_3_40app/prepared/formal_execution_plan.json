@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "protocol_id": "android_xml_v2_multimodel_40app_v2_3",
+  "status": "prepared_no_model_execution",
+  "dataset_version": "v2.3-40app-repair-benchmark",
+  "dataset_sha256": "bfc3f9420bd863d2329462a8b4b48c23eb2ff173c56465c1c757f6b66723d4f0",
+  "model_count": 3,
+  "models": [
+    {
+      "key": "deepseek_v4_pro",
+      "display_name": "DeepSeek V4 Pro",
+      "provider": "deepseek",
+      "model": "deepseek-v4-pro"
+    },
+    {
+      "key": "gpt_5_6_sol",
+      "display_name": "GPT 5.6 SOL",
+      "provider": "openai",
+      "model": "gpt-5.6-sol"
+    },
+    {
+      "key": "claude_opus_4_8",
+      "display_name": "Claude Opus 4.8",
+      "provider": "anthropic",
+      "model": "claude-opus-4-8"
+    }
+  ],
+  "groups": [
+    "raw_baseline",
+    "full_enhanced"
+  ],
+  "repair_task_count": 110,
+  "xml_safe_candidate_count": 136,
+  "repair_app_count": 40,
+  "boundary_candidate_count": 30,
+  "condition_run_count": 660,
+  "minimum_model_calls": 660,
+  "maximum_model_calls": 3300,
+  "actual_model_calls": 0,
+  "boundary_model_calls": 0,
+  "tasks_csv": "experiments/android_xml_v2_formal/multimodel_v2_3_40app/prepared/formal_tasks.csv"
+}

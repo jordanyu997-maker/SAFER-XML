@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.0",
+  "description": "Unified bilingual accessibility knowledge document schema for RAG retrieval.",
+  "document": {
+    "doc_id": "string, globally unique id such as wcag22.sc.2.4.7",
+    "doc_type": "wcag_success_criterion | component_pattern | technique | failure | evaluation_rule | fix_case | fix_mapping | project_context",
+    "standard": "WCAG 2.2 | WAI-ARIA APG | axe-core | Android Accessibility | Android Jetpack Compose Accessibility | Android Accessibility Views | Android Accessibility Testing | local",
+    "language": "bilingual",
+    "priority": "required | recommended | optional",
+    "conformance": {
+      "level": "A | AA | AAA | null",
+      "principle": "Perceivable | Operable | Understandable | Robust | null"
+    },
+    "source": {
+      "title_en": "string",
+      "title_zh": "string",
+      "standard_url": "string",
+      "understanding_url": "string",
+      "techniques_urls": ["string"],
+      "apg_urls": ["string"]
+    },
+    "tags": {
+      "applies_to": ["string"],
+      "issue_codes": ["optional detector issue codes served by this document"],
+      "keywords_en": ["string"],
+      "keywords_zh": ["string"],
+      "related_wcag": ["string"]
+    },
+    "content": {
+      "summary_en": "string",
+      "summary_zh": "string",
+      "intent_en": "string",
+      "intent_zh": "string",
+      "requirements_en": ["string"],
+      "requirements_zh": ["string"],
+      "good_examples": [
+        {
+          "title_en": "string",
+          "title_zh": "string",
+          "code": "string",
+          "explanation_en": "string",
+          "explanation_zh": "string"
+        }
+      ],
+      "bad_examples": [
+        {
+          "title_en": "string",
+          "title_zh": "string",
+          "code": "string",
+          "explanation_en": "string",
+          "explanation_zh": "string"
+        }
+      ],
+      "repair_suggestions_en": ["string"],
+      "repair_suggestions_zh": ["string"],
+      "manual_checks_en": ["string"],
+      "manual_checks_zh": ["string"]
+    },
+    "retrieval": {
+      "search_text_en": "string for embedding / semantic retrieval",
+      "search_text_zh": "string for embedding / semantic retrieval",
+      "search_text_mixed": "combined bilingual searchable text"
+    }
+  }
+}

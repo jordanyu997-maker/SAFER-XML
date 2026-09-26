@@ -1,0 +1,1242 @@
+{
+  "schema_version": 1,
+  "protocol_id": "android_xml_v2_deepseek_ablation_v2_3",
+  "status": "boundary_inputs_frozen",
+  "model_calls": 0,
+  "task_count": 24,
+  "candidate_count": 30,
+  "app_count": 14,
+  "tasks": [
+    {
+      "task_id": "Prav--actionview_search--c4f4fbe0",
+      "app_name": "Prav",
+      "package_name": "app.prav.client",
+      "repository_url": "https://codeberg.org/prav/prav.git",
+      "xml_path": "src/main/res/layout/actionview_search.xml",
+      "screen_name": "actionview_search",
+      "candidate_ids": [
+        "src-74822db4a0c5c0cab458"
+      ],
+      "issue_types": [
+        "focus_accessibility_tree"
+      ],
+      "issue_subtypes": [
+        "unnamed_focusable_container"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-74822db4a0c5c0cab458",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/actionview_search.xml",
+          "selector": "/RelativeLayout[1]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "",
+          "widget_type": "RelativeLayout",
+          "attributes": {
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "addStatesFromChildren": "true",
+            "focusable": "true",
+            "gravity": "center"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Prav--actionview_search--c4f4fbe0",
+      "input_resource_sha256": "24da4775a8ef6d6a8440c19819133edac02f38c55bf89435439712e8fbeded21",
+      "prompt_sha256": "ee109adf0b5c0fe5db6f2ebeed3456fb38158c8c46c3bf04276d902f05e2bfd3",
+      "retrieval_trace_sha256": "876140e135520ae683275d73a8721d9cea598646f1e876e78db5fb3f1c12a276"
+    },
+    {
+      "task_id": "org.fossify.phone--call_notification--a1804f35",
+      "app_name": "org.fossify.phone",
+      "package_name": "org.fossify.phone",
+      "repository_url": "https://github.com/FossifyOrg/Phone.git",
+      "xml_path": "app/src/main/res/layout/call_notification.xml",
+      "screen_name": "call_notification",
+      "candidate_ids": [
+        "src-06993a4424d936147382"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-06993a4424d936147382",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/call_notification.xml",
+          "selector": "/RelativeLayout[1]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/notification_thumbnail",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/notification_thumbnail",
+            "layout_width": "@dimen/list_avatar_size",
+            "layout_height": "@dimen/list_avatar_size",
+            "layout_alignParentTop": "true",
+            "layout_alignParentEnd": "true"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/org.fossify.phone--call_notification--a1804f35",
+      "input_resource_sha256": "fd9889248ec68841ea78b3c3696e471039c6e19c33322807cd3043b53e56f647",
+      "prompt_sha256": "930dd3fa7223a4446aecac3a3fdb550c7a95534aca1d71e5d62891ce141b020c",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "Infomaniak-Mail--fragment_ai_prompt--d0d44de2",
+      "app_name": "Infomaniak Mail",
+      "package_name": "com.infomaniak.mail",
+      "repository_url": "https://github.com/Infomaniak/android-kMail.git",
+      "xml_path": "app/src/main/res/layout/fragment_ai_prompt.xml",
+      "screen_name": "fragment_ai_prompt",
+      "candidate_ids": [
+        "src-11c13155c195d6bee0cf"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "nonsemantic_clickable_requires_structure_or_code"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-11c13155c195d6bee0cf",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "nonsemantic_clickable_requires_structure_or_code",
+          "resource_path": "layout/fragment_ai_prompt.xml",
+          "selector": "/ConstraintLayout[1]/MaterialCardView[1]",
+          "expected_codes": [
+            "ANDROID_XML_NON_SEMANTIC_CLICKABLE"
+          ],
+          "widget_id": "",
+          "widget_type": "MaterialCardView",
+          "attributes": {
+            "style": "@style/AiCardView",
+            "layout_width": "0dp",
+            "layout_height": "wrap_content",
+            "clickable": "true",
+            "focusable": "false",
+            "foregroundTint": "@android:color/transparent",
+            "layout_constraintBottom_toBottomOf": "parent",
+            "layout_constraintEnd_toEndOf": "parent",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toTopOf": "parent",
+            "layout_constraintWidth_max": "@dimen/material_bottom_sheet_max_width",
+            "rippleColor": "?attr/colorControlHighlight",
+            "ignore": "KeyboardInaccessibleWidget",
+            "cardBackgroundColor": "@color/backgroundColorSecondary",
+            "cardCornerRadius": "@null",
+            "cardElevation": "0dp",
+            "cardPreventCornerOverlap": "false",
+            "shapeAppearanceOverlay": "@style/BottomSheetDialogThemeShapeAppearanceOverlay"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Infomaniak-Mail--fragment_ai_prompt--d0d44de2",
+      "input_resource_sha256": "6032830be38611ab1a807e7bc672e0161f6a4725a99c97ec6589318f55e1743c",
+      "prompt_sha256": "588ee2959f23d2b003345cc5616d84832e9e2e5a2a363bc6db215b3625c8244e",
+      "retrieval_trace_sha256": "5d96bf9b015f6ea4ec38a12cc59b68f4eb070de6b0ea0841780b8030a9f21f80"
+    },
+    {
+      "task_id": "Infomaniak-Mail--fragment_ai_proposition--8ab96cee",
+      "app_name": "Infomaniak Mail",
+      "package_name": "com.infomaniak.mail",
+      "repository_url": "https://github.com/Infomaniak/android-kMail.git",
+      "xml_path": "app/src/main/res/layout/fragment_ai_proposition.xml",
+      "screen_name": "fragment_ai_proposition",
+      "candidate_ids": [
+        "src-f9fd2670821079ba1f98"
+      ],
+      "issue_types": [
+        "focus_accessibility_tree"
+      ],
+      "issue_subtypes": [
+        "unnamed_focusable_container"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-f9fd2670821079ba1f98",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/fragment_ai_proposition.xml",
+          "selector": "/ConstraintLayout[1]/NestedScrollView[1]/LinearLayout[1]/FrameLayout[1]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "@+id/contentLayout",
+          "widget_type": "FrameLayout",
+          "attributes": {
+            "id": "@+id/contentLayout",
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "focusable": "true",
+            "paddingHorizontal": "@dimen/marginStandardMedium",
+            "paddingVertical": "@dimen/marginStandard"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Infomaniak-Mail--fragment_ai_proposition--8ab96cee",
+      "input_resource_sha256": "3081fb56be3bd46c9af0a00feda26534c5806e2b73b6d27827b42859be418bfa",
+      "prompt_sha256": "26850eaa66284960381a604207660fb88f06f0c459ec81177d5eaf7de58f8ec0",
+      "retrieval_trace_sha256": "876140e135520ae683275d73a8721d9cea598646f1e876e78db5fb3f1c12a276"
+    },
+    {
+      "task_id": "Infomaniak-Mail--fragment_search--3e5f60f4",
+      "app_name": "Infomaniak Mail",
+      "package_name": "com.infomaniak.mail",
+      "repository_url": "https://github.com/Infomaniak/android-kMail.git",
+      "xml_path": "app/src/main/res/layout/fragment_search.xml",
+      "screen_name": "fragment_search",
+      "candidate_ids": [
+        "src-f8fcd55f7fb13fda0816"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "nonsemantic_clickable_requires_structure_or_code"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-f8fcd55f7fb13fda0816",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "nonsemantic_clickable_requires_structure_or_code",
+          "resource_path": "layout/fragment_search.xml",
+          "selector": "/LinearLayout[1]/FrameLayout[1]",
+          "expected_codes": [
+            "ANDROID_XML_NON_SEMANTIC_CLICKABLE"
+          ],
+          "widget_id": "@+id/dragSeparator",
+          "widget_type": "FrameLayout",
+          "attributes": {
+            "id": "@+id/dragSeparator",
+            "layout_width": "@dimen/dragSeparatorTouchAreaWidth",
+            "layout_height": "match_parent",
+            "layout_marginStart": "@dimen/dragSeparatorTouchAreaMargin",
+            "layout_marginEnd": "@dimen/dragSeparatorTouchAreaMargin",
+            "clickable": "true",
+            "focusable": "true",
+            "translationZ": "@dimen/dragSeparatorTranslationZ"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Infomaniak-Mail--fragment_search--3e5f60f4",
+      "input_resource_sha256": "ef9eeb2d6a2bae479c44a6dbf0468d609b78d7cfaa25be92ae46e365f4fc9ed0",
+      "prompt_sha256": "3588371d330cadfdc09c99d8400dd4207ac9134ddc5dc3f7d126ac3822985e19",
+      "retrieval_trace_sha256": "5d96bf9b015f6ea4ec38a12cc59b68f4eb070de6b0ea0841780b8030a9f21f80"
+    },
+    {
+      "task_id": "Infomaniak-Mail--fragment_thread_list--0366d8fe",
+      "app_name": "Infomaniak Mail",
+      "package_name": "com.infomaniak.mail",
+      "repository_url": "https://github.com/Infomaniak/android-kMail.git",
+      "xml_path": "app/src/main/res/layout/fragment_thread_list.xml",
+      "screen_name": "fragment_thread_list",
+      "candidate_ids": [
+        "src-a2b397190c2426dab517"
+      ],
+      "issue_types": [
+        "focus_accessibility_tree"
+      ],
+      "issue_subtypes": [
+        "unnamed_focusable_container"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-a2b397190c2426dab517",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/fragment_thread_list.xml",
+          "selector": "/LinearLayout[1]/ConstraintLayout[1]/AppBarLayout[1]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "@+id/appBarLayout",
+          "widget_type": "AppBarLayout",
+          "attributes": {
+            "id": "@+id/appBarLayout",
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "focusable": "true",
+            "touchscreenBlocksFocus": "false",
+            "layout_constraintEnd_toEndOf": "parent",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toTopOf": "parent"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Infomaniak-Mail--fragment_thread_list--0366d8fe",
+      "input_resource_sha256": "cc6de3a672a681478492294f7e852e48842318fa2fc2203d0d0abb1dc8dacbfa",
+      "prompt_sha256": "f66b36d70675be2900f9c56662a53f4005919acaa061436c7a0e4043e1180ebe",
+      "retrieval_trace_sha256": "876140e135520ae683275d73a8721d9cea598646f1e876e78db5fb3f1c12a276"
+    },
+    {
+      "task_id": "ShareX--fab_drop_view--79ba631f",
+      "app_name": "ShareX",
+      "package_name": "com.akansh.fileserversuit",
+      "repository_url": "https://github.com/akanshSirohi/ShareX.git",
+      "xml_path": "app/src/main/res/layout/fab_drop_view.xml",
+      "screen_name": "fab_drop_view",
+      "candidate_ids": [
+        "src-8feded1c19cd48296a85",
+        "src-b7f1978b0061e2737d1c"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "custom_view_runtime_semantics"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-8feded1c19cd48296a85",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "custom_view_runtime_semantics",
+          "resource_path": "layout/fab_drop_view.xml",
+          "selector": "/FloatingActionMenu[1]/FloatingActionButton[1]",
+          "expected_codes": [
+            "ANDROID_XML_CUSTOM_VIEW_REQUIRES_ACCESSIBILITY_REVIEW"
+          ],
+          "widget_id": "@+id/material_design_floating_action_menu_item1",
+          "widget_type": "FloatingActionButton",
+          "attributes": {
+            "id": "@+id/material_design_floating_action_menu_item1",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "src": "@drawable/ic_photo_video",
+            "fab_label": "0 media selected",
+            "fab_size": "mini"
+          }
+        },
+        {
+          "candidate_id": "src-b7f1978b0061e2737d1c",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "custom_view_runtime_semantics",
+          "resource_path": "layout/fab_drop_view.xml",
+          "selector": "/FloatingActionMenu[1]/FloatingActionButton[2]",
+          "expected_codes": [
+            "ANDROID_XML_CUSTOM_VIEW_REQUIRES_ACCESSIBILITY_REVIEW"
+          ],
+          "widget_id": "@+id/material_design_floating_action_menu_item2",
+          "widget_type": "FloatingActionButton",
+          "attributes": {
+            "id": "@+id/material_design_floating_action_menu_item2",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "src": "@drawable/ic_folder_open",
+            "fab_label": "0 files selected",
+            "fab_size": "mini"
+          }
+        }
+      ],
+      "candidate_count": 2,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/ShareX--fab_drop_view--79ba631f",
+      "input_resource_sha256": "98806de0aa66b16aee42a13c05a2790490f496a033583270c39daf7972cfc943",
+      "prompt_sha256": "d63932c45c93b40f583a3f0c1319ef417bac5898d9bf618980e80ab5bbb4858e",
+      "retrieval_trace_sha256": "b14b7a17ab642a3c44f148d2641397f3d4b68c5b9fdb2a988ff8fadb8b14db78"
+    },
+    {
+      "task_id": "FocusMastodon--activity_pro_version--0a08a947",
+      "app_name": "FocusMastodon",
+      "package_name": "allen.town.focus.mastodon",
+      "repository_url": "https://github.com/allentown521/FocusMastodon.git",
+      "xml_path": "app/src/main/res/layout/activity_pro_version.xml",
+      "screen_name": "activity_pro_version",
+      "candidate_ids": [
+        "src-483c108627d0e61ef4c3",
+        "src-ad61a5b9bc59704943f9"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "image_semantics_runtime_or_visual_context"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-483c108627d0e61ef4c3",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "image_semantics_runtime_or_visual_context",
+          "resource_path": "layout/activity_pro_version.xml",
+          "selector": "/InsetsConstraintLayout[1]/FastScrollScrollView[1]/LinearLayout[1]/LinearLayout[1]/AppCompatImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_IMAGE_SEMANTICS_REQUIRES_REVIEW"
+          ],
+          "widget_id": "@+id/upgradeImage0",
+          "widget_type": "AppCompatImageView",
+          "attributes": {
+            "id": "@+id/upgradeImage0",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "padding": "16dp",
+            "srcCompat": "@drawable/ic_check_circle",
+            "tint": "@color/md_white_1000"
+          }
+        },
+        {
+          "candidate_id": "src-ad61a5b9bc59704943f9",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "image_semantics_runtime_or_visual_context",
+          "resource_path": "layout/activity_pro_version.xml",
+          "selector": "/InsetsConstraintLayout[1]/FastScrollScrollView[1]/LinearLayout[1]/LinearLayout[2]/AppCompatImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_IMAGE_SEMANTICS_REQUIRES_REVIEW"
+          ],
+          "widget_id": "@+id/upgradeImage1",
+          "widget_type": "AppCompatImageView",
+          "attributes": {
+            "id": "@+id/upgradeImage1",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "padding": "16dp",
+            "srcCompat": "@drawable/ic_check_circle",
+            "tint": "@color/md_white_1000"
+          }
+        }
+      ],
+      "candidate_count": 2,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FocusMastodon--activity_pro_version--0a08a947",
+      "input_resource_sha256": "a7c8b86e6c963d9e0d5bfa3c4a7f024054de9fc74fb96a135ce286dbb23e82ff",
+      "prompt_sha256": "7c6a51aba6e921ab6489dad964b8e2224c33f79da0bcf2a31e39d27fc85a1a31",
+      "retrieval_trace_sha256": "a7c72129c21818083f0a07384ca877a8444a2929adfc6f6021c3069fa112a3fb"
+    },
+    {
+      "task_id": "FocusMastodon--fragment_onboarding_common--1104d579",
+      "app_name": "FocusMastodon",
+      "package_name": "allen.town.focus.mastodon",
+      "repository_url": "https://github.com/allentown521/FocusMastodon.git",
+      "xml_path": "app/src/main/res/layout/fragment_onboarding_common.xml",
+      "screen_name": "fragment_onboarding_common",
+      "candidate_ids": [
+        "src-badb07f07f339a8680e5"
+      ],
+      "issue_types": [
+        "focus_accessibility_tree"
+      ],
+      "issue_subtypes": [
+        "unnamed_focusable_container"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-badb07f07f339a8680e5",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/fragment_onboarding_common.xml",
+          "selector": "/FragmentRootLinearLayout[1]/RelativeLayout[1]/View[1]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "@+id/focus_thing",
+          "widget_type": "View",
+          "attributes": {
+            "id": "@+id/focus_thing",
+            "layout_width": "1dp",
+            "layout_height": "1dp",
+            "focusable": "true",
+            "focusableInTouchMode": "true",
+            "importantForAccessibility": "no"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FocusMastodon--fragment_onboarding_common--1104d579",
+      "input_resource_sha256": "6e8e2daa61cf7a1b4bcad314f7450b9c83c205b17005a4857bf6310562ac91e6",
+      "prompt_sha256": "833055ef51bc5183c706326086b16790ff442baf6f0d01f82638175bee9b7712",
+      "retrieval_trace_sha256": "876140e135520ae683275d73a8721d9cea598646f1e876e78db5fb3f1c12a276"
+    },
+    {
+      "task_id": "FocusMastodon--item_blocked_user--d8534ce1",
+      "app_name": "FocusMastodon",
+      "package_name": "allen.town.focus.mastodon",
+      "repository_url": "https://github.com/allentown521/FocusMastodon.git",
+      "xml_path": "app/src/main/res/layout/item_blocked_user.xml",
+      "screen_name": "item_blocked_user",
+      "candidate_ids": [
+        "src-90f0e704987772851dbc"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-90f0e704987772851dbc",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/item_blocked_user.xml",
+          "selector": "/ConstraintLayout[1]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/blocked_user_avatar",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/blocked_user_avatar",
+            "layout_width": "48dp",
+            "layout_height": "48dp",
+            "layout_constraintBottom_toBottomOf": "parent",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toTopOf": "parent",
+            "src": "@drawable/avatar_default"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FocusMastodon--item_blocked_user--d8534ce1",
+      "input_resource_sha256": "c9cd01e3274c2db77d96c15f06808d9c94bc01b4fbe4a17f783b08666adac826",
+      "prompt_sha256": "c1d4335f192c78a8f403475aad6ffc26764a6bda2c0a460a34b459b3a3184124",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "FocusPodcast--circle_cover_fragment--464b1753",
+      "app_name": "FocusPodcast",
+      "package_name": "allen.town.focus.podcast",
+      "repository_url": "https://github.com/allentown521/FocusPodcast.git",
+      "xml_path": "app/src/main/res/layout-land/circle_cover_fragment.xml",
+      "screen_name": "circle_cover_fragment",
+      "candidate_ids": [
+        "src-536ef63b6a37cacb5fb2"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-536ef63b6a37cacb5fb2",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout-land/circle_cover_fragment.xml",
+          "selector": "/LinearLayout[1]/RelativeLayout[1]/RetroShapeableImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/imgvCover",
+          "widget_type": "RetroShapeableImageView",
+          "attributes": {
+            "id": "@+id/imgvCover",
+            "layout_centerInParent": "true",
+            "layout_margin": "42dp",
+            "layout_width": "match_parent",
+            "layout_height": "match_parent",
+            "scaleType": "centerCrop",
+            "srcCompat": "@tools:sample/backgrounds/scenic[6]"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FocusPodcast--circle_cover_fragment--464b1753",
+      "input_resource_sha256": "a1aae711d2a9df7606998d6164710c9d7870f0ac5122294f7de94458ef3dc7a5",
+      "prompt_sha256": "d3071a82ba71a1d98d052cb4d0c97a707ca0c06cdaa30fda50941cb4705d8fb4",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "FocusPodcast--circle_cover_fragment--a11b4676",
+      "app_name": "FocusPodcast",
+      "package_name": "allen.town.focus.podcast",
+      "repository_url": "https://github.com/allentown521/FocusPodcast.git",
+      "xml_path": "app/src/main/res/layout/circle_cover_fragment.xml",
+      "screen_name": "circle_cover_fragment",
+      "candidate_ids": [
+        "src-7a45dce08feb51bca10e"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-7a45dce08feb51bca10e",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/circle_cover_fragment.xml",
+          "selector": "/RelativeLayout[1]/FrameLayout[1]/FrameLayout[1]/RetroShapeableImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/album_cover_overlay",
+          "widget_type": "RetroShapeableImageView",
+          "attributes": {
+            "id": "@+id/album_cover_overlay",
+            "layout_width": "match_parent",
+            "layout_height": "match_parent",
+            "alpha": "0.5",
+            "scaleType": "centerCrop"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FocusPodcast--circle_cover_fragment--a11b4676",
+      "input_resource_sha256": "7c8760dbb147a787b28b9ebad6ee6fd75909f20c29bcd941d4bd7afb69c811f8",
+      "prompt_sha256": "5cf0694f30799e5ab21876ccf4aed6ab0b66dfe24be6f2167fc39daf99014440",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "DuckDuckGo-Privacy-Browser--component_buttons--84110056",
+      "app_name": "DuckDuckGo Privacy Browser",
+      "package_name": "com.duckduckgo.mobile.android",
+      "repository_url": "https://github.com/duckduckgo/Android.git",
+      "xml_path": "android-design-system/design-system-internal/src/main/res/layout/component_buttons.xml",
+      "screen_name": "component_buttons",
+      "candidate_ids": [
+        "src-9d59dd8eff1713687f84"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "custom_view_runtime_semantics"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-9d59dd8eff1713687f84",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "custom_view_runtime_semantics",
+          "resource_path": "layout/component_buttons.xml",
+          "selector": "/NestedScrollView[1]/LinearLayout[1]/IconButton[1]",
+          "expected_codes": [
+            "ANDROID_XML_CUSTOM_VIEW_REQUIRES_ACCESSIBILITY_REVIEW"
+          ],
+          "widget_id": "@+id/getIconButton",
+          "widget_type": "IconButton",
+          "attributes": {
+            "id": "@+id/getIconButton",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "layout_gravity": "center",
+            "layout_marginTop": "16dp",
+            "srcCompat": "@drawable/ic_union"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/DuckDuckGo-Privacy-Browser--component_buttons--84110056",
+      "input_resource_sha256": "480b8495c8bece1bf758c36f35f638b7618f603fef5635640b8d162413fcb6a0",
+      "prompt_sha256": "a699402550f818f59d7f5b771d838018a3d931ed993236ccffb518341bc22103",
+      "retrieval_trace_sha256": "b14b7a17ab642a3c44f148d2641397f3d4b68c5b9fdb2a988ff8fadb8b14db78"
+    },
+    {
+      "task_id": "DuckDuckGo-Privacy-Browser--component_menu_item--e89f9084",
+      "app_name": "DuckDuckGo Privacy Browser",
+      "package_name": "com.duckduckgo.mobile.android",
+      "repository_url": "https://github.com/duckduckgo/Android.git",
+      "xml_path": "android-design-system/design-system-internal/src/main/res/layout/component_menu_item.xml",
+      "screen_name": "component_menu_item",
+      "candidate_ids": [
+        "src-2c3d7c1482fe367f5559",
+        "src-bc766e267bb382489f6a"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "custom_view_runtime_semantics",
+        "nonsemantic_clickable_requires_structure_or_code"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-2c3d7c1482fe367f5559",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "nonsemantic_clickable_requires_structure_or_code",
+          "resource_path": "layout/component_menu_item.xml",
+          "selector": "/ConstraintLayout[1]/MenuItemView[1]",
+          "expected_codes": [
+            "ANDROID_XML_NON_SEMANTIC_CLICKABLE"
+          ],
+          "widget_id": "",
+          "widget_type": "MenuItemView",
+          "attributes": {
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "primaryText": "This is a Test",
+            "iconDrawable": "@drawable/ic_globe_16",
+            "layout_constraintEnd_toEndOf": "parent",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toBottomOf": "@id/label",
+            "clickable": "true",
+            "focusable": "true"
+          }
+        },
+        {
+          "candidate_id": "src-bc766e267bb382489f6a",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "custom_view_runtime_semantics",
+          "resource_path": "layout/component_menu_item.xml",
+          "selector": "/ConstraintLayout[1]/MenuItemView[1]",
+          "expected_codes": [
+            "ANDROID_XML_CUSTOM_VIEW_REQUIRES_ACCESSIBILITY_REVIEW"
+          ],
+          "widget_id": "",
+          "widget_type": "MenuItemView",
+          "attributes": {
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "primaryText": "This is a Test",
+            "iconDrawable": "@drawable/ic_globe_16",
+            "layout_constraintEnd_toEndOf": "parent",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toBottomOf": "@id/label",
+            "clickable": "true",
+            "focusable": "true"
+          }
+        }
+      ],
+      "candidate_count": 2,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/DuckDuckGo-Privacy-Browser--component_menu_item--e89f9084",
+      "input_resource_sha256": "e34924db5c8f423976edbada7e30b5e59aab9bfc08bd163f25b92554e5ea52a7",
+      "prompt_sha256": "4e41309628c6251b63777cde1d26adcbdfff21c97f0eadd557efbe5cfe76b60a",
+      "retrieval_trace_sha256": "bbeedf864547a8a524eb2d91043239962424a1d1fc0b1ecaaab834f044c6837c"
+    },
+    {
+      "task_id": "DuckDuckGo-Privacy-Browser--view_dax_dialog--74273f21",
+      "app_name": "DuckDuckGo Privacy Browser",
+      "package_name": "com.duckduckgo.mobile.android",
+      "repository_url": "https://github.com/duckduckgo/Android.git",
+      "xml_path": "android-design-system/design-system/src/main/res/layout/view_dax_dialog.xml",
+      "screen_name": "view_dax_dialog",
+      "candidate_ids": [
+        "src-dd16197314a543442616"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-dd16197314a543442616",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/view_dax_dialog.xml",
+          "selector": "/RelativeLayout[1]/ConstraintLayout[1]/AppCompatImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/logo",
+          "widget_type": "AppCompatImageView",
+          "attributes": {
+            "id": "@+id/logo",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "layout_marginStart": "@dimen/keyline_2",
+            "layout_marginBottom": "@dimen/keyline_4",
+            "layout_constraintBottom_toTopOf": "@id/cardView",
+            "layout_constraintStart_toStartOf": "@id/cardView",
+            "srcCompat": "@drawable/ic_dax_icon"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/DuckDuckGo-Privacy-Browser--view_dax_dialog--74273f21",
+      "input_resource_sha256": "bedec07a6e0a47653c1be7167eccd83e4b5815de27c9f9cab64a22f70d09673e",
+      "prompt_sha256": "af1b5030e8da9f2bec42ac0b3d9ad9f1bf6160fd2485071170855e7bc3b5808e",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "QuickLyric-old--tutorial_4--860d47a8",
+      "app_name": "QuickLyric (old)",
+      "package_name": "be.geecko.QuickLyric",
+      "repository_url": "https://github.com/geecko86/QuickLyric",
+      "xml_path": "QuickLyric/src/main/res/layout-land/tutorial_4.xml",
+      "screen_name": "tutorial_4",
+      "candidate_ids": [
+        "src-33b34dbb9252eb142c3f"
+      ],
+      "issue_types": [
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "image_semantics_runtime_or_visual_context"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-33b34dbb9252eb142c3f",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "image_semantics_runtime_or_visual_context",
+          "resource_path": "layout-land/tutorial_4.xml",
+          "selector": "/LinearLayout[1]/RelativeLayout[1]/ImageView[2]",
+          "expected_codes": [
+            "ANDROID_XML_IMAGE_SEMANTICS_REQUIRES_REVIEW"
+          ],
+          "widget_id": "@+id/blueGear",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/blueGear",
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "layout_centerInParent": "true",
+            "scaleType": "centerCrop",
+            "src": "@drawable/intro_5_gear_b",
+            "translationX": "@dimen/bluegear_X",
+            "translationY": "@dimen/bluegear_Y"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/QuickLyric-old--tutorial_4--860d47a8",
+      "input_resource_sha256": "6a7f4d26a1d23fb9991f64624c3f53403dd047ef88e34649caab2311ececcb78",
+      "prompt_sha256": "4f83bfea3427732bb1184f18f7efff46c6fcc9db129f1ea5722f82add95a475f",
+      "retrieval_trace_sha256": "a7c72129c21818083f0a07384ca877a8444a2929adfc6f6021c3069fa112a3fb"
+    },
+    {
+      "task_id": "Authenticator--main_no_accounts--dcac01ab",
+      "app_name": "Authenticator",
+      "package_name": "com.google.android.apps.authenticator2",
+      "repository_url": "https://github.com/google/google-authenticator-android",
+      "xml_path": "java/com/google/android/apps/authenticator/res/layout-sw360dp/main_no_accounts.xml",
+      "screen_name": "main_no_accounts",
+      "candidate_ids": [
+        "src-dbe02cdb01c77d2778bf"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-dbe02cdb01c77d2778bf",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout-sw360dp/main_no_accounts.xml",
+          "selector": "/LinearLayout[1]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "",
+          "widget_type": "ImageView",
+          "attributes": {
+            "layout_width": "148dp",
+            "layout_height": "148dp",
+            "layout_marginTop": "72dp",
+            "layout_marginBottom": "48dp",
+            "layout_gravity": "center_horizontal",
+            "adjustViewBounds": "true",
+            "src": "@drawable/product_logo_authenticator_color_144"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Authenticator--main_no_accounts--dcac01ab",
+      "input_resource_sha256": "fdfc31d1aa671de13d42d00b7a8644daed361bba418105fdcf93e73f4e5ed49e",
+      "prompt_sha256": "c567d0221d60a63ed0e2f8faac0051d98ce6400ed0a0d66cfe8c1505183053f6",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "Authenticator--main_no_accounts--78b16ecc",
+      "app_name": "Authenticator",
+      "package_name": "com.google.android.apps.authenticator2",
+      "repository_url": "https://github.com/google/google-authenticator-android",
+      "xml_path": "java/com/google/android/apps/authenticator/res/layout-sw600dp-land/main_no_accounts.xml",
+      "screen_name": "main_no_accounts",
+      "candidate_ids": [
+        "src-1acb50699ae750682215"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-1acb50699ae750682215",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout-sw600dp-land/main_no_accounts.xml",
+          "selector": "/LinearLayout[1]/LinearLayout[1]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "",
+          "widget_type": "ImageView",
+          "attributes": {
+            "layout_width": "260dp",
+            "layout_height": "260dp",
+            "layout_marginLeft": "20dp",
+            "layout_gravity": "center",
+            "adjustViewBounds": "true",
+            "src": "@drawable/product_logo_authenticator_color_tablet"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Authenticator--main_no_accounts--78b16ecc",
+      "input_resource_sha256": "d9bf09ed14fb40591e946bba5d1d05a7728e9af2ac4720904ddfc45e5dafe101",
+      "prompt_sha256": "352a5378f54be50b74b4a6340e22014309814abf079ef25901a194682759a5c4",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "FreeOTP-Plus--edit--8de4076d",
+      "app_name": "FreeOTP Plus",
+      "package_name": "org.liberty.android.freeotpplus",
+      "repository_url": "https://github.com/helloworld1/FreeOTPPlus.git",
+      "xml_path": "app/src/main/res/layout/edit.xml",
+      "screen_name": "edit",
+      "candidate_ids": [
+        "src-69d40693aa2a7502db52",
+        "src-c0968f8faedad30d401f"
+      ],
+      "issue_types": [
+        "focus_accessibility_tree"
+      ],
+      "issue_subtypes": [
+        "unnamed_focusable_container"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-69d40693aa2a7502db52",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/edit.xml",
+          "selector": "/LinearLayout[1]/LinearLayout[1]/TextView[5]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "@+id/digits",
+          "widget_type": "TextView",
+          "attributes": {
+            "id": "@+id/digits",
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "layout_marginBottom": "4dp",
+            "textIsSelectable": "true",
+            "focusable": "true",
+            "focusableInTouchMode": "true"
+          }
+        },
+        {
+          "candidate_id": "src-c0968f8faedad30d401f",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/edit.xml",
+          "selector": "/LinearLayout[1]/LinearLayout[1]/TextView[3]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "@+id/algorithm",
+          "widget_type": "TextView",
+          "attributes": {
+            "id": "@+id/algorithm",
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "layout_marginBottom": "4dp",
+            "textIsSelectable": "true",
+            "focusable": "true",
+            "focusableInTouchMode": "true"
+          }
+        }
+      ],
+      "candidate_count": 2,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FreeOTP-Plus--edit--8de4076d",
+      "input_resource_sha256": "02b5c04dae9d29dd562f9ca1d3d3bfd35c1df3030581d26f93eb69780371d3ce",
+      "prompt_sha256": "fd3f8696e31e7f7916676b0d337ab2581a30b744c01a3066a1d654f981d9f216",
+      "retrieval_trace_sha256": "876140e135520ae683275d73a8721d9cea598646f1e876e78db5fb3f1c12a276"
+    },
+    {
+      "task_id": "FreeOTP-Plus--token--9fc389e7",
+      "app_name": "FreeOTP Plus",
+      "package_name": "org.liberty.android.freeotpplus",
+      "repository_url": "https://github.com/helloworld1/FreeOTPPlus.git",
+      "xml_path": "app/src/main/res/layout/token.xml",
+      "screen_name": "token",
+      "candidate_ids": [
+        "src-0c8638d62dfae4b03454",
+        "src-3666aea22fa859e747a3"
+      ],
+      "issue_types": [
+        "accessible_name_quality",
+        "static_xml_boundary"
+      ],
+      "issue_subtypes": [
+        "image_semantics_runtime_or_visual_context",
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-0c8638d62dfae4b03454",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/token.xml",
+          "selector": "/TokenLayout[1]/ConstraintLayout[1]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/image",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/image",
+            "layout_width": "96dp",
+            "layout_height": "0dp",
+            "src": "@drawable/logo",
+            "scaleType": "fitCenter",
+            "padding": "16dp",
+            "layout_constraintDimensionRatio": "1:1",
+            "layout_constraintStart_toStartOf": "@+id/image_bg",
+            "layout_constraintEnd_toEndOf": "@+id/image_bg",
+            "layout_constraintTop_toTopOf": "@+id/image_bg",
+            "layout_constraintBottom_toBottomOf": "@+id/image_bg"
+          }
+        },
+        {
+          "candidate_id": "src-3666aea22fa859e747a3",
+          "issue_type": "static_xml_boundary",
+          "issue_subtype": "image_semantics_runtime_or_visual_context",
+          "resource_path": "layout/token.xml",
+          "selector": "/TokenLayout[1]/ConstraintLayout[1]/ImageView[2]",
+          "expected_codes": [
+            "ANDROID_XML_IMAGE_SEMANTICS_REQUIRES_REVIEW"
+          ],
+          "widget_id": "@+id/menu",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/menu",
+            "layout_width": "32dp",
+            "layout_height": "0dp",
+            "layout_marginEnd": "@dimen/space_2",
+            "src": "@drawable/menu",
+            "tint": "@color/overflow_menu",
+            "tintMode": "add",
+            "scaleType": "centerInside",
+            "layout_constraintEnd_toEndOf": "parent",
+            "layout_constraintBottom_toBottomOf": "parent",
+            "layout_constraintTop_toTopOf": "@+id/titles_container"
+          }
+        }
+      ],
+      "candidate_count": 2,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/FreeOTP-Plus--token--9fc389e7",
+      "input_resource_sha256": "f15a1b0872960896163e78ef8a705b6d8b314447a03cb95c035ed8dae61d31eb",
+      "prompt_sha256": "64aeeeaae2b162726651456d4e37e430fbc39d1b82877565e5c5e1b04880f268",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "Session--giphy_activity--549cd485",
+      "app_name": "Session",
+      "package_name": "network.loki.messenger.fdroid",
+      "repository_url": "https://github.com/session-foundation/session-android.git",
+      "xml_path": "app/src/main/res/layout/giphy_activity.xml",
+      "screen_name": "giphy_activity",
+      "candidate_ids": [
+        "src-01013a1ceebce70d3c32"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-01013a1ceebce70d3c32",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/giphy_activity.xml",
+          "selector": "/RelativeLayout[1]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/giphy_logo",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/giphy_logo",
+            "src": "@drawable/poweredby_giphy",
+            "layout_width": "match_parent",
+            "layout_height": "wrap_content",
+            "layout_alignParentBottom": "true",
+            "padding": "10dp",
+            "background": "@color/black"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Session--giphy_activity--549cd485",
+      "input_resource_sha256": "1a91e87f0fb932deb116399e855559badd34338eadcb4efd0dd508153a33206c",
+      "prompt_sha256": "204d28a6ca22fca32d1ca10034e7612f5ecb7209608973adcc57ddcadb8f1ddf",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "ch.threema.app.libre--activity_enter_serial--4807abc1",
+      "app_name": "ch.threema.app.libre",
+      "package_name": "ch.threema.app.libre",
+      "repository_url": "https://github.com/threema-ch/threema-android.git",
+      "xml_path": "app/src/blue/res/layout/activity_enter_serial.xml",
+      "screen_name": "activity_enter_serial",
+      "candidate_ids": [
+        "src-1aaa7fc7f0335a0333dd",
+        "src-f7dc2be3f41957714f6e"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-1aaa7fc7f0335a0333dd",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/activity_enter_serial.xml",
+          "selector": "/ScrollView[1]/FrameLayout[1]/LinearLayout[1]/ConstraintLayout[2]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/unlock_logo",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/unlock_logo",
+            "style": "@style/WizardEditTextIcon",
+            "layout_width": "0dp",
+            "layout_height": "0dp",
+            "layout_constraintBottom_toBottomOf": "@+id/license_key",
+            "layout_constraintDimensionRatio": "1",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toTopOf": "@+id/license_key",
+            "srcCompat": "@drawable/ic_person_outline"
+          }
+        },
+        {
+          "candidate_id": "src-f7dc2be3f41957714f6e",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/activity_enter_serial.xml",
+          "selector": "/ScrollView[1]/FrameLayout[1]/LinearLayout[1]/ConstraintLayout[3]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/password_logo",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/password_logo",
+            "style": "@style/WizardEditTextIcon",
+            "layout_width": "0dp",
+            "layout_height": "0dp",
+            "layout_constraintBottom_toBottomOf": "@id/password_container",
+            "layout_constraintDimensionRatio": "1",
+            "layout_constraintStart_toStartOf": "parent",
+            "layout_constraintTop_toTopOf": "@+id/password_container",
+            "srcCompat": "@drawable/ic_key_outline"
+          }
+        }
+      ],
+      "candidate_count": 2,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/ch.threema.app.libre--activity_enter_serial--4807abc1",
+      "input_resource_sha256": "b052cf910881cbc38e971ba7b8020c0ce2566086a703fcfc4f0f7609f8900603",
+      "prompt_sha256": "5ddba5d3c42e9d8ec0e8c037b1c47705542b8c3f899f3f8e3727fe3f787833e0",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    },
+    {
+      "task_id": "Gear-Shift--transmission_session_connections--bd5be400",
+      "app_name": "Gear Shift",
+      "package_name": "org.sugr.gearshift",
+      "repository_url": "https://github.com/urandom/gearshift",
+      "xml_path": "gearshift/src/main/res/layout/transmission_session_connections.xml",
+      "screen_name": "transmission_session_connections",
+      "candidate_ids": [
+        "src-38b06a3e4cd1ecba9f4c"
+      ],
+      "issue_types": [
+        "focus_accessibility_tree"
+      ],
+      "issue_subtypes": [
+        "unnamed_focusable_container"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-38b06a3e4cd1ecba9f4c",
+          "issue_type": "focus_accessibility_tree",
+          "issue_subtype": "unnamed_focusable_container",
+          "resource_path": "layout/transmission_session_connections.xml",
+          "selector": "/CardView[1]/LinearLayout[1]/TableLayout[1]/TableRow[2]",
+          "expected_codes": [
+            "ANDROID_XML_UNNAMED_FOCUSABLE_CONTAINER"
+          ],
+          "widget_id": "",
+          "widget_type": "TableRow",
+          "attributes": {
+            "layout_width": "wrap_content",
+            "layout_height": "wrap_content",
+            "descendantFocusability": "beforeDescendants",
+            "focusable": "true",
+            "focusableInTouchMode": "true",
+            "gravity": "center"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Gear-Shift--transmission_session_connections--bd5be400",
+      "input_resource_sha256": "5eb209d8fe42bfaac79d0f682d1f1dec5069bea4d7781394c3deb6a548f9e8c4",
+      "prompt_sha256": "7191c46744e79ad5ea5eb1867b458656dd25a2b06290fbd3f71b5f59b562ce70",
+      "retrieval_trace_sha256": "876140e135520ae683275d73a8721d9cea598646f1e876e78db5fb3f1c12a276"
+    },
+    {
+      "task_id": "Crescent--send--ce777c1d",
+      "app_name": "Crescent",
+      "package_name": "app.crescentcash.src",
+      "repository_url": "https://gitlab.com/pokkst/crescentcash.git",
+      "xml_path": "app/src/main/res/layout/send.xml",
+      "screen_name": "send",
+      "candidate_ids": [
+        "src-f75a75531678eeac3edb"
+      ],
+      "issue_types": [
+        "accessible_name_quality"
+      ],
+      "issue_subtypes": [
+        "meaningful_image_requires_description_review"
+      ],
+      "target_candidates": [
+        {
+          "candidate_id": "src-f75a75531678eeac3edb",
+          "issue_type": "accessible_name_quality",
+          "issue_subtype": "meaningful_image_requires_description_review",
+          "resource_path": "layout/send.xml",
+          "selector": "/FrameLayout[1]/LinearLayout[1]/ScrollView[1]/LinearLayout[1]/LinearLayout[1]/LinearLayout[2]/ImageView[1]",
+          "expected_codes": [
+            "ANDROID_XML_MEANINGFUL_IMAGE_MISSING_DESCRIPTION"
+          ],
+          "widget_id": "@+id/qrScan",
+          "widget_type": "ImageView",
+          "attributes": {
+            "id": "@+id/qrScan",
+            "layout_width": "match_parent",
+            "layout_height": "50dp",
+            "layout_weight": "3",
+            "padding": "5dp",
+            "tint": "?attr/textColor",
+            "srcCompat": "@drawable/qrcodeicon"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "input_package": "experiments/android_xml_v2_ablation/deepseek_v2_3/prepared/boundary_inputs/Crescent--send--ce777c1d",
+      "input_resource_sha256": "55d0ff696fd9bf0d9a5c65c1cbcc7d3670eae60e2a629bec14c79275e4d70ba2",
+      "prompt_sha256": "c3f4c3671e5b2f93f5407e2fcabe07f6fe4a0f83a720f6a2a51ce6b56fbeb7bf",
+      "retrieval_trace_sha256": "b069f7c7693eacbae646bdbba473f06dd6d057367a6826401e26bd0bdcd0fcd8"
+    }
+  ]
+}

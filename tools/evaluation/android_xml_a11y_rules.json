@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "field_purpose_terms": {
+    "email": ["email", "mail", "e-mail", "邮箱", "邮件"],
+    "password": ["password", "passwd", "pwd", "密码"],
+    "phone": ["phone", "tel", "mobile", "手机号", "电话", "手机"],
+    "personal_name": [
+      "username",
+      "user_name",
+      "user name",
+      "first_name",
+      "first name",
+      "last_name",
+      "last name",
+      "full_name",
+      "full name",
+      "person name",
+      "姓名",
+      "用户名",
+      "名字"
+    ],
+    "number": ["number", "amount", "count", "age", "price", "数量", "金额", "年龄", "价格"]
+  },
+  "component_aliases": {
+    "interactive": [
+      "AppCompatButton",
+      "AppCompatCheckBox",
+      "AppCompatImageButton",
+      "AppCompatRadioButton",
+      "AppCompatToggleButton"
+    ],
+    "input": [
+      "AppCompatAutoCompleteTextView",
+      "AppCompatEditText",
+      "MaterialAutoCompleteTextView"
+    ],
+    "image": [
+      "AppCompatImageButton",
+      "AppCompatImageView"
+    ],
+    "text": [
+      "AppCompatButton",
+      "AppCompatCheckBox",
+      "AppCompatEditText",
+      "AppCompatRadioButton",
+      "AppCompatTextView",
+      "MaterialAutoCompleteTextView"
+    ],
+    "text_input_layout": ["TextInputLayout"]
+  },
+  "custom_interactive_suffixes": [
+    "Button",
+    "CheckBox",
+    "FloatingActionButton",
+    "ImageButton",
+    "RadioButton",
+    "RatingBar",
+    "SeekBar",
+    "Spinner",
+    "Switch",
+    "ToggleButton"
+  ],
+  "advisories": {
+    "hardcoded_text": false,
+    "missing_autofill": false
+  }
+}

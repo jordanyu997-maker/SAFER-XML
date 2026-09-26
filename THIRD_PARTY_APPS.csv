@@ -1,0 +1,41 @@
+app_name,package_name,repository_url,source_commit,licence_note
+Amaze Utilities,com.amaze.fileutilities,https://github.com/TeamAmaze/AmazeFileUtilities,272a2846c1af5314a9e75090b1a8472d6915b718,Original upstream licence applies; verify at the frozen commit.
+Android Password Store,app.passwordstore.agrahn,https://github.com/agrahn/Android-Password-Store.git,bcebd2918f34476bf68df4233ea052a938337c92,Original upstream licence applies; verify at the frozen commit.
+Authorizer,net.tjado.passwdsafe,https://github.com/tejado/Authorizer.git,06e8f7d87ddf9aafc5df5fc7380767d6de596a45,Original upstream licence applies; verify at the frozen commit.
+Boilr,mobi.boilr.boilr,https://github.com/drpout/boilr.git,ef21e83140ad7806ce1c3caccc16961a14a192bf,Original upstream licence applies; verify at the frozen commit.
+Clock,com.best.deskclock,https://github.com/BlackyHawky/Clock,69a517e2abc1fa92e583c7891a9d5faf18777fb6,Original upstream licence applies; verify at the frozen commit.
+Crescent,app.crescentcash.src,https://gitlab.com/pokkst/crescentcash.git,f67dd1d01e39f48766d833663580c19221aa158c,Original upstream licence applies; verify at the frozen commit.
+CryptoPass,krasilnikov.alexey.cryptopass,https://bitbucket.org/zeac/cryptopass.git,326e5edb072c6006e245fa84a514d11b78cb3c4a,Original upstream licence applies; verify at the frozen commit.
+Delta Chat,com.b44t.messenger,https://github.com/deltachat/deltachat-android.git,d5f627be501dc9ad1d314b62b36708f8afa2242b,Original upstream licence applies; verify at the frozen commit.
+DuckDuckGo Privacy Browser,com.duckduckgo.mobile.android,https://github.com/duckduckgo/Android.git,b10c13f8328f6e610a9145b076a92ef9349bc1a8,Original upstream licence applies; verify at the frozen commit.
+Dumbphone Assistant,com.github.yeriomin.dumbphoneassistant,https://github.com/yeriomin/DumbphoneAssistant,0d9bcfe8f2d39c7bed3e00f537a93ace2f37e0a1,Original upstream licence applies; verify at the frozen commit.
+Emerald Dialer,ru.henridellal.dialer,https://github.com/HenriDellal/emerald-dialer.git,e21ad030af4369acb05529eb6432794b0a631f26,Original upstream licence applies; verify at the frozen commit.
+FocusMastodon,allen.town.focus.mastodon,https://github.com/allentown521/FocusMastodon.git,f55325d1a4cff75bed0cd47208685fe4ce6bcd05,Original upstream licence applies; verify at the frozen commit.
+FocusPodcast,allen.town.focus.podcast,https://github.com/allentown521/FocusPodcast.git,bf21b66ddea1b6197ceebf7a3e7d153353ee0359,Original upstream licence applies; verify at the frozen commit.
+FreeOTP Plus,org.liberty.android.freeotpplus,https://github.com/helloworld1/FreeOTPPlus.git,e5807ee0ae74a9fe6cec61fc77f5a34ad2d9c352,Original upstream licence applies; verify at the frozen commit.
+Gear Shift,org.sugr.gearshift,https://github.com/urandom/gearshift,5e0077087ba5fadae81973146692eee5b72e499c,Original upstream licence applies; verify at the frozen commit.
+Glucosio,org.glucosio.android,https://gitlab.com/glucosio/glucosio-android.git,4443f3c63a79dec63999c0bc7c83bf8c39e1236a,Original upstream licence applies; verify at the frozen commit.
+HeaterRC,com.dynamite.heaterrc,https://github.com/dynamitetuning/com.dynamite.heaterrc,735b0d1c21fed53ed46c712e196af652a266f3f8,Original upstream licence applies; verify at the frozen commit.
+Infomaniak Mail,com.infomaniak.mail,https://github.com/Infomaniak/android-kMail.git,dbf462e3552e3bdb5de3bf1c52db77d06ade6b28,Original upstream licence applies; verify at the frozen commit.
+Mindfulness Meditation,biz.binarysolutions.mindfulnessmeditation,https://github.com/vbresan/MindfulnessMeditation,e90ad6f65b575a757ab913e415e8752678855216,Original upstream licence applies; verify at the frozen commit.
+Ministocks,nitezh.ministock,https://github.com/niteshpatel/ministocks.git,f6e28d7a8c8142785049053813b67ef549bc722a,Original upstream licence applies; verify at the frozen commit.
+Money Tracker,com.blogspot.e_kanivets.moneytracker,https://github.com/xorum-io/open_money_tracker,0bd1332b5d0743f3fffe1452bc97b079f7f6e2ea,Original upstream licence applies; verify at the frozen commit.
+MoneyWallet,com.oriondev.moneywallet,https://github.com/AndreAle94/moneywallet,071be04b63359f061138ae57af15a4d0d04d3627,Original upstream licence applies; verify at the frozen commit.
+Motion Eye,com.jairaj.janglegmail.motioneye,https://github.com/JairajJangle/motioneye-android,c3d8fd408ebf3b03ce2094113ca9887f7e9dbfe4,Original upstream licence applies; verify at the frozen commit.
+MyExpenses,org.totschnig.myexpenses,https://github.com/mtotschnig/MyExpenses.git,b1058b7afff31ddd5b909d13f6f26def149eed7f,Original upstream licence applies; verify at the frozen commit.
+PalmCalc 2019+,com.github.palmcalc2019.palmcalc,https://github.com/palmcalc2019/PalmCalc,287154fba46b68788075e57a4b022d5d6440a803,Original upstream licence applies; verify at the frozen commit.
+Prav,app.prav.client,https://codeberg.org/prav/prav.git,9d6943f270679bf8d4d6cfa9eb181af72d4ffdc5,Original upstream licence applies; verify at the frozen commit.
+Pro Expense,com.arduia.expense,https://github.com/arduia/ProExpense.git,300a8170200fc70f1b6d3d4ab6c1e5c08fc7d98a,Original upstream licence applies; verify at the frozen commit.
+Puff,sun.bob.leela,https://github.com/PuffOpenSource/Puff-Android.git,6b66bcf531e726107e08e89bd9d459c4837ef3b2,Original upstream licence applies; verify at the frozen commit.
+QuickLyric (old),be.geecko.QuickLyric,https://github.com/geecko86/QuickLyric,9847aa13ad4c4ee07d1dc13b5bde7892ac0716c5,Original upstream licence applies; verify at the frozen commit.
+RGB Tool,com.fastebro.androidrgbtool,https://github.com/fasteque/rgb-tool,fef1ca039161741c22a4c13efdd13cf4dd6292b3,Original upstream licence applies; verify at the frozen commit.
+RasPi Check,de.eidottermihi.raspicheck,https://github.com/eidottermihi/rpicheck,28b5e65aa8ab4f19627ebd65d3eda4a27cd85991,Original upstream licence applies; verify at the frozen commit.
+Session,network.loki.messenger.fdroid,https://github.com/session-foundation/session-android.git,09d77582d2490ba46bba96bb6730ab9e8750916e,Original upstream licence applies; verify at the frozen commit.
+Simple sms remote,tranquvis.simplesmsremote,https://github.com/tranquvis/SimpleSmsRemote,fdfa1f2d3b8304e572fd15ab2ca264452f10b156,Original upstream licence applies; verify at the frozen commit.
+Smartcoins Wallet,de.bitsharesmunich.smartcoinswallet,https://github.com/kenCode-de/smartcoins-wallet.git,690ed7c9c5e5d99966483e532cafe151ad5aea55,Original upstream licence applies; verify at the frozen commit.
+Trivia You,com.bnyro.trivia,https://github.com/you-apps/TriviaYou.git,71adf5c5d3f3017272daf86f451572cc4b25f22f,Original upstream licence applies; verify at the frozen commit.
+XBMC Remote,org.xbmc.android.remote,https://github.com/freezy/android-xbmcremote.git,9dd0d41d55639b846fad0d49fc316042962c3dbf,Original upstream licence applies; verify at the frozen commit.
+app.dumdum,app.dumdum,https://github.com/Project-Mandarin/DumDum,21d8c767ad0528c02fc46ba9046eb2116d789632,Original upstream licence applies; verify at the frozen commit.
+ch.threema.app.libre,ch.threema.app.libre,https://github.com/threema-ch/threema-android.git,ef63ad83fff7f2828cb899e2557848e13a210835,Original upstream licence applies; verify at the frozen commit.
+mythmote,tkj.android.homecontrol.mythmote,https://github.com/pot8oe/mythmote,3ce6dc3a62ff5e65ac6ce9f9f1b752042335b2c7,Original upstream licence applies; verify at the frozen commit.
+sesam,de.larcado.sesam,https://gitlab.com/larcado/sesam.git,8f8a1e5e9122555add8f9f06345d4c568439db0c,Original upstream licence applies; verify at the frozen commit.

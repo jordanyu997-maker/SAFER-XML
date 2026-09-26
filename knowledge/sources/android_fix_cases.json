@@ -1,0 +1,1344 @@
+{
+  "schema_version": "2.0",
+  "description": "Android accessibility fix cases: concrete bad-code to good-code examples for RAG repair.",
+  "documents": [
+    {
+      "doc_id": "android.fixcase.compose-switch-duplicate-focus",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Compose Switch Duplicate Focus",
+        "title_zh": "Compose 开关设置项重复焦点",
+        "standard_url": "https://developer.android.com/develop/ui/compose/accessibility",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "settings", "switch", "talkback"],
+        "keywords_en": ["Compose", "Switch", "duplicate focus", "toggleable", "Role.Switch", "TalkBack", "settings row"],
+        "keywords_zh": ["Compose", "开关", "重复焦点", "设置项", "整行切换", "TalkBack"],
+        "related_wcag": ["1.3.1", "2.4.3", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "A settings row and its Switch both handle clicks, creating duplicate TalkBack focus stops for one setting.",
+        "summary_zh": "设置项 Row 和内部 Switch 同时可点击，导致 TalkBack 对同一个设置出现重复焦点。",
+        "intent_en": "Expose the whole row as one switch control while keeping the visual Switch from adding a second action.",
+        "intent_zh": "把整行暴露为一个开关控件，同时避免视觉 Switch 再创建第二个操作焦点。",
+        "requirements_en": [
+          "Use Modifier.toggleable on the row with role = Role.Switch.",
+          "Set the child Switch onCheckedChange to null when the parent row owns the action.",
+          "Keep visible label text inside the same semantic control.",
+          "Only add stateDescription when default state wording is insufficient."
+        ],
+        "requirements_zh": [
+          "在整行 Row 上使用 Modifier.toggleable，并设置 role = Role.Switch。",
+          "父行处理切换时，将子 Switch 的 onCheckedChange 设置为 null。",
+          "可见标签文本应处于同一个语义控件中。",
+          "默认状态播报不足时，再补充 stateDescription。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Single focusable switch row",
+            "title_zh": "单焦点开关设置行",
+            "code": "Row(\n    modifier = Modifier\n        .fillMaxWidth()\n        .toggleable(\n            value = checked,\n            role = Role.Switch,\n            onValueChange = onCheckedChange\n        )\n        .padding(16.dp),\n    verticalAlignment = Alignment.CenterVertically\n) {\n    Text(text = title, modifier = Modifier.weight(1f))\n    Switch(checked = checked, onCheckedChange = null)\n}",
+            "explanation_en": "The row is the only semantic switch action, and the child Switch is visual.",
+            "explanation_zh": "整行是唯一的语义开关操作，子 Switch 只负责视觉呈现。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Row and Switch both clickable",
+            "title_zh": "Row 和 Switch 都可点击",
+            "code": "Row(Modifier.clickable { onCheckedChange(!checked) }) {\n    Text(title)\n    Switch(checked = checked, onCheckedChange = onCheckedChange)\n}",
+            "explanation_en": "The same setting may be exposed twice to TalkBack and Switch Access.",
+            "explanation_zh": "同一个设置可能被 TalkBack 和 Switch Access 识别成两个焦点。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Move the toggle action to the parent row with toggleable.",
+          "Make the child Switch passive by setting onCheckedChange = null.",
+          "Verify TalkBack announces one name, one role, and one state."
+        ],
+        "repair_suggestions_zh": [
+          "把切换操作移动到父 Row 的 toggleable 上。",
+          "将子 Switch 设为被动视觉控件：onCheckedChange = null。",
+          "用 TalkBack 验证只播报一个名称、一个角色和一个状态。"
+        ],
+        "manual_checks_en": ["Swipe through the setting with TalkBack; it should stop once.", "Toggle it and verify the new state is announced."],
+        "manual_checks_zh": ["用 TalkBack 滑到该设置项，应只停留一次。", "切换后确认新状态会被播报。"]
+      },
+      "retrieval": {
+        "search_text_en": "Compose Switch duplicate focus settings row toggleable Role.Switch TalkBack onCheckedChange null child switch duplicate accessibility focus",
+        "search_text_zh": "Compose 开关 重复焦点 设置项 Row Switch toggleable Role.Switch TalkBack onCheckedChange null 子开关",
+        "search_text_mixed": "Compose Switch duplicate focus settings row toggleable Role.Switch TalkBack onCheckedChange null child switch duplicate accessibility focus\nCompose 开关 重复焦点 设置项 Row Switch toggleable Role.Switch TalkBack onCheckedChange null 子开关"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.recycler-overflow-generic-label",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "RecyclerView Repeated Overflow Labels",
+        "title_zh": "RecyclerView 重复更多按钮标签",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "understanding_url": "",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "views", "recyclerview", "list-item", "overflow-menu"],
+        "keywords_en": ["RecyclerView", "ViewHolder", "contentDescription", "More", "overflow", "repeated label", "list item"],
+        "keywords_zh": ["RecyclerView", "ViewHolder", "contentDescription", "更多", "菜单", "重复标签", "列表项"],
+        "related_wcag": ["2.4.4", "2.4.6", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "Repeated overflow buttons in a RecyclerView use the same generic contentDescription, so users cannot tell which item the menu belongs to.",
+        "summary_zh": "RecyclerView 中重复的更多按钮使用同一个通用 contentDescription，用户无法判断菜单属于哪个条目。",
+        "intent_en": "Bind item-specific labels every time a recycled item view is bound.",
+        "intent_zh": "每次绑定复用条目时，都用当前条目数据生成具体标签。",
+        "requirements_en": [
+          "Include the item title or stable identifier in repeated action labels.",
+          "Set contentDescription during every ViewHolder bind.",
+          "Do not leave stale contentDescription values on recycled views.",
+          "Use string resources with placeholders for localization."
+        ],
+        "requirements_zh": [
+          "重复操作标签中包含条目标题或稳定标识。",
+          "每次 ViewHolder 绑定时都设置 contentDescription。",
+          "不要让复用视图保留旧的 contentDescription。",
+          "使用带占位符的 string resource 以支持本地化。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Item-specific overflow contentDescription",
+            "title_zh": "结合条目的更多菜单标签",
+            "code": "override fun onBindViewHolder(holder: AppViewHolder, position: Int) {\n    val app = getItem(position)\n    holder.title.text = app.name\n    holder.moreButton.contentDescription =\n        holder.itemView.context.getString(R.string.more_options_for_app, app.name)\n    holder.moreButton.setOnClickListener { showMenu(app) }\n}",
+            "explanation_en": "Each overflow button announces the item it controls.",
+            "explanation_zh": "每个更多按钮都会播报自己控制的具体条目。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Generic overflow label",
+            "title_zh": "通用更多标签",
+            "code": "holder.moreButton.contentDescription = \"More\"\nholder.moreButton.setOnClickListener { showMenu(app) }",
+            "explanation_en": "Every row announces the same label.",
+            "explanation_zh": "每一行都播报相同的“更多”。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Replace generic labels with item-specific string resources.",
+          "Audit all repeated icon buttons in lists.",
+          "Scroll the list and verify labels stay aligned with visible data."
+        ],
+        "repair_suggestions_zh": [
+          "用带条目名称的字符串资源替换通用标签。",
+          "检查列表中所有重复图标按钮。",
+          "滚动列表后确认标签仍与可见数据一致。"
+        ],
+        "manual_checks_en": ["Use TalkBack on several list items and compare overflow labels.", "Scroll far enough to force recycling and test again."],
+        "manual_checks_zh": ["用 TalkBack 检查多个列表项的更多按钮标签。", "滚动到发生视图复用后再次检查。"]
+      },
+      "retrieval": {
+        "search_text_en": "RecyclerView ViewHolder repeated overflow More contentDescription generic label item-specific list item recycled stale label",
+        "search_text_zh": "RecyclerView ViewHolder 重复 更多 菜单 contentDescription 通用标签 结合条目 复用 旧标签",
+        "search_text_mixed": "RecyclerView ViewHolder repeated overflow More contentDescription generic label item-specific list item recycled stale label\nRecyclerView ViewHolder 重复 更多 菜单 contentDescription 通用标签 结合条目 复用 旧标签"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.compose-iconbutton-missing-label",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Compose IconButton Missing Label",
+        "title_zh": "Compose 图标按钮缺少标签",
+        "standard_url": "https://developer.android.com/develop/ui/compose/accessibility",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "icon-button", "toolbar"],
+        "keywords_en": ["Compose", "IconButton", "contentDescription", "missing label", "decorative icon", "toolbar"],
+        "keywords_zh": ["Compose", "图标按钮", "contentDescription", "缺少标签", "工具栏", "装饰图标"],
+        "related_wcag": ["1.1.1", "2.4.6", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "An icon-only Compose button uses contentDescription = null, making its action unnamed for assistive technologies.",
+        "summary_zh": "只有图标的 Compose 按钮使用 contentDescription = null，导致辅助技术无法获得操作名称。",
+        "intent_en": "Provide a localized accessible name for meaningful icon-only actions, and reserve null descriptions for decorative icons.",
+        "intent_zh": "为有意义的纯图标操作提供本地化可访问名称，只把 null 描述用于装饰图标。",
+        "requirements_en": [
+          "Icon-only actions need a localized contentDescription.",
+          "If the parent has semantics, avoid duplicate child descriptions.",
+          "Use contentDescription = null only when the icon is decorative or duplicated by visible text."
+        ],
+        "requirements_zh": [
+          "只有图标的操作必须提供本地化 contentDescription。",
+          "父容器已有语义时，避免子图标重复描述。",
+          "只有装饰图标或已被可见文本表达时，才使用 contentDescription = null。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Labeled icon action",
+            "title_zh": "带标签的图标操作",
+            "code": "IconButton(onClick = onSearch) {\n    Icon(\n        imageVector = Icons.Default.Search,\n        contentDescription = stringResource(R.string.search)\n    )\n}",
+            "explanation_en": "The action is named for TalkBack and Voice Access.",
+            "explanation_zh": "该操作能被 TalkBack 和 Voice Access 正确命名。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Unnamed icon action",
+            "title_zh": "无名称图标操作",
+            "code": "IconButton(onClick = onSearch) {\n    Icon(Icons.Default.Search, contentDescription = null)\n}",
+            "explanation_en": "The icon is the only visible content but is hidden from accessibility services.",
+            "explanation_zh": "图标是唯一可见内容，却被无障碍服务忽略。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add a stringResource contentDescription to the meaningful icon.",
+          "If the button contains visible text, keep the icon decorative.",
+          "Check toolbar actions one by one with TalkBack."
+        ],
+        "repair_suggestions_zh": [
+          "为有意义图标添加 stringResource contentDescription。",
+          "如果按钮已有可见文本，图标保持装饰即可。",
+          "逐个用 TalkBack 检查工具栏操作。"
+        ],
+        "manual_checks_en": ["Swipe through toolbar actions with TalkBack.", "Use Voice Access and verify commands match action labels."],
+        "manual_checks_zh": ["用 TalkBack 遍历工具栏操作。", "使用 Voice Access 检查命令是否匹配操作标签。"]
+      },
+      "retrieval": {
+        "search_text_en": "Compose IconButton missing label contentDescription null icon-only button toolbar TalkBack Voice Access search close back share",
+        "search_text_zh": "Compose IconButton 图标按钮 缺少标签 contentDescription null 工具栏 TalkBack 语音控制 搜索 关闭 返回 分享",
+        "search_text_mixed": "Compose IconButton missing label contentDescription null icon-only button toolbar TalkBack Voice Access search close back share\nCompose IconButton 图标按钮 缺少标签 contentDescription null 工具栏 TalkBack 语音控制 搜索 关闭 返回 分享"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.clickable-custom-view-no-performclick",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Custom View Missing performClick",
+        "title_zh": "自定义 View 缺少 performClick",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/views/custom-views",
+        "understanding_url": "",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "views", "custom-view", "touch", "lint"],
+        "keywords_en": ["custom View", "performClick", "onTouchEvent", "ClickableViewAccessibility", "lint", "AccessibilityEvent"],
+        "keywords_zh": ["自定义View", "performClick", "onTouchEvent", "Lint", "ClickableViewAccessibility", "触摸"],
+        "related_wcag": ["2.1.1", "2.5.1", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "A custom View handles touch directly but does not override performClick, so accessibility services lack a standard activation path.",
+        "summary_zh": "自定义 View 直接处理触摸却没有覆盖 performClick，辅助服务缺少标准激活入口。",
+        "intent_en": "Route custom touch activation through performClick and expose the same action to accessibility services.",
+        "intent_zh": "把自定义触摸激活统一路由到 performClick，并向辅助服务暴露同样的操作。",
+        "requirements_en": [
+          "Override performClick and call super.performClick().",
+          "Call performClick from the touch-up activation path.",
+          "Ensure keyboard/D-pad activation triggers the same behavior.",
+          "Populate accessibility node info if the custom view has custom role or state."
+        ],
+        "requirements_zh": [
+          "覆盖 performClick，并调用 super.performClick()。",
+          "在触摸抬起的激活路径中调用 performClick。",
+          "确保键盘/方向键激活触发同样行为。",
+          "自定义角色或状态时，补充 AccessibilityNodeInfo。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "performClick entry point",
+            "title_zh": "performClick 标准入口",
+            "code": "override fun onTouchEvent(event: MotionEvent): Boolean {\n    if (event.action == MotionEvent.ACTION_UP) {\n        performClick()\n        return true\n    }\n    return true\n}\n\noverride fun performClick(): Boolean {\n    super.performClick()\n    activate()\n    return true\n}",
+            "explanation_en": "The accessibility action and touch action share one activation path.",
+            "explanation_zh": "无障碍动作和触摸动作共享同一个激活路径。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Touch-only activation",
+            "title_zh": "只有触摸激活",
+            "code": "override fun onTouchEvent(event: MotionEvent): Boolean {\n    if (event.action == MotionEvent.ACTION_UP) {\n        activate()\n    }\n    return true\n}",
+            "explanation_en": "This can trigger ClickableViewAccessibility lint warnings and block non-touch users.",
+            "explanation_zh": "这会触发 ClickableViewAccessibility lint 警告，也可能阻碍非触摸用户。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add performClick and call it from onTouchEvent.",
+          "Handle Enter and D-pad center consistently.",
+          "Run lint after the repair."
+        ],
+        "repair_suggestions_zh": [
+          "补充 performClick，并从 onTouchEvent 调用。",
+          "一致处理 Enter 和方向键中键。",
+          "修复后运行 lint。"
+        ],
+        "manual_checks_en": ["Run Android Lint and verify the warning is gone.", "Activate the view with TalkBack and keyboard."],
+        "manual_checks_zh": ["运行 Android Lint，确认警告消失。", "使用 TalkBack 和键盘激活该 View。"]
+      },
+      "retrieval": {
+        "search_text_en": "custom View missing performClick onTouchEvent ClickableViewAccessibility lint touch-only activation AccessibilityEvent keyboard D-pad",
+        "search_text_zh": "自定义View 缺少 performClick onTouchEvent ClickableViewAccessibility Lint 触摸 激活 无障碍事件 键盘 方向键",
+        "search_text_mixed": "custom View missing performClick onTouchEvent ClickableViewAccessibility lint touch-only activation AccessibilityEvent keyboard D-pad\n自定义View 缺少 performClick onTouchEvent ClickableViewAccessibility Lint 触摸 激活 无障碍事件 键盘 方向键"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.swipe-action-no-alternative",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Swipe Action Without Alternative",
+        "title_zh": "滑动操作缺少替代方式",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "understanding_url": "",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "views", "list", "gesture", "swipe"],
+        "keywords_en": ["swipe", "gesture-only", "delete", "dismiss", "customActions", "TalkBack", "Switch Access"],
+        "keywords_zh": ["滑动", "仅手势", "删除", "关闭", "自定义操作", "TalkBack", "开关控制"],
+        "related_wcag": ["2.1.1", "2.5.1", "2.5.7"]
+      },
+      "content": {
+        "summary_en": "A list item can only be deleted or dismissed with a swipe gesture, leaving keyboard, TalkBack, and Switch Access users without an equivalent action.",
+        "summary_zh": "列表项只能通过滑动删除或关闭，键盘、TalkBack 和 Switch Access 用户缺少等价操作。",
+        "intent_en": "Provide visible buttons or custom accessibility actions for gesture-only behavior.",
+        "intent_zh": "为仅手势行为提供可见按钮或自定义无障碍操作。",
+        "requirements_en": [
+          "Gesture-only operations need a selectable alternative.",
+          "Destructive alternatives must have item-specific labels.",
+          "For Compose, consider customActions only when visible buttons would duplicate an already clear action.",
+          "Ensure Switch Access can discover the action."
+        ],
+        "requirements_zh": [
+          "仅手势操作必须提供可选择的替代方式。",
+          "破坏性替代操作必须包含条目上下文。",
+          "Compose 中只有在可见按钮会造成明显重复时才考虑 customActions。",
+          "确保 Switch Access 能发现该操作。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Visible delete alternative",
+            "title_zh": "可见删除替代操作",
+            "code": "ListItem(\n    headlineContent = { Text(item.title) },\n    trailingContent = {\n        IconButton(onClick = { onDelete(item.id) }) {\n            Icon(\n                Icons.Default.Delete,\n                contentDescription = stringResource(R.string.delete_item, item.title)\n            )\n        }\n    }\n)",
+            "explanation_en": "Delete is available through a normal selectable control.",
+            "explanation_zh": "删除操作可通过普通可选择控件完成。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Swipe-only delete",
+            "title_zh": "仅滑动删除",
+            "code": "SwipeToDismissBox(state = dismissState) {\n    Text(item.title)\n}",
+            "explanation_en": "Users who cannot swipe may not be able to delete the item.",
+            "explanation_zh": "不能滑动的用户可能无法删除该条目。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add an item-specific visible delete/dismiss button.",
+          "Add customActions only after testing with TalkBack.",
+          "Verify Switch Access highlights the alternative action."
+        ],
+        "repair_suggestions_zh": [
+          "添加包含条目名称的可见删除/关闭按钮。",
+          "仅在 TalkBack 测试后再考虑 customActions。",
+          "验证 Switch Access 能高亮替代操作。"
+        ],
+        "manual_checks_en": ["Complete the action without touch gestures.", "Use Switch Access to discover and activate the alternative."],
+        "manual_checks_zh": ["不使用触摸手势完成该操作。", "使用 Switch Access 发现并激活替代操作。"]
+      },
+      "retrieval": {
+        "search_text_en": "swipe-only gesture-only delete dismiss alternative customActions TalkBack Switch Access SwipeToDismissBox list item trailing delete button",
+        "search_text_zh": "仅滑动 仅手势 删除 关闭 替代操作 customActions TalkBack Switch Access SwipeToDismissBox 列表项 删除按钮",
+        "search_text_mixed": "swipe-only gesture-only delete dismiss alternative customActions TalkBack Switch Access SwipeToDismissBox list item trailing delete button\n仅滑动 仅手势 删除 关闭 替代操作 customActions TalkBack Switch Access SwipeToDismissBox 列表项 删除按钮"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.textfield-placeholder-only",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "TextField Placeholder Used as Label",
+        "title_zh": "输入框只用占位提示当标签",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "understanding_url": "",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "views", "textfield", "edittext", "form"],
+        "keywords_en": ["TextField", "EditText", "placeholder", "hint", "label", "isError", "supportingText", "form"],
+        "keywords_zh": ["TextField", "EditText", "placeholder", "hint", "标签", "输入框", "表单", "错误"],
+        "related_wcag": ["1.3.1", "3.3.1", "3.3.2"]
+      },
+      "content": {
+        "summary_en": "A field uses placeholder text as its only label, so the field purpose may disappear visually and become unclear after input starts.",
+        "summary_zh": "输入框只使用 placeholder 作为标签，用户开始输入后字段目的可能消失或变得不清楚。",
+        "intent_en": "Provide a stable label and reserve placeholder/hint text for examples or input format guidance.",
+        "intent_zh": "提供稳定标签，把 placeholder/hint 留给示例或输入格式说明。",
+        "requirements_en": [
+          "Compose TextField should use label for stable field identity.",
+          "Placeholder should show example input, not replace the label.",
+          "Invalid fields should expose isError and nearby supportingText.",
+          "View EditText should use android:hint and labelFor when a separate label is present."
+        ],
+        "requirements_zh": [
+          "Compose TextField 使用 label 表达稳定字段名称。",
+          "placeholder 用于示例输入，不替代标签。",
+          "无效字段应暴露 isError 和邻近 supportingText。",
+          "View/EditText 在有独立标签时使用 labelFor 关联。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Stable label with example placeholder",
+            "title_zh": "稳定标签和示例占位提示",
+            "code": "OutlinedTextField(\n    value = email,\n    onValueChange = onEmailChange,\n    label = { Text(stringResource(R.string.email)) },\n    placeholder = { Text(\"name@example.com\") },\n    isError = emailError != null,\n    supportingText = { emailError?.let { Text(it) } }\n)",
+            "explanation_en": "The field has stable identity, example input, and error support.",
+            "explanation_zh": "字段有稳定名称、示例输入和错误支持。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Placeholder-only field",
+            "title_zh": "只有 placeholder 的输入框",
+            "code": "TextField(\n    value = email,\n    onValueChange = onEmailChange,\n    placeholder = { Text(\"Email\") }\n)",
+            "explanation_en": "The visible label disappears once the field has a value.",
+            "explanation_zh": "字段有值后，可见标签会消失。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Move field identity into label.",
+          "Use placeholder for examples such as name@example.com.",
+          "Add isError and supportingText for validation failures."
+        ],
+        "repair_suggestions_zh": [
+          "把字段名称放入 label。",
+          "placeholder 用于 name@example.com 这样的示例。",
+          "校验失败时补充 isError 和 supportingText。"
+        ],
+        "manual_checks_en": ["Enter text and verify the field purpose remains clear.", "Use TalkBack to hear label, value, and error."],
+        "manual_checks_zh": ["输入文本后确认字段目的仍然清楚。", "用 TalkBack 听取标签、值和错误。"]
+      },
+      "retrieval": {
+        "search_text_en": "TextField placeholder only label EditText hint form label isError supportingText validation email password field purpose",
+        "search_text_zh": "TextField 只有 placeholder 标签 EditText hint 表单 label isError supportingText 校验 邮箱 密码 字段目的",
+        "search_text_mixed": "TextField placeholder only label EditText hint form label isError supportingText validation email password field purpose\nTextField 只有 placeholder 标签 EditText hint 表单 label isError supportingText 校验 邮箱 密码 字段目的"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.dialog-focus-not-moved",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Dialog Opens Without Focus Movement",
+        "title_zh": "弹窗打开后焦点未进入",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "understanding_url": "",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "views", "dialog", "bottom-sheet", "focus"],
+        "keywords_en": ["dialog", "bottom sheet", "focus", "paneTitle", "AlertDialog", "ModalBottomSheet", "dismiss"],
+        "keywords_zh": ["弹窗", "对话框", "底部弹层", "焦点", "paneTitle", "关闭", "取消"],
+        "related_wcag": ["2.1.2", "2.4.3", "4.1.2"]
+      },
+      "content": {
+        "summary_en": "A custom overlay appears visually, but accessibility focus remains behind it and the surface has no title or close semantics.",
+        "summary_zh": "自定义遮罩视觉上出现了，但无障碍焦点仍停留在背景，弹层也缺少标题或关闭语义。",
+        "intent_en": "Use platform modal components or provide title, pane semantics, initial focus, and focus return.",
+        "intent_zh": "使用平台模态组件，或补充标题、窗格语义、初始焦点和焦点返回。",
+        "requirements_en": [
+          "Prefer AlertDialog/Dialog/ModalBottomSheet over custom overlays.",
+          "Expose a visible title as the dialog or pane title.",
+          "Move focus to the title or first useful control when opened.",
+          "Restore focus to the trigger when dismissed."
+        ],
+        "requirements_zh": [
+          "优先使用 AlertDialog/Dialog/ModalBottomSheet，而不是自定义遮罩。",
+          "把可见标题暴露为对话框或窗格标题。",
+          "打开时把焦点移动到标题或第一个有用控件。",
+          "关闭后把焦点恢复到触发控件。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Platform AlertDialog",
+            "title_zh": "平台 AlertDialog",
+            "code": "AlertDialog(\n    onDismissRequest = onDismiss,\n    title = { Text(stringResource(R.string.confirm_delete)) },\n    text = { Text(stringResource(R.string.delete_message)) },\n    confirmButton = { TextButton(onClick = onConfirm) { Text(stringResource(R.string.delete)) } },\n    dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } }\n)",
+            "explanation_en": "The platform component provides modal semantics and named actions.",
+            "explanation_zh": "平台组件提供模态语义和命名操作。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Untitled clickable overlay",
+            "title_zh": "无标题可点击遮罩",
+            "code": "if (showDialog) {\n    Box(Modifier.fillMaxSize().clickable { showDialog = false }) {\n        Column { Text(\"Delete?\"); Text(\"OK\") }\n    }\n}",
+            "explanation_en": "The overlay has no modal role, no title semantics, and unclear actions.",
+            "explanation_zh": "遮罩没有模态角色、标题语义和清晰操作。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Replace custom overlay with AlertDialog or ModalBottomSheet.",
+          "Add a named close/cancel action.",
+          "Test focus entry and return with TalkBack."
+        ],
+        "repair_suggestions_zh": [
+          "用 AlertDialog 或 ModalBottomSheet 替换自定义遮罩。",
+          "增加有名称的关闭/取消操作。",
+          "用 TalkBack 测试焦点进入和返回。"
+        ],
+        "manual_checks_en": ["Open the dialog with TalkBack and check the first announcement.", "Dismiss it and confirm focus returns to the trigger."],
+        "manual_checks_zh": ["用 TalkBack 打开弹窗，检查首次播报。", "关闭后确认焦点回到触发控件。"]
+      },
+      "retrieval": {
+        "search_text_en": "dialog opens focus not moved AlertDialog ModalBottomSheet custom overlay paneTitle focus return dismiss close title TalkBack",
+        "search_text_zh": "弹窗 打开 焦点未进入 AlertDialog ModalBottomSheet 自定义遮罩 paneTitle 焦点返回 关闭 标题 TalkBack",
+        "search_text_mixed": "dialog opens focus not moved AlertDialog ModalBottomSheet custom overlay paneTitle focus return dismiss close title TalkBack\n弹窗 打开 焦点未进入 AlertDialog ModalBottomSheet 自定义遮罩 paneTitle 焦点返回 关闭 标题 TalkBack"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.dynamic-status-silent",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Silent Dynamic Status Update",
+        "title_zh": "动态状态更新未播报",
+        "standard_url": "https://developer.android.com/develop/ui/compose/accessibility",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": ["android", "compose", "views", "status", "search", "loading", "error"],
+        "keywords_en": ["liveRegion", "status", "result count", "loading", "error", "Snackbar", "Toast", "TalkBack"],
+        "keywords_zh": ["实时区域", "状态消息", "结果数量", "加载", "错误", "Snackbar", "Toast", "TalkBack"],
+        "related_wcag": ["4.1.3", "3.3.1", "3.3.3"]
+      },
+      "content": {
+        "summary_en": "Search results, loading completion, save success, or validation errors update visually but are not announced to assistive technologies.",
+        "summary_zh": "搜索结果、加载完成、保存成功或校验错误只在视觉上更新，没有向辅助技术播报。",
+        "intent_en": "Expose important non-focus-moving updates as status messages or polite live regions.",
+        "intent_zh": "把重要但不移动焦点的更新暴露为状态消息或礼貌实时区域。",
+        "requirements_en": [
+          "Use liveRegion for important Compose text updates that should be announced.",
+          "Do not move focus for every incremental result update.",
+          "Announce blocking validation errors by moving focus to summary or first invalid field.",
+          "Ensure Snackbar actions have accessible names."
+        ],
+        "requirements_zh": [
+          "Compose 中重要文本更新使用 liveRegion。",
+          "不要为每次增量结果更新移动焦点。",
+          "阻塞性校验错误应移动焦点到错误摘要或第一个无效字段。",
+          "Snackbar 操作必须有可访问名称。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Polite result count status",
+            "title_zh": "礼貌播报结果数量",
+            "code": "Text(\n    text = stringResource(R.string.result_count, results.size),\n    modifier = Modifier.semantics {\n        liveRegion = LiveRegionMode.Polite\n    }\n)",
+            "explanation_en": "Result changes are announced without stealing focus.",
+            "explanation_zh": "结果变化会被播报，但不会抢走焦点。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Silent result update",
+            "title_zh": "静默结果更新",
+            "code": "LazyColumn {\n    items(results) { item -> ResultRow(item) }\n}",
+            "explanation_en": "The list changes, but screen reader users receive no status.",
+            "explanation_zh": "列表改变了，但读屏用户得不到状态反馈。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add a visible status Text with liveRegion = Polite.",
+          "Use assertive announcements only for urgent errors.",
+          "Keep focus stable for non-blocking updates."
+        ],
+        "repair_suggestions_zh": [
+          "增加可见状态文本，并设置 liveRegion = Polite。",
+          "仅紧急错误使用更强播报。",
+          "非阻塞更新保持焦点稳定。"
+        ],
+        "manual_checks_en": ["Change results with TalkBack on and listen for count updates.", "Verify focus stays in the search field during typing."],
+        "manual_checks_zh": ["开启 TalkBack 改变结果，听取数量更新。", "确认输入搜索时焦点仍留在搜索框。"]
+      },
+      "retrieval": {
+        "search_text_en": "silent dynamic status update liveRegion result count loading complete save success error Snackbar Toast TalkBack Compose status message",
+        "search_text_zh": "动态状态 静默 更新 liveRegion 结果数量 加载完成 保存成功 错误 Snackbar Toast TalkBack Compose 状态消息",
+        "search_text_mixed": "silent dynamic status update liveRegion result count loading complete save success error Snackbar Toast TalkBack Compose status message\n动态状态 静默 更新 liveRegion 结果数量 加载完成 保存成功 错误 Snackbar Toast TalkBack Compose 状态消息"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.xml-email-inputtype-missing",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Android XML Email Field Missing Input Type",
+        "title_zh": "Android XML 邮箱输入框缺少输入类型",
+        "standard_url": "https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/style",
+        "understanding_url": "https://developer.android.com/reference/android/text/InputType",
+        "techniques_urls": [
+          "https://developer.android.com/guide/topics/ui/accessibility/views/principles-views",
+          "https://developer.android.com/reference/com/google/android/material/textfield/TextInputLayout"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "issue_codes": [
+          "ANDROID_XML_EMAIL_INPUTTYPE_MISSING"
+        ],
+        "applies_to": [
+          "android",
+          "views",
+          "xml",
+          "EditText",
+          "TextInputEditText",
+          "email-input"
+        ],
+        "keywords_en": [
+          "ANDROID_XML_EMAIL_INPUTTYPE_MISSING",
+          "android:inputType",
+          "textEmailAddress",
+          "TYPE_TEXT_VARIATION_EMAIL_ADDRESS",
+          "EditText",
+          "TextInputEditText",
+          "email field"
+        ],
+        "keywords_zh": [
+          "邮箱输入框",
+          "电子邮件地址",
+          "输入类型",
+          "邮箱键盘"
+        ],
+        "related_wcag": [
+          "1.3.5",
+          "3.3.2"
+        ]
+      },
+      "content": {
+        "summary_en": "When stable XML evidence identifies a text field as an email-address field and no inputType is declared, set android:inputType to textEmailAddress so Android can expose the intended input purpose and show an appropriate IME.",
+        "summary_zh": "当 XML 中有稳定证据表明字段用于输入邮箱地址且尚未声明 inputType 时，设置 android:inputType=\"textEmailAddress\"，使 Android 暴露正确输入目的并显示合适键盘。",
+        "intent_en": "Repair a missing email input semantic with one bounded XML attribute edit without changing labels, hierarchy, ids, or validation behavior.",
+        "intent_zh": "通过一个受限 XML 属性修改补充邮箱输入语义，不改变标签、层级、id 或校验逻辑。",
+        "requirements_en": [
+          "Promote this repair only when an id, label, TextInputLayout hint, or equivalent stable XML evidence identifies an email-address field.",
+          "When inputType is absent, set android:inputType=\"textEmailAddress\" on the EditText or TextInputEditText.",
+          "Do not confuse an email address with an email subject, message body, username, or generic text field.",
+          "inputType does not replace a descriptive label or hint; preserve the existing TextInputLayout or labelFor relationship.",
+          "If an existing inputType contains conflicting class or variation flags, require review instead of overwriting it blindly."
+        ],
+        "requirements_zh": [
+          "只有 id、标签、TextInputLayout hint 或等价稳定 XML 证据明确表示邮箱地址字段时才自动修复。",
+          "inputType 缺失时，在 EditText 或 TextInputEditText 上设置 android:inputType=\"textEmailAddress\"。",
+          "不要把邮件主题、邮件正文、用户名或普通文本字段误判成邮箱地址。",
+          "inputType 不能替代描述性标签或 hint；保留已有 TextInputLayout 或 labelFor 关系。",
+          "已有 inputType 包含冲突类型或变体时应转人工复核，不要盲目覆盖。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Email field with label and input purpose",
+            "title_zh": "同时具有标签和邮箱输入语义",
+            "code": "<com.google.android.material.textfield.TextInputLayout\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"wrap_content\"\n    android:hint=\"@string/email\">\n    <com.google.android.material.textfield.TextInputEditText\n        android:id=\"@+id/edt_email\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:inputType=\"textEmailAddress\" />\n</com.google.android.material.textfield.TextInputLayout>",
+            "explanation_en": "The floating label communicates purpose and the inputType communicates email-address input semantics.",
+            "explanation_zh": "浮动标签说明字段用途，inputType 暴露邮箱地址输入语义。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Email field left as generic text",
+            "title_zh": "邮箱字段仍使用普通文本语义",
+            "code": "<EditText\n    android:id=\"@+id/edt_email\"\n    android:hint=\"@string/email\" />",
+            "explanation_en": "The label identifies email, but the missing inputType leaves the input purpose generic.",
+            "explanation_zh": "标签虽然说明邮箱用途，但缺少 inputType，输入目的仍是普通文本。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add only android:inputType=\"textEmailAddress\" when the attribute is absent and email purpose is unambiguous.",
+          "Preserve the existing label, hint, id, hierarchy, and validation-related attributes.",
+          "Re-run the XML detector and inspect the resulting operation diff."
+        ],
+        "repair_suggestions_zh": [
+          "仅在属性缺失且邮箱用途明确时添加 android:inputType=\"textEmailAddress\"。",
+          "保留已有标签、hint、id、层级和校验相关属性。",
+          "重新运行 XML 检测器并检查操作差异。"
+        ],
+        "manual_checks_en": [
+          "Confirm the field collects an email address rather than another kind of text.",
+          "Confirm the email-oriented keyboard appears at runtime."
+        ],
+        "manual_checks_zh": [
+          "确认字段收集的是邮箱地址而不是其他文本。",
+          "确认运行时显示邮箱输入键盘。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "ANDROID_XML_EMAIL_INPUTTYPE_MISSING Android XML EditText TextInputEditText email field missing inputType android:inputType textEmailAddress TYPE_TEXT_VARIATION_EMAIL_ADDRESS stable email id label TextInputLayout hint appropriate keyboard IME",
+        "search_text_zh": "ANDROID_XML_EMAIL_INPUTTYPE_MISSING Android XML 邮箱输入框 EditText TextInputEditText 缺少 inputType android:inputType textEmailAddress 邮箱地址 邮箱键盘 稳定标签 TextInputLayout hint",
+        "search_text_mixed": "ANDROID_XML_EMAIL_INPUTTYPE_MISSING Android XML EditText TextInputEditText email field missing inputType android:inputType textEmailAddress TYPE_TEXT_VARIATION_EMAIL_ADDRESS stable email id label TextInputLayout hint appropriate keyboard IME\nANDROID_XML_EMAIL_INPUTTYPE_MISSING Android XML 邮箱输入框 EditText TextInputEditText 缺少 inputType android:inputType textEmailAddress 邮箱地址 邮箱键盘 稳定标签 TextInputLayout hint"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.xml-password-inputtype-missing",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Android XML Password Field Missing Input Type",
+        "title_zh": "Android XML 密码输入框缺少输入类型",
+        "standard_url": "https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/style",
+        "understanding_url": "https://developer.android.com/reference/android/text/InputType",
+        "techniques_urls": [
+          "https://developer.android.com/reference/android/R.attr#inputType"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "issue_codes": [
+          "ANDROID_XML_PASSWORD_INPUTTYPE_MISSING"
+        ],
+        "applies_to": [
+          "android",
+          "views",
+          "xml",
+          "EditText",
+          "TextInputEditText",
+          "password-input"
+        ],
+        "keywords_en": [
+          "ANDROID_XML_PASSWORD_INPUTTYPE_MISSING",
+          "android:inputType",
+          "textPassword",
+          "numberPassword",
+          "textVisiblePassword",
+          "EditText",
+          "password field",
+          "PIN field"
+        ],
+        "keywords_zh": [
+          "密码输入框",
+          "密码输入类型",
+          "数字密码",
+          "PIN",
+          "隐藏密码"
+        ],
+        "related_wcag": [
+          "1.3.5",
+          "3.3.2"
+        ]
+      },
+      "content": {
+        "summary_en": "When stable XML evidence identifies a field as a password value and no password inputType is declared, select the password variation that preserves the field's existing text or numeric behavior.",
+        "summary_zh": "当稳定 XML 证据明确表明字段用于输入密码值且未声明密码 inputType 时，应选择与现有文本或数字输入行为一致的密码类型。",
+        "intent_en": "Expose password input semantics with one bounded XML attribute edit without changing the label, value, validation, visibility toggle, or hierarchy.",
+        "intent_zh": "通过一个受限 XML 属性修改补充密码输入语义，不改变标签、值、校验、显隐切换或层级。",
+        "requirements_en": [
+          "Repair only when an id, label, TextInputLayout hint, or equivalent stable XML evidence identifies a password value rather than a password length, strength, separator, generator option, or generic secret setting.",
+          "Use textPassword for an ordinary concealed text password.",
+          "Use numberPassword only when independent XML restrictions identify a numeric PIN or numeric password.",
+          "Do not introduce textVisiblePassword unless existing XML or source behavior explicitly requires a visible password; a password visibility toggle must retain its existing behavior.",
+          "Preserve compatible flags, digits, maxLength, autofill attributes, ids, labels, validators, and event handlers.",
+          "If the required text-versus-numeric behavior is ambiguous, require review instead of guessing."
+        ],
+        "requirements_zh": [
+          "只有 id、标签、TextInputLayout hint 或等价稳定 XML 证据明确表示密码值时才修复；密码长度、强度、分隔符、生成器选项或普通安全设置不属于密码值字段。",
+          "普通隐藏文本密码使用 textPassword。",
+          "只有独立 XML 输入限制明确表示数字 PIN 或数字密码时才使用 numberPassword。",
+          "除非现有 XML 或源码行为明确要求可见密码，否则不要引入 textVisiblePassword；已有密码显隐切换必须保持原行为。",
+          "保留兼容标志、digits、maxLength、autofill 属性、id、标签、校验器和事件处理。",
+          "无法判断文本或数字行为时应转人工复核，不要猜测。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Concealed text password field",
+            "title_zh": "隐藏文本密码字段",
+            "code": "<EditText\n    android:id=\"@+id/account_password\"\n    android:hint=\"@string/password\"\n    android:inputType=\"textPassword\" />",
+            "explanation_en": "The stable label identifies a password value and textPassword preserves normal concealed text entry.",
+            "explanation_zh": "稳定标签明确密码用途，textPassword 保持普通隐藏文本输入。"
+          },
+          {
+            "title_en": "Numeric PIN field",
+            "title_zh": "数字 PIN 字段",
+            "code": "<EditText\n    android:id=\"@+id/account_pin\"\n    android:hint=\"@string/pin\"\n    android:digits=\"0123456789\"\n    android:inputType=\"numberPassword\" />",
+            "explanation_en": "The PIN identity and numeric restriction support numberPassword rather than a text-password guess.",
+            "explanation_zh": "PIN 身份和数字限制共同支持 numberPassword，避免猜测文本密码类型。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Password value left as generic text",
+            "title_zh": "密码值仍使用普通文本语义",
+            "code": "<EditText\n    android:id=\"@+id/account_password\"\n    android:hint=\"@string/password\" />",
+            "explanation_en": "The field purpose is clear, but no password input semantics are exposed.",
+            "explanation_zh": "字段用途明确，但没有暴露密码输入语义。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Choose textPassword or numberPassword from stable XML evidence, not from the issue code alone.",
+          "Set only android:inputType and preserve labels, restrictions, ids, and behavior.",
+          "Reject ambiguous password parameter fields instead of concealing unrelated values."
+        ],
+        "repair_suggestions_zh": [
+          "根据稳定 XML 证据选择 textPassword 或 numberPassword，不能只依据错误代码。",
+          "只修改 android:inputType，并保留标签、限制、id 和行为。",
+          "拒绝修复有歧义的密码参数字段，避免错误隐藏无关数值。"
+        ],
+        "manual_checks_en": [
+          "Confirm the field collects a password value and not a password-related parameter.",
+          "Confirm the keyboard, concealment, visibility toggle, and validation still behave as intended."
+        ],
+        "manual_checks_zh": [
+          "确认字段收集密码值，而不是密码相关参数。",
+          "确认键盘、隐藏显示、显隐切换和校验行为仍符合预期。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "ANDROID_XML_PASSWORD_INPUTTYPE_MISSING Android XML EditText TextInputEditText password PIN missing inputType textPassword numberPassword textVisiblePassword stable id label TextInputLayout preserve digits maxLength visibility toggle",
+        "search_text_zh": "ANDROID_XML_PASSWORD_INPUTTYPE_MISSING Android XML 密码输入框 PIN 缺少 inputType textPassword numberPassword textVisiblePassword 稳定 id 标签 TextInputLayout 保留 digits maxLength 显隐切换",
+        "search_text_mixed": "ANDROID_XML_PASSWORD_INPUTTYPE_MISSING Android XML EditText TextInputEditText password PIN missing inputType textPassword numberPassword textVisiblePassword stable id label TextInputLayout preserve digits maxLength visibility toggle\nANDROID_XML_PASSWORD_INPUTTYPE_MISSING Android XML 密码输入框 PIN 缺少 inputType textPassword numberPassword textVisiblePassword 稳定 id 标签 TextInputLayout 保留 digits maxLength 显隐切换"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.xml-phone-inputtype-missing",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Android XML Phone Field Missing Input Type",
+        "title_zh": "Android XML 电话输入框缺少输入类型",
+        "standard_url": "https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/style",
+        "understanding_url": "https://developer.android.com/reference/android/text/InputType",
+        "techniques_urls": [
+          "https://developer.android.com/reference/android/R.attr#inputType"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "issue_codes": [
+          "ANDROID_XML_PHONE_INPUTTYPE_MISSING"
+        ],
+        "applies_to": [
+          "android",
+          "views",
+          "xml",
+          "EditText",
+          "TextInputEditText",
+          "phone-input"
+        ],
+        "keywords_en": [
+          "ANDROID_XML_PHONE_INPUTTYPE_MISSING",
+          "android:inputType",
+          "phone",
+          "TYPE_CLASS_PHONE",
+          "EditText",
+          "telephone number"
+        ],
+        "keywords_zh": [
+          "电话输入框",
+          "电话号码",
+          "电话键盘",
+          "输入类型"
+        ],
+        "related_wcag": [
+          "1.3.5",
+          "3.3.2"
+        ]
+      },
+      "content": {
+        "summary_en": "When stable XML evidence identifies a field as a telephone-number field and inputType is absent, set android:inputType to phone so Android exposes phone-number input semantics and an appropriate IME.",
+        "summary_zh": "当稳定 XML 证据明确表明字段用于输入电话号码且 inputType 缺失时，设置 android:inputType=\"phone\"，使 Android 暴露电话输入语义并提供合适键盘。",
+        "intent_en": "Add phone input semantics without changing the accessible label, accepted value format, validation, or layout structure.",
+        "intent_zh": "补充电话输入语义，同时不改变可访问标签、可接受值格式、校验或布局结构。",
+        "requirements_en": [
+          "Repair only when an id, label, TextInputLayout hint, or equivalent stable XML evidence identifies a telephone-number value.",
+          "Set android:inputType=\"phone\" when the attribute is absent.",
+          "Do not treat an SMS body, contact name, extension description, generic number, or search field as a telephone-number field.",
+          "Do not replace phone with number; phone numbers can contain dialing characters and are not arithmetic values.",
+          "Preserve digits, maxLength, country-code guidance, ids, labels, validators, and event handlers.",
+          "If existing restrictions conflict with phone input, require review instead of overwriting them."
+        ],
+        "requirements_zh": [
+          "只有 id、标签、TextInputLayout hint 或等价稳定 XML 证据明确表示电话号码值时才修复。",
+          "属性缺失时设置 android:inputType=\"phone\"。",
+          "不要把短信正文、联系人姓名、分机说明、普通数字或搜索字段当作电话号码字段。",
+          "不要用 number 代替 phone；电话号码可能包含拨号字符，并非算术数值。",
+          "保留 digits、maxLength、国家区号提示、id、标签、校验器和事件处理。",
+          "已有输入限制与 phone 冲突时应转人工复核，不要覆盖。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Phone field with purpose and input semantics",
+            "title_zh": "具有用途标签和电话输入语义",
+            "code": "<EditText\n    android:id=\"@+id/contact_phone\"\n    android:hint=\"@string/phone_number\"\n    android:inputType=\"phone\" />",
+            "explanation_en": "The label communicates purpose and phone requests the telephone-oriented IME.",
+            "explanation_zh": "标签说明用途，phone 请求面向电话号码的输入键盘。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Phone field left as generic text",
+            "title_zh": "电话字段仍使用普通文本语义",
+            "code": "<EditText\n    android:id=\"@+id/contact_phone\"\n    android:hint=\"@string/phone_number\" />",
+            "explanation_en": "The purpose is clear, but the input method remains generic.",
+            "explanation_zh": "字段用途明确，但输入方式仍为普通文本。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add only android:inputType=\"phone\" when telephone purpose is unambiguous.",
+          "Preserve labels, restrictions, ids, validation, and event behavior.",
+          "Reject generic numeric evidence instead of assuming it is a phone number."
+        ],
+        "repair_suggestions_zh": [
+          "只有电话用途无歧义时才添加 android:inputType=\"phone\"。",
+          "保留标签、输入限制、id、校验和事件行为。",
+          "拒绝仅凭普通数字证据推断电话号码。"
+        ],
+        "manual_checks_en": [
+          "Confirm the field collects a telephone number rather than another numeric or text value.",
+          "Confirm the phone-oriented keyboard and accepted dialing characters at runtime."
+        ],
+        "manual_checks_zh": [
+          "确认字段收集电话号码，而不是其他数字或文本。",
+          "确认运行时电话键盘和允许的拨号字符。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "ANDROID_XML_PHONE_INPUTTYPE_MISSING Android XML EditText TextInputEditText telephone phone number missing inputType android:inputType phone TYPE_CLASS_PHONE stable id label TextInputLayout dialing characters",
+        "search_text_zh": "ANDROID_XML_PHONE_INPUTTYPE_MISSING Android XML 电话输入框 电话号码 缺少 inputType android:inputType phone 电话键盘 稳定 id 标签 TextInputLayout 拨号字符",
+        "search_text_mixed": "ANDROID_XML_PHONE_INPUTTYPE_MISSING Android XML EditText TextInputEditText telephone phone number missing inputType android:inputType phone TYPE_CLASS_PHONE stable id label TextInputLayout dialing characters\nANDROID_XML_PHONE_INPUTTYPE_MISSING Android XML 电话输入框 电话号码 缺少 inputType android:inputType phone 电话键盘 稳定 id 标签 TextInputLayout 拨号字符"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.xml-number-inputtype-missing",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Android XML Numeric Field Missing Input Type",
+        "title_zh": "Android XML 数值输入框缺少输入类型",
+        "standard_url": "https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/style",
+        "understanding_url": "https://developer.android.com/reference/android/text/InputType",
+        "techniques_urls": [
+          "https://developer.android.com/reference/android/R.attr#inputType"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "issue_codes": [
+          "ANDROID_XML_NUMBER_INPUTTYPE_MISSING"
+        ],
+        "applies_to": [
+          "android",
+          "views",
+          "xml",
+          "EditText",
+          "TextInputEditText",
+          "numeric-input"
+        ],
+        "keywords_en": [
+          "ANDROID_XML_NUMBER_INPUTTYPE_MISSING",
+          "android:inputType",
+          "number",
+          "numberDecimal",
+          "numberSigned",
+          "TYPE_CLASS_NUMBER",
+          "amount",
+          "age",
+          "quantity"
+        ],
+        "keywords_zh": [
+          "数值输入框",
+          "整数",
+          "小数",
+          "金额",
+          "年龄",
+          "数量",
+          "输入类型"
+        ],
+        "related_wcag": [
+          "1.3.5",
+          "3.3.2"
+        ]
+      },
+      "content": {
+        "summary_en": "When stable XML evidence identifies a field as a numeric value and inputType is absent, choose number or numberDecimal from the field's purpose and preserve any explicit range or character restrictions.",
+        "summary_zh": "当稳定 XML 证据明确表明字段用于输入数值且 inputType 缺失时，应根据字段用途选择 number 或 numberDecimal，并保留明确的范围或字符限制。",
+        "intent_en": "Expose numeric input semantics without silently changing whether fractions, signs, units, or formatted identifiers are accepted.",
+        "intent_zh": "补充数值输入语义，同时不擅自改变小数、符号、单位或格式化标识符的接受规则。",
+        "requirements_en": [
+          "Repair only when an id, label, TextInputLayout hint, or equivalent stable XML evidence identifies a specific numeric purpose such as age, count, quantity, amount, price, or measurement.",
+          "Use number for integer-only values such as age or count when XML evidence does not allow fractions.",
+          "Use numberDecimal only when the purpose or existing restrictions clearly allow fractional values such as amount, price, weight, or measurement.",
+          "Add numberSigned only when negative values are explicitly supported; do not infer signed input from a generic number label.",
+          "Do not convert phone numbers, postal codes, account identifiers, one-time codes, or free-form formatted values into arithmetic numeric fields.",
+          "Preserve digits, maxLength, min/max validation evidence, ids, labels, units, and event handlers; require review when decimal behavior is ambiguous."
+        ],
+        "requirements_zh": [
+          "只有 id、标签、TextInputLayout hint 或等价稳定 XML 证据明确表示年龄、计数、数量、金额、价格或测量值等具体数值用途时才修复。",
+          "年龄或计数等仅允许整数的字段使用 number。",
+          "只有用途或现有限制明确允许小数时，金额、价格、重量或测量字段才使用 numberDecimal。",
+          "只有明确支持负值时才添加 numberSigned，不能根据普通数字标签推断。",
+          "不要把电话号码、邮政编码、账户标识、一次性验证码或自由格式值转换为算术数值字段。",
+          "保留 digits、maxLength、最小最大值校验证据、id、标签、单位和事件处理；小数行为不明确时转人工复核。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Integer age field",
+            "title_zh": "整数年龄字段",
+            "code": "<EditText\n    android:id=\"@+id/user_age\"\n    android:hint=\"@string/age\"\n    android:inputType=\"number\" />",
+            "explanation_en": "Age is identified as an integer value, so number is the bounded repair.",
+            "explanation_zh": "年龄被明确为整数值，因此 number 是受限修复。"
+          },
+          {
+            "title_en": "Decimal amount field",
+            "title_zh": "小数金额字段",
+            "code": "<EditText\n    android:id=\"@+id/expense_amount\"\n    android:hint=\"@string/amount\"\n    android:inputType=\"numberDecimal\" />",
+            "explanation_en": "The amount purpose supports fractional input, so numberDecimal preserves expected behavior.",
+            "explanation_zh": "金额用途支持小数输入，因此 numberDecimal 保持预期行为。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Numeric purpose left as generic text",
+            "title_zh": "数值用途仍使用普通文本语义",
+            "code": "<EditText\n    android:id=\"@+id/user_age\"\n    android:hint=\"@string/age\" />",
+            "explanation_en": "The XML identifies an age value, but the field does not expose numeric input semantics.",
+            "explanation_zh": "XML 已明确年龄数值用途，但字段没有暴露数值输入语义。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Choose number or numberDecimal from stable purpose and restriction evidence.",
+          "Preserve digits, maxLength, units, ids, labels, validators, and event behavior.",
+          "Reject ambiguous identifiers and formatted codes instead of treating every digit string as arithmetic input."
+        ],
+        "repair_suggestions_zh": [
+          "根据稳定用途和输入限制证据选择 number 或 numberDecimal。",
+          "保留 digits、maxLength、单位、id、标签、校验器和事件行为。",
+          "拒绝有歧义的标识符和格式化代码，不要把所有数字字符串当作算术输入。"
+        ],
+        "manual_checks_en": [
+          "Confirm whether the value permits fractions or negative numbers.",
+          "Confirm the numeric keyboard and validation behavior at runtime."
+        ],
+        "manual_checks_zh": [
+          "确认该值是否允许小数或负数。",
+          "确认运行时数字键盘和校验行为。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "ANDROID_XML_NUMBER_INPUTTYPE_MISSING Android XML EditText TextInputEditText numeric field missing inputType number numberDecimal numberSigned TYPE_CLASS_NUMBER age count quantity amount price weight measurement preserve digits maxLength",
+        "search_text_zh": "ANDROID_XML_NUMBER_INPUTTYPE_MISSING Android XML 数值输入框 缺少 inputType number numberDecimal numberSigned 年龄 计数 数量 金额 价格 重量 测量 保留 digits maxLength",
+        "search_text_mixed": "ANDROID_XML_NUMBER_INPUTTYPE_MISSING Android XML EditText TextInputEditText numeric field missing inputType number numberDecimal numberSigned TYPE_CLASS_NUMBER age count quantity amount price weight measurement preserve digits maxLength\nANDROID_XML_NUMBER_INPUTTYPE_MISSING Android XML 数值输入框 缺少 inputType number numberDecimal numberSigned 年龄 计数 数量 金额 价格 重量 测量 保留 digits maxLength"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.xml-format-example-only-hint",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Android XML Format Example Used as the Only Input Label",
+        "title_zh": "Android XML 仅用格式示例作为输入标签",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/views/principles-views",
+        "understanding_url": "https://developer.android.com/reference/com/google/android/material/textfield/TextInputLayout",
+        "techniques_urls": [],
+        "apg_urls": []
+      },
+      "tags": {
+        "issue_codes": [
+          "ANDROID_XML_INPUT_WEAK_LABEL_OR_HINT"
+        ],
+        "applies_to": [
+          "android",
+          "views",
+          "xml",
+          "EditText",
+          "TextInputEditText",
+          "TextInputLayout",
+          "labelFor"
+        ],
+        "keywords_en": [
+          "ANDROID_XML_INPUT_WEAK_LABEL_OR_HINT",
+          "weak hint",
+          "format example",
+          "purpose label",
+          "android:hint",
+          "android:labelFor",
+          "placeholder only"
+        ],
+        "keywords_zh": [
+          "弱标签",
+          "格式示例",
+          "字段用途",
+          "输入框标签",
+          "占位符"
+        ],
+        "related_wcag": [
+          "2.4.6",
+          "3.3.2"
+        ]
+      },
+      "content": {
+        "summary_en": "A phone number, numeric sample, plus sign, or other format example does not by itself explain an input field's purpose. Keep the example as guidance, but provide a stable purpose label through TextInputLayout, labelFor, or a purpose-specific hint.",
+        "summary_zh": "电话号码、数字样例、加号等格式示例本身不能说明输入框用途。可以保留示例作为格式指导，但必须通过 TextInputLayout、labelFor 或用途明确的 hint 提供稳定标签。",
+        "intent_en": "Replace an example-only accessible name with a purpose label while preserving useful format guidance and input behavior.",
+        "intent_zh": "用用途标签替代仅由示例构成的可访问名称，同时保留有用的格式指导和输入行为。",
+        "requirements_en": [
+          "The accessible label must describe what users enter, not only show a syntactically valid example.",
+          "Prefer an existing visible TextView with android:labelFor or a TextInputLayout hint when one already represents the field purpose.",
+          "A TextView that owns android:labelFor does not need a new android:id; point labelFor to the input's existing id using @id/name, never @+id/name.",
+          "When no separate visible label exists, use a concise purpose-specific android:hint and keep format help in nearby helper text when possible.",
+          "Do not invent a field purpose from a generic numeric value alone.",
+          "Preserve inputType, digits, maxLength, validators, ids, and event handlers."
+        ],
+        "requirements_zh": [
+          "可访问标签必须说明用户要输入什么，不能只展示语法正确的示例。",
+          "已有可见 TextView 或 TextInputLayout 表达字段用途时，优先使用 android:labelFor 或父级 hint。",
+          "设置 android:labelFor 的 TextView 本身不需要新增 android:id；应使用 @id/name 引用输入框已有 id，不能使用 @+id/name。",
+          "没有独立可见标签时，使用简洁且说明用途的 android:hint；可能时把格式示例保留为附近辅助文本。",
+          "不要仅根据一个普通数字推断字段用途。",
+          "保留 inputType、digits、maxLength、校验器、id 和事件处理。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Purpose label plus format guidance",
+            "title_zh": "用途标签与格式指导分离",
+            "code": "<TextView\n    android:text=\"@string/phone_number\"\n    android:labelFor=\"@id/phone_input\" />\n<EditText\n    android:id=\"@+id/phone_input\"\n    android:hint=\"@string/phone_example\"\n    android:inputType=\"phone\" />",
+            "explanation_en": "The label communicates purpose; the hint can remain a format example.",
+            "explanation_zh": "标签说明字段用途，hint 可以继续提供格式示例。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Example-only accessible name",
+            "title_zh": "仅由示例构成的可访问名称",
+            "code": "<EditText\n    android:id=\"@+id/number\"\n    android:hint=\"+1-555-12345\"\n    android:inputType=\"phone\" />",
+            "explanation_en": "The example shows a format but does not identify that the field is a phone-number field.",
+            "explanation_zh": "该示例只展示格式，没有说明这是电话号码字段。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Use stable XML evidence such as id, visible text, parent TextInputLayout hint, or inputType to identify the purpose.",
+          "Associate an existing visible label with labelFor when available.",
+          "Otherwise replace the example-only hint with a localized purpose hint without changing input restrictions."
+        ],
+        "repair_suggestions_zh": [
+          "使用 id、可见文本、父 TextInputLayout hint 或 inputType 等稳定 XML 证据判断用途。",
+          "存在可见标签时用 labelFor 建立关联。",
+          "否则用本地化用途 hint 替换仅由示例构成的 hint，同时保持输入限制不变。"
+        ],
+        "manual_checks_en": [
+          "Confirm the inferred purpose using visible labels or source context when XML evidence is ambiguous.",
+          "Verify TalkBack announces the field purpose before the current value."
+        ],
+        "manual_checks_zh": [
+          "XML 证据存在歧义时，结合可见标签或源码上下文确认用途。",
+          "确认 TalkBack 会在当前值之前播报字段用途。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "ANDROID_XML_INPUT_WEAK_LABEL_OR_HINT Android XML EditText TextInputEditText weak label weak hint format example placeholder only plus sign numeric example phone example purpose-specific label android:hint android:labelFor TextInputLayout",
+        "search_text_zh": "ANDROID_XML_INPUT_WEAK_LABEL_OR_HINT Android XML 输入框 弱标签 弱 hint 格式示例 占位符 加号 数字示例 电话号码示例 字段用途 android:hint android:labelFor TextInputLayout",
+        "search_text_mixed": "ANDROID_XML_INPUT_WEAK_LABEL_OR_HINT Android XML EditText TextInputEditText weak label weak hint format example placeholder only plus sign numeric example phone example purpose-specific label android:hint android:labelFor TextInputLayout\nANDROID_XML_INPUT_WEAK_LABEL_OR_HINT Android XML 输入框 弱标签 弱 hint 格式示例 占位符 加号 数字示例 电话号码示例 字段用途 android:hint android:labelFor TextInputLayout"
+      }
+    },
+    {
+      "doc_id": "android.fixcase.xml-standard-control-focusable-false",
+      "doc_type": "fix_case",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Android XML Standard Control Explicitly Not Focusable",
+        "title_zh": "Android XML 标准交互控件被显式设为不可聚焦",
+        "standard_url": "https://developer.android.com/develop/ui/views/touch-and-input/keyboard-input/navigation",
+        "understanding_url": "https://developer.android.com/develop/ui/views/touch-and-input/input-compatibility-on-large-screens",
+        "techniques_urls": [
+          "https://developer.android.com/guide/topics/ui/accessibility/views/principles-views"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "issue_codes": [
+          "ANDROID_XML_INTERACTIVE_NOT_FOCUSABLE"
+        ],
+        "applies_to": [
+          "android",
+          "views",
+          "xml",
+          "Button",
+          "ImageButton",
+          "EditText",
+          "keyboard",
+          "D-pad"
+        ],
+        "keywords_en": [
+          "ANDROID_XML_INTERACTIVE_NOT_FOCUSABLE",
+          "android:focusable",
+          "focusable=false",
+          "keyboard navigation",
+          "D-pad",
+          "standard interactive widget"
+        ],
+        "keywords_zh": [
+          "交互控件不可聚焦",
+          "键盘导航",
+          "方向键",
+          "标准控件",
+          "移除错误覆盖"
+        ],
+        "related_wcag": [
+          "2.1.1",
+          "2.4.3",
+          "2.4.7"
+        ]
+      },
+      "content": {
+        "summary_en": "Framework interactive widgets such as Button, ImageButton, and EditText are focusable by default. When an enabled visible standard control explicitly declares android:focusable=\"false\", remove that override to restore default keyboard and D-pad navigation.",
+        "summary_zh": "Button、ImageButton、EditText 等框架交互控件默认可聚焦。启用且可见的标准控件显式声明 android:focusable=\"false\" 时，应移除该覆盖以恢复默认键盘和方向键导航。",
+        "intent_en": "Restore the framework's default focus behavior with the smallest XML edit and without changing click listeners, ids, hierarchy, or visual layout.",
+        "intent_zh": "通过最小 XML 修改恢复框架默认焦点行为，不改变点击监听、id、层级或视觉布局。",
+        "requirements_en": [
+          "Apply automatically only to enabled, visible, standard semantic controls whose framework class is focusable by default.",
+          "Prefer removing the explicit android:focusable=\"false\" attribute so the widget regains its default behavior.",
+          "Do not blindly set focusable=true on decorative images, disabled controls, hidden views, containers, or unknown custom views.",
+          "Preserve click handlers, ids, dimensions, hierarchy, content descriptions, and directional focus attributes.",
+          "Custom views and controls whose focus is managed in code require source or runtime review."
+        ],
+        "requirements_zh": [
+          "仅对启用、可见且框架默认可聚焦的标准语义控件自动修复。",
+          "优先移除显式 android:focusable=\"false\"，让控件恢复框架默认行为。",
+          "不要盲目给装饰图片、禁用控件、隐藏视图、容器或未知自定义 View 设置 focusable=true。",
+          "保留点击处理、id、尺寸、层级、内容描述和方向焦点属性。",
+          "由代码管理焦点的自定义 View 或控件需要源码或运行时复核。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Use the standard ImageButton focus behavior",
+            "title_zh": "使用 ImageButton 默认焦点行为",
+            "code": "<ImageButton\n    android:id=\"@+id/move_left\"\n    android:layout_width=\"48dp\"\n    android:layout_height=\"48dp\"\n    android:contentDescription=\"@string/move_left\" />",
+            "explanation_en": "Omitting the false override lets the standard interactive widget remain keyboard and D-pad focusable.",
+            "explanation_zh": "移除 false 覆盖后，标准交互控件保持键盘和方向键可聚焦。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Enabled ImageButton removed from focus navigation",
+            "title_zh": "启用的 ImageButton 被排除在焦点导航之外",
+            "code": "<ImageButton\n    android:id=\"@+id/move_left\"\n    android:focusable=\"false\"\n    android:contentDescription=\"@string/move_left\" />",
+            "explanation_en": "The control can still receive touch clicks but cannot receive normal keyboard or D-pad focus.",
+            "explanation_zh": "控件仍可触摸点击，但无法通过普通键盘或方向键获得焦点。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Remove android:focusable=\"false\" from the confirmed standard interactive control.",
+          "Do not add unrelated labels, dimensions, roles, or event handlers in the same repair.",
+          "Verify Tab and directional navigation after rebuilding the App."
+        ],
+        "repair_suggestions_zh": [
+          "从已确认的标准交互控件移除 android:focusable=\"false\"。",
+          "不要在同一修复中添加无关标签、尺寸、角色或事件处理。",
+          "重新构建后验证 Tab 和方向键导航。"
+        ],
+        "manual_checks_en": [
+          "Navigate to the control with Tab and D-pad keys.",
+          "Confirm touch and click behavior is unchanged."
+        ],
+        "manual_checks_zh": [
+          "使用 Tab 和方向键导航到该控件。",
+          "确认触摸和点击行为保持不变。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "ANDROID_XML_INTERACTIVE_NOT_FOCUSABLE Android XML ImageButton Button EditText standard interactive control android:focusable=false focusable false remove attribute restore default keyboard navigation D-pad enabled visible",
+        "search_text_zh": "ANDROID_XML_INTERACTIVE_NOT_FOCUSABLE Android XML 标准交互控件 ImageButton Button EditText android:focusable=false 不可聚焦 移除属性 恢复默认 键盘导航 方向键 启用 可见",
+        "search_text_mixed": "ANDROID_XML_INTERACTIVE_NOT_FOCUSABLE Android XML ImageButton Button EditText standard interactive control android:focusable=false focusable false remove attribute restore default keyboard navigation D-pad enabled visible\nANDROID_XML_INTERACTIVE_NOT_FOCUSABLE Android XML 标准交互控件 ImageButton Button EditText android:focusable=false 不可聚焦 移除属性 恢复默认 键盘导航 方向键 启用 可见"
+      }
+    }
+  ]
+}

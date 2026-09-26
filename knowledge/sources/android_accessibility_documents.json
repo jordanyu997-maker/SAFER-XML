@@ -1,0 +1,1374 @@
+{
+  "schema_version": "2.0",
+  "description": "Android accessibility knowledge documents for Compose, Views, component repair patterns, and testing feedback.",
+  "documents": [
+    {
+      "doc_id": "android.rule.content-labels",
+      "doc_type": "technique",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Android Content Labels",
+        "title_zh": "Android 内容标签与可访问名称",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility",
+          "https://developer.android.com/guide/topics/ui/accessibility/views/apps-views"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "icon-button",
+          "image",
+          "list-item"
+        ],
+        "keywords_en": [
+          "android",
+          "contentDescription",
+          "content description",
+          "accessibility label",
+          "talkback",
+          "icon button",
+          "decorative icon"
+        ],
+        "keywords_zh": [
+          "安卓",
+          "内容描述",
+          "可访问名称",
+          "读屏标签",
+          "图标按钮",
+          "装饰图标"
+        ],
+        "related_wcag": [
+          "1.1.1",
+          "2.4.6",
+          "2.5.3",
+          "4.1.2"
+        ]
+      },
+      "content": {
+        "summary_en": "Meaningful Android UI elements need concise labels that describe purpose or result; decorative visuals should be hidden from accessibility services.",
+        "summary_zh": "Android 中有意义的 UI 元素需要简洁、唯一、说明用途或结果的标签；纯装饰图形应从无障碍树中隐藏。",
+        "intent_en": "Expose a reliable accessible name for controls, images, repeated list items, and icon-only actions in Android apps.",
+        "intent_zh": "让 TalkBack、Switch Access、Voice Access 等辅助技术能理解控件、图片、列表项和图标操作的目的。",
+        "requirements_en": [
+          "For Compose icon-only controls, pass a localized contentDescription to the inner Icon or provide semantics on the clickable parent.",
+          "For decorative Compose icons, pass contentDescription = null or hide them with semantics when appropriate.",
+          "For Views, set android:contentDescription on meaningful ImageView/ImageButton controls, and use string resources for localization.",
+          "Treat logos, brand marks, avatars, profile images, QR codes, maps, charts, photos, covers, and thumbnails as meaningful unless equivalent accessible text already conveys the same information.",
+          "Do not hide a meaningful image merely to clear an automated finding; only purely decorative visuals that provide no identity, context, information, or function may be excluded.",
+          "Do not include redundant role words such as button or image when the platform already exposes the role.",
+          "Repeated list items must have unique labels based on item content, not identical labels such as More or Open."
+        ],
+        "requirements_zh": [
+          "Compose 中只有图标的操作控件必须提供本地化 contentDescription，或在可点击父容器上提供语义。",
+          "纯装饰 Icon 使用 contentDescription = null，必要时通过 semantics 从无障碍树隐藏。",
+          "View/XML 中有意义的 ImageView/ImageButton 使用 android:contentDescription，并引用 strings.xml 以便本地化。",
+          "Logo、品牌标志、头像、个人资料图片、二维码、地图、图表、照片、封面和缩略图默认视为有意义内容，除非附近已有等价的可访问文本。",
+          "不要为了消除自动检测结果而隐藏有意义图片；只有不提供身份、上下文、信息或功能的纯装饰图形才能排除。",
+          "不要在标签中重复“按钮”“图片”等角色词，平台会自动播报角色。",
+          "列表中的重复操作必须结合条目内容生成唯一标签，避免所有按钮都叫“更多”或“打开”。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Compose icon button with label",
+            "title_zh": "带可访问名称的 Compose 图标按钮",
+            "code": "IconButton(onClick = onShare) {\n    Icon(\n        imageVector = Icons.Default.Share,\n        contentDescription = stringResource(R.string.action_share)\n    )\n}",
+            "explanation_en": "The icon-only control has a localized accessible name that describes the action.",
+            "explanation_zh": "只有图标的按钮提供了本地化操作名称，TalkBack 可以读出其用途。"
+          },
+          {
+            "title_en": "View image button with contentDescription",
+            "title_zh": "带 contentDescription 的 XML 图标按钮",
+            "code": "<ImageButton\n    android:id=\"@+id/shareButton\"\n    android:layout_width=\"48dp\"\n    android:layout_height=\"48dp\"\n    android:src=\"@drawable/ic_share\"\n    android:contentDescription=\"@string/action_share\" />",
+            "explanation_en": "The control has an accessible name and a sufficient target size.",
+            "explanation_zh": "控件既有可访问名称，也有足够的触控区域。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Unlabeled icon button",
+            "title_zh": "缺少标签的图标按钮",
+            "code": "IconButton(onClick = onShare) {\n    Icon(Icons.Default.Share, contentDescription = null)\n}",
+            "explanation_en": "The only visible content is hidden from accessibility services, so the button has no meaningful label.",
+            "explanation_zh": "唯一可见内容被隐藏，导致按钮没有可理解的读屏标签。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add a localized contentDescription to meaningful icons.",
+          "Move the label to the clickable parent when an entire row/card is clickable.",
+          "Use null contentDescription only for decorative icons that duplicate nearby text.",
+          "Before hiding an image, inspect its id, drawable name, nearby text, and page role; identifiers containing logo or brand require a meaningful description by default."
+        ],
+        "repair_suggestions_zh": [
+          "为有意义图标补充本地化 contentDescription。",
+          "整行或整卡片可点击时，把标签放在可点击父容器的语义上。",
+          "只有当图标纯装饰或已被邻近文本表达时，才使用 null contentDescription。",
+          "隐藏图片前检查 id、drawable 名称、邻近文本和页面作用；包含 logo 或 brand 的标识默认必须提供有意义描述。"
+        ],
+        "manual_checks_en": [
+          "Swipe through the screen with TalkBack and verify each meaningful control has a concise name.",
+          "Check repeated list actions; each label should identify the specific item.",
+          "Verify decorative icons are not announced redundantly."
+        ],
+        "manual_checks_zh": [
+          "使用 TalkBack 线性滑动，确认每个有意义控件都有简洁名称。",
+          "检查列表重复操作，每个标签都应能指向具体条目。",
+          "确认装饰图标不会被重复播报。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "android contentDescription accessibility label accessible name TalkBack icon button decorative icon Compose Views ImageButton ImageView list item More Open unique label WCAG 1.1.1 2.5.3 4.1.2",
+        "search_text_zh": "安卓 contentDescription 内容描述 可访问名称 读屏标签 TalkBack 图标按钮 装饰图标 Compose View ImageButton ImageView 列表项 更多 打开 唯一标签",
+        "search_text_mixed": "android contentDescription accessibility label accessible name TalkBack icon button decorative icon Compose Views ImageButton ImageView list item More Open unique label WCAG 1.1.1 2.5.3 4.1.2\n安卓 contentDescription 内容描述 可访问名称 读屏标签 TalkBack 图标按钮 装饰图标 Compose View ImageButton ImageView 列表项 更多 打开 唯一标签"
+      }
+    },
+    {
+      "doc_id": "android.rule.touch-targets-contrast",
+      "doc_type": "technique",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Perceivable"
+      },
+      "source": {
+        "title_en": "Android Touch Targets and Contrast",
+        "title_zh": "Android 触控目标与颜色对比",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/apps",
+        "understanding_url": "https://m3.material.io/foundations/accessible-design/overview",
+        "techniques_urls": [
+          "https://developer.android.com/guide/topics/ui/accessibility/testing"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "button",
+          "icon-button",
+          "text",
+          "custom-control"
+        ],
+        "keywords_en": [
+          "touch target",
+          "48dp",
+          "minimum size",
+          "contrast",
+          "low contrast",
+          "sizeIn",
+          "minWidth",
+          "minHeight"
+        ],
+        "keywords_zh": [
+          "触控目标",
+          "点击区域",
+          "48dp",
+          "最小尺寸",
+          "颜色对比",
+          "低对比度"
+        ],
+        "related_wcag": [
+          "1.4.3",
+          "1.4.11",
+          "2.5.8"
+        ]
+      },
+      "content": {
+        "summary_en": "Android interactive elements should provide at least a 48dp by 48dp focusable/touchable area and maintain sufficient text and non-text contrast.",
+        "summary_zh": "Android 交互元素应提供至少 48dp x 48dp 的可聚焦/可触控区域，并保证文本和非文本视觉边界有足够对比度。",
+        "intent_en": "Ensure controls can be reliably seen and activated by users with low vision, motor disabilities, or imprecise touch input.",
+        "intent_zh": "确保低视力、运动障碍或触控不精确的用户也能看清并准确激活控件。",
+        "requirements_en": [
+          "Interactive controls should expose at least a 48dp by 48dp target, even when the visible icon is smaller.",
+          "Compose custom controls should use sizeIn(minWidth = 48.dp, minHeight = 48.dp) or a Material component that already enforces minimum target size.",
+          "Views should combine minWidth/minHeight and padding to reach the recommended target size.",
+          "Normal text should target at least 4.5:1 contrast; large text and major non-text indicators should target at least 3:1.",
+          "Do not communicate state or errors only with color."
+        ],
+        "requirements_zh": [
+          "交互控件应暴露至少 48dp x 48dp 的目标区域，即使可见图标本身更小。",
+          "Compose 自定义控件使用 sizeIn(minWidth = 48.dp, minHeight = 48.dp)，或优先使用已保证最小尺寸的 Material 组件。",
+          "View/XML 中通过 minWidth/minHeight 与 padding 组合达到推荐触控大小。",
+          "普通文本对比度目标至少 4.5:1，大文本和关键非文本标识至少 3:1。",
+          "不要只用颜色表达状态、错误或分类。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Compose small visual target with large touch area",
+            "title_zh": "Compose 小图标大触控区域",
+            "code": "Box(\n    modifier = Modifier\n        .sizeIn(minWidth = 48.dp, minHeight = 48.dp)\n        .clickable(onClick = onFavorite),\n    contentAlignment = Alignment.Center\n) {\n    Icon(Icons.Default.Favorite, contentDescription = stringResource(R.string.favorite))\n}",
+            "explanation_en": "The visible icon can stay compact while the clickable area remains large enough.",
+            "explanation_zh": "图标视觉尺寸可以较小，但实际可点击区域满足触控要求。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Tiny custom click target",
+            "title_zh": "过小的自定义点击区域",
+            "code": "Icon(\n    Icons.Default.Close,\n    contentDescription = \"Close\",\n    modifier = Modifier.size(24.dp).clickable { onClose() }\n)",
+            "explanation_en": "The clickable target is only 24dp and may be difficult to activate.",
+            "explanation_zh": "可点击区域只有 24dp，触控精度要求过高。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Wrap small visuals in a 48dp target container.",
+          "Increase minWidth/minHeight or padding on XML controls.",
+          "Add text, icon shape, or pattern cues when color communicates state."
+        ],
+        "repair_suggestions_zh": [
+          "把小图标包在至少 48dp 的可点击容器里。",
+          "在 XML 控件上增加 minWidth/minHeight 或 padding。",
+          "颜色表达状态时，同时增加文字、图标形状或图案提示。"
+        ],
+        "manual_checks_en": [
+          "Use Accessibility Scanner or ATF to find small touch targets and low contrast.",
+          "Try activating controls with one hand and with increased display/font size.",
+          "Check whether state remains understandable in grayscale or color-blind previews."
+        ],
+        "manual_checks_zh": [
+          "使用 Accessibility Scanner 或 ATF 检查小触控目标和低对比度。",
+          "在字体/显示放大后尝试单手激活控件。",
+          "在灰度或色觉缺陷预览下确认状态仍可理解。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "android touch target 48dp sizeIn minWidth minHeight padding contrast low contrast color state Material Compose View Accessibility Scanner target size",
+        "search_text_zh": "安卓 触控目标 点击区域 48dp sizeIn minWidth minHeight padding 颜色对比 低对比度 只用颜色 状态 Material Compose View",
+        "search_text_mixed": "android touch target 48dp sizeIn minWidth minHeight padding contrast low contrast color state Material Compose View Accessibility Scanner target size\n安卓 触控目标 点击区域 48dp sizeIn minWidth minHeight padding 颜色对比 低对比度 只用颜色 状态 Material Compose View"
+      }
+    },
+    {
+      "doc_id": "android.rule.compose-semantics-role-state",
+      "doc_type": "technique",
+      "standard": "Android Jetpack Compose Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Compose Semantics, Role, and State",
+        "title_zh": "Compose 语义、角色与状态",
+        "standard_url": "https://developer.android.com/develop/ui/compose/accessibility",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [
+          "https://developer.android.com/guide/topics/ui/accessibility/testing"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "semantics",
+          "custom-control",
+          "switch",
+          "checkbox",
+          "tab",
+          "progress"
+        ],
+        "keywords_en": [
+          "Compose",
+          "semantics",
+          "Role",
+          "stateDescription",
+          "heading",
+          "paneTitle",
+          "liveRegion",
+          "progressBarRangeInfo",
+          "customActions",
+          "clearAndSetSemantics",
+          "mergeDescendants"
+        ],
+        "keywords_zh": [
+          "Compose",
+          "语义",
+          "角色",
+          "状态说明",
+          "标题",
+          "窗格标题",
+          "实时区域",
+          "自定义操作",
+          "语义合并"
+        ],
+        "related_wcag": [
+          "1.3.1",
+          "2.4.6",
+          "4.1.2",
+          "4.1.3"
+        ]
+      },
+      "content": {
+        "summary_en": "Compose custom UI must expose meaningful semantics: accessible names, roles, states, headings, progress information, pane titles, live regions, and custom actions.",
+        "summary_zh": "Compose 自定义 UI 必须暴露清晰语义，包括名称、角色、状态、标题、进度、窗格标题、实时区域和自定义操作。",
+        "intent_en": "Make the Compose semantics tree match the user's mental model and the available interactions.",
+        "intent_zh": "让 Compose 语义树与用户看到的界面结构、状态和可执行操作一致。",
+        "requirements_en": [
+          "Prefer built-in Material components because many expose accessibility semantics automatically.",
+          "For custom clickable containers, add a role when the role is not obvious from the underlying component.",
+          "Use stateDescription for custom state wording, especially switches, filters, selection, and progress.",
+          "Use heading semantics for section titles that users should navigate by heading.",
+          "Use liveRegion or state announcements for non-focus-moving updates such as result counts, loading completion, or validation summaries."
+        ],
+        "requirements_zh": [
+          "优先使用 Material 内置组件，因为很多语义会自动暴露。",
+          "自定义可点击容器在底层类型无法表达角色时，应补充 Role。",
+          "对开关、筛选、选中、进度等自定义状态使用 stateDescription。",
+          "对需要按标题导航的分区标题标记 heading 语义。",
+          "对结果数量、加载完成、校验摘要等不移动焦点的更新使用 liveRegion 或状态播报。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Custom selectable row with role and state",
+            "title_zh": "带角色和状态的自定义可选行",
+            "code": "Row(\n    modifier = Modifier\n        .toggleable(value = enabled, role = Role.Switch, onValueChange = onToggle)\n        .semantics {\n            stateDescription = if (enabled) \"Enabled\" else \"Disabled\"\n        }\n) {\n    Text(stringResource(R.string.notifications))\n}",
+            "explanation_en": "The row exposes switch behavior and its current state.",
+            "explanation_zh": "整行暴露为开关，并提供当前状态说明。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Clickable row without semantics",
+            "title_zh": "缺少语义的可点击行",
+            "code": "Row(modifier = Modifier.clickable { onToggle() }) {\n    Text(\"Notifications\")\n    Text(if (enabled) \"On\" else \"Off\")\n}",
+            "explanation_en": "The row may be announced as generic clickable content without switch role or state.",
+            "explanation_zh": "整行可能只被播报为普通可点击内容，缺少开关角色和状态。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Replace custom clickable rows with Switch, Checkbox, Button, Tab, or Slider when possible.",
+          "Add semantics role and stateDescription for custom controls.",
+          "Use Compose tests to assert semantics properties."
+        ],
+        "repair_suggestions_zh": [
+          "能用 Switch、Checkbox、Button、Tab、Slider 等内置组件时优先替换。",
+          "为自定义控件补充 role 与 stateDescription。",
+          "用 Compose 测试断言关键语义属性。"
+        ],
+        "manual_checks_en": [
+          "Inspect the semantics tree with Compose tests or UI Automator.",
+          "Use TalkBack and verify name, role, state, and available actions are announced.",
+          "Check dynamic state changes without moving focus."
+        ],
+        "manual_checks_zh": [
+          "通过 Compose 测试或 UI Automator 查看语义树。",
+          "使用 TalkBack 确认名称、角色、状态和可用操作被正确播报。",
+          "检查不移动焦点时的动态状态变化。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Jetpack Compose accessibility semantics Role stateDescription heading paneTitle liveRegion progressBarRangeInfo customActions clearAndSetSemantics mergeDescendants switch checkbox tab progress custom control TalkBack",
+        "search_text_zh": "Jetpack Compose 无障碍 semantics 语义 Role 角色 stateDescription 状态说明 heading 标题 paneTitle liveRegion 实时区域 customActions 自定义操作 语义合并 开关 复选框 标签页 进度",
+        "search_text_mixed": "Jetpack Compose accessibility semantics Role stateDescription heading paneTitle liveRegion progressBarRangeInfo customActions clearAndSetSemantics mergeDescendants switch checkbox tab progress custom control TalkBack\nJetpack Compose 无障碍 semantics 语义 Role 角色 stateDescription 状态说明 heading 标题 paneTitle liveRegion 实时区域 customActions 自定义操作 语义合并 开关 复选框 标签页 进度"
+      }
+    },
+    {
+      "doc_id": "android.rule.focus-navigation",
+      "doc_type": "technique",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Operable"
+      },
+      "source": {
+        "title_en": "Android Focus, Traversal, and Non-touch Operation",
+        "title_zh": "Android 焦点、遍历顺序与非触摸操作",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility",
+          "https://developer.android.com/guide/topics/ui/accessibility/views/principles-views"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "talkback",
+          "switch-access",
+          "keyboard",
+          "voice-access"
+        ],
+        "keywords_en": [
+          "focus order",
+          "traversal order",
+          "TalkBack",
+          "Switch Access",
+          "keyboard",
+          "Voice Access",
+          "focusable",
+          "traversalIndex",
+          "accessibilityTraversalBefore",
+          "accessibilityTraversalAfter"
+        ],
+        "keywords_zh": [
+          "焦点顺序",
+          "遍历顺序",
+          "TalkBack",
+          "开关控制",
+          "键盘",
+          "语音控制",
+          "可聚焦",
+          "焦点管理"
+        ],
+        "related_wcag": [
+          "1.3.2",
+          "2.1.1",
+          "2.4.3",
+          "2.4.7"
+        ]
+      },
+      "content": {
+        "summary_en": "All important Android workflows must be reachable and operable through TalkBack linear navigation, Switch Access scanning, keyboard/D-pad, and voice-driven selection.",
+        "summary_zh": "Android 主流程必须能通过 TalkBack 线性导航、Switch Access 扫描、键盘/方向键和语音选择完成。",
+        "intent_en": "Keep focus traversal aligned with visual and logical order, and ensure every touch-only action has a non-touch alternative.",
+        "intent_zh": "让焦点遍历与视觉/逻辑顺序一致，并为所有触摸操作提供非触摸替代方式。",
+        "requirements_en": [
+          "The traversal order should match the logical reading and task order.",
+          "Only actionable or meaningful elements should be focusable; purely decorative or structural containers should not create extra stops.",
+          "Dialogs, bottom sheets, and new panes should move accessibility focus to an appropriate heading or first useful control.",
+          "Gesture-only actions such as swipe-to-delete, drag, pinch, or long-press must have visible selectable alternatives or custom accessibility actions.",
+          "For Views, use accessibilityTraversalBefore/After only when layout order cannot be made logical; for Compose, use traversalIndex sparingly."
+        ],
+        "requirements_zh": [
+          "遍历顺序应符合逻辑阅读顺序和任务操作顺序。",
+          "只有可操作或有意义元素应进入焦点；纯装饰或结构性容器不应增加额外停靠点。",
+          "Dialog、BottomSheet、新窗格出现后，应把无障碍焦点移到合适标题或第一个有效控件。",
+          "滑动删除、拖拽、捏合、长按等手势必须提供可见可选择替代操作或自定义无障碍操作。",
+          "View 中仅在无法调整布局顺序时使用 accessibilityTraversalBefore/After；Compose 中谨慎使用 traversalIndex。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Alternative action for swipe delete",
+            "title_zh": "滑动删除的替代操作",
+            "code": "ListItem(\n    headlineContent = { Text(item.title) },\n    trailingContent = {\n        IconButton(onClick = { onDelete(item.id) }) {\n            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete_item, item.title))\n        }\n    }\n)",
+            "explanation_en": "Deletion is available through a selectable button, not only a swipe gesture.",
+            "explanation_zh": "删除操作可通过按钮完成，不依赖滑动手势。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Gesture-only action",
+            "title_zh": "只有手势的操作",
+            "code": "SwipeToDismissBox(state = dismissState) {\n    Text(item.title)\n}",
+            "explanation_en": "Users who cannot perform swipe gestures may have no way to delete or dismiss the item.",
+            "explanation_zh": "无法执行滑动手势的用户可能没有任何删除或关闭方式。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add visible buttons or accessibility custom actions for gesture-only behavior.",
+          "Remove focusability from decorative containers.",
+          "Move focus deliberately when opening modal surfaces or replacing major content."
+        ],
+        "repair_suggestions_zh": [
+          "为仅手势操作补充可见按钮或自定义无障碍操作。",
+          "移除装饰容器的可聚焦属性。",
+          "打开模态界面或替换主要内容时明确管理焦点。"
+        ],
+        "manual_checks_en": [
+          "Swipe through the screen with TalkBack and verify the sequence is logical.",
+          "Use Switch Access group selection to check whether all and only actionable items are highlighted.",
+          "Use a hardware keyboard or D-pad to complete primary flows."
+        ],
+        "manual_checks_zh": [
+          "使用 TalkBack 滑动遍历，确认顺序符合逻辑。",
+          "使用 Switch Access 组选择，确认所有且只有可操作项被高亮。",
+          "使用硬件键盘或方向键完成主流程。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "android focus order traversal order TalkBack Switch Access keyboard D-pad Voice Access focusable traversalIndex accessibilityTraversalBefore accessibilityTraversalAfter gesture alternative swipe delete drag long press",
+        "search_text_zh": "安卓 焦点顺序 遍历顺序 TalkBack Switch Access 开关控制 键盘 方向键 语音控制 可聚焦 traversalIndex 手势替代 滑动删除 拖拽 长按",
+        "search_text_mixed": "android focus order traversal order TalkBack Switch Access keyboard D-pad Voice Access focusable traversalIndex accessibilityTraversalBefore accessibilityTraversalAfter gesture alternative swipe delete drag long press\n安卓 焦点顺序 遍历顺序 TalkBack Switch Access 开关控制 键盘 方向键 语音控制 可聚焦 traversalIndex 手势替代 滑动删除 拖拽 长按"
+      }
+    },
+    {
+      "doc_id": "android.rule.forms-errors",
+      "doc_type": "technique",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Understandable"
+      },
+      "source": {
+        "title_en": "Android Forms, Hints, Labels, and Errors",
+        "title_zh": "Android 表单、提示、标签与错误反馈",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/views/principles-views",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "textfield",
+          "edittext",
+          "form",
+          "validation"
+        ],
+        "keywords_en": [
+          "TextField",
+          "EditText",
+          "hint",
+          "labelFor",
+          "placeholder",
+          "supportingText",
+          "isError",
+          "error",
+          "validation",
+          "required"
+        ],
+        "keywords_zh": [
+          "文本输入",
+          "输入框",
+          "表单",
+          "提示",
+          "标签",
+          "错误",
+          "校验",
+          "必填",
+          "labelFor"
+        ],
+        "related_wcag": [
+          "1.3.1",
+          "3.3.1",
+          "3.3.2",
+          "3.3.3",
+          "4.1.3"
+        ]
+      },
+      "content": {
+        "summary_en": "Android form fields need stable labels, useful hints, programmatic relationships, clear validation errors, and announced status changes.",
+        "summary_zh": "Android 表单字段需要稳定标签、有效提示、程序化关联、清晰错误信息，以及可被辅助技术感知的状态变化。",
+        "intent_en": "Make input purpose and validation feedback understandable before, during, and after user input.",
+        "intent_zh": "让用户在输入前、输入中和输入后都能理解字段目的与校验反馈。",
+        "requirements_en": [
+          "Compose TextField should use label for stable field identity and placeholder only for examples or format hints.",
+          "When a Compose field is invalid, set isError and expose a clear supportingText message near the field.",
+          "View EditText should use android:hint for examples and android:labelFor on nearby labels when needed.",
+          "Error messages should identify the field, explain the problem, and suggest a fix where possible.",
+          "After submit, focus should move to an error summary or the first invalid field when validation fails."
+        ],
+        "requirements_zh": [
+          "Compose TextField 使用 label 表达稳定字段名称，placeholder 只用于示例或格式提示。",
+          "Compose 字段无效时设置 isError，并在 supportingText 或邻近文本中显示清晰错误。",
+          "View/EditText 使用 android:hint 提供示例，必要时用 android:labelFor 关联邻近标签。",
+          "错误信息应指出字段、解释问题，并尽可能给出修复建议。",
+          "提交失败后，焦点应移动到错误摘要或第一个无效字段。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Compose TextField with label and error",
+            "title_zh": "带标签和错误提示的 Compose 输入框",
+            "code": "OutlinedTextField(\n    value = email,\n    onValueChange = onEmailChange,\n    label = { Text(stringResource(R.string.email_label)) },\n    placeholder = { Text(\"name@example.com\") },\n    isError = emailError != null,\n    supportingText = {\n        if (emailError != null) Text(emailError)\n    },\n    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)\n)",
+            "explanation_en": "The field has a stable label, input hint, error state, and visible error text.",
+            "explanation_zh": "字段有稳定标签、格式提示、错误状态和可见错误文本。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Placeholder-only field",
+            "title_zh": "只有占位提示的输入框",
+            "code": "TextField(\n    value = email,\n    onValueChange = onEmailChange,\n    placeholder = { Text(\"Email\") }\n)",
+            "explanation_en": "The field lacks a stable label once the user starts typing.",
+            "explanation_zh": "用户开始输入后字段缺少稳定标签。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add labels to all input fields.",
+          "Expose error state and nearby error text.",
+          "Move focus to the first error when a blocking validation failure occurs."
+        ],
+        "repair_suggestions_zh": [
+          "为所有输入字段补充稳定标签。",
+          "暴露错误状态并显示邻近错误文本。",
+          "阻塞性校验失败时，把焦点移动到第一个错误或错误摘要。"
+        ],
+        "manual_checks_en": [
+          "With TalkBack, verify field name, value, hint, error state, and error text.",
+          "Submit an invalid form and check focus movement.",
+          "Confirm instructions do not rely only on color or placeholder text."
+        ],
+        "manual_checks_zh": [
+          "使用 TalkBack 确认字段名称、值、提示、错误状态和错误文本。",
+          "提交无效表单，检查焦点移动。",
+          "确认说明不只依赖颜色或 placeholder。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "android form TextField EditText label hint placeholder labelFor supportingText isError error validation required error summary first invalid field Compose Views",
+        "search_text_zh": "安卓 表单 TextField EditText 标签 提示 placeholder labelFor supportingText isError 错误 校验 必填 错误摘要 第一个无效字段 Compose View",
+        "search_text_mixed": "android form TextField EditText label hint placeholder labelFor supportingText isError error validation required error summary first invalid field Compose Views\n安卓 表单 TextField EditText 标签 提示 placeholder labelFor supportingText isError 错误 校验 必填 错误摘要 第一个无效字段 Compose View"
+      }
+    },
+    {
+      "doc_id": "android.rule.custom-views",
+      "doc_type": "technique",
+      "standard": "Android Accessibility Views",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": "Robust"
+      },
+      "source": {
+        "title_en": "Custom Android Views",
+        "title_zh": "Android 自定义 View 无障碍",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/views/custom-views",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/views/principles-views",
+        "techniques_urls": [
+          "https://developer.android.com/guide/topics/ui/accessibility/testing"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "views",
+          "custom-view",
+          "canvas",
+          "calendar",
+          "chart",
+          "slider",
+          "gesture"
+        ],
+        "keywords_en": [
+          "custom View",
+          "performClick",
+          "AccessibilityEvent",
+          "AccessibilityNodeInfo",
+          "AccessibilityDelegateCompat",
+          "ExploreByTouchHelper",
+          "virtual view hierarchy",
+          "onInitializeAccessibilityNodeInfo"
+        ],
+        "keywords_zh": [
+          "自定义View",
+          "自绘控件",
+          "performClick",
+          "无障碍事件",
+          "无障碍节点",
+          "虚拟视图层级",
+          "日历",
+          "图表"
+        ],
+        "related_wcag": [
+          "1.1.1",
+          "2.1.1",
+          "2.5.1",
+          "4.1.2",
+          "4.1.3"
+        ]
+      },
+      "content": {
+        "summary_en": "Custom Android Views must implement accessibility node information, events, keyboard/D-pad activation, and virtual child nodes when visual subregions act independently.",
+        "summary_zh": "Android 自定义 View 必须实现无障碍节点信息、事件、键盘/方向键激活；当可视子区域独立操作时，应提供虚拟子节点。",
+        "intent_en": "Make custom drawn or gesture-driven controls understandable and operable by accessibility services.",
+        "intent_zh": "让自绘或手势驱动控件能被辅助服务理解和操作。",
+        "requirements_en": [
+          "Override performClick for custom touch handling and call it from touch-up activation paths.",
+          "Populate AccessibilityNodeInfo with class, text/content description, state, checkable/checked, range, and actions as appropriate.",
+          "Send AccessibilityEvent when visible content or control state changes.",
+          "Handle D-pad center and Enter consistently with touch activation.",
+          "Use ExploreByTouchHelper or an AccessibilityNodeProvider when one custom View contains multiple independently focusable regions."
+        ],
+        "requirements_zh": [
+          "自定义触摸处理必须覆盖 performClick，并在触摸抬起触发路径中调用。",
+          "按需在 AccessibilityNodeInfo 中填充类名、文本/内容描述、状态、可选/已选、范围和操作。",
+          "可见内容或控件状态变化时发送 AccessibilityEvent。",
+          "方向键中键和 Enter 应与触摸激活行为一致。",
+          "单个自定义 View 内有多个独立可聚焦区域时，使用 ExploreByTouchHelper 或 AccessibilityNodeProvider 提供虚拟节点。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Custom view click entry point",
+            "title_zh": "自定义 View 的点击入口",
+            "code": "override fun onTouchEvent(event: MotionEvent): Boolean {\n    if (event.action == MotionEvent.ACTION_UP) {\n        performClick()\n        return true\n    }\n    return true\n}\n\noverride fun performClick(): Boolean {\n    super.performClick()\n    activateSelection()\n    return true\n}",
+            "explanation_en": "performClick gives accessibility services a standard activation path.",
+            "explanation_zh": "performClick 为辅助服务提供标准激活入口。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Touch-only custom control",
+            "title_zh": "只有触摸逻辑的自定义控件",
+            "code": "override fun onTouchEvent(event: MotionEvent): Boolean {\n    if (event.action == MotionEvent.ACTION_UP) {\n        activateSelection()\n    }\n    return true\n}",
+            "explanation_en": "The control has no standard accessibility action entry point and may trigger lint warnings.",
+            "explanation_zh": "控件缺少标准无障碍动作入口，也容易触发 lint 警告。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add performClick and call super.performClick.",
+          "Populate AccessibilityNodeInfo for custom state and role.",
+          "Add virtual view hierarchy for calendars, charts, maps, and custom sliders."
+        ],
+        "repair_suggestions_zh": [
+          "补充 performClick 并调用 super.performClick。",
+          "为自定义状态和角色填充 AccessibilityNodeInfo。",
+          "为日历、图表、地图、自定义滑块等提供虚拟视图层级。"
+        ],
+        "manual_checks_en": [
+          "Run Android lint and inspect custom view warnings.",
+          "Use UI Automator Viewer to verify speakable text and node boundaries.",
+          "Operate the control with TalkBack, keyboard, and D-pad."
+        ],
+        "manual_checks_zh": [
+          "运行 Android lint 并检查自定义 View 警告。",
+          "使用 UI Automator Viewer 查看可读文本和节点边界。",
+          "使用 TalkBack、键盘和方向键操作该控件。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Android custom View accessibility performClick onTouchEvent AccessibilityEvent AccessibilityNodeInfo AccessibilityDelegateCompat ExploreByTouchHelper virtual view hierarchy calendar chart slider D-pad Enter custom touch gesture",
+        "search_text_zh": "安卓 自定义View 自绘控件 无障碍 performClick onTouchEvent AccessibilityEvent AccessibilityNodeInfo AccessibilityDelegateCompat ExploreByTouchHelper 虚拟视图层级 日历 图表 滑块 方向键 Enter",
+        "search_text_mixed": "Android custom View accessibility performClick onTouchEvent AccessibilityEvent AccessibilityNodeInfo AccessibilityDelegateCompat ExploreByTouchHelper virtual view hierarchy calendar chart slider D-pad Enter custom touch gesture\n安卓 自定义View 自绘控件 无障碍 performClick onTouchEvent AccessibilityEvent AccessibilityNodeInfo AccessibilityDelegateCompat ExploreByTouchHelper 虚拟视图层级 日历 图表 滑块 方向键 Enter"
+      }
+    },
+    {
+      "doc_id": "android.pattern.list-item-actions",
+      "doc_type": "component_pattern",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "recommended",
+      "conformance": {
+        "level": null,
+        "principle": null
+      },
+      "source": {
+        "title_en": "Android List Item Actions",
+        "title_zh": "Android 列表项与重复操作",
+        "standard_url": "",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "LazyColumn",
+          "RecyclerView",
+          "list",
+          "card"
+        ],
+        "keywords_en": [
+          "LazyColumn",
+          "RecyclerView",
+          "list item",
+          "card",
+          "more",
+          "overflow",
+          "open",
+          "delete",
+          "favorite"
+        ],
+        "keywords_zh": [
+          "列表",
+          "列表项",
+          "卡片",
+          "更多",
+          "菜单",
+          "打开",
+          "删除",
+          "收藏",
+          "RecyclerView"
+        ],
+        "related_wcag": [
+          "1.1.1",
+          "2.4.4",
+          "2.4.6",
+          "2.5.3",
+          "4.1.2"
+        ]
+      },
+      "content": {
+        "summary_en": "Repeated Android list/card actions need item-specific labels, logical grouping, and clear activation behavior.",
+        "summary_zh": "Android 列表/卡片中的重复操作需要结合条目内容生成标签、合理分组，并清楚表达激活行为。",
+        "intent_en": "Prevent repeated controls from sounding identical and make each row's primary and secondary actions clear.",
+        "intent_zh": "避免重复控件读起来完全相同，并让每一行的主操作和次操作清楚可辨。",
+        "requirements_en": [
+          "Use item-specific accessible names such as Delete AntennaPod, not Delete.",
+          "If the entire row is clickable, expose a single meaningful row action unless child actions need independent focus.",
+          "Do not make both the row and all text children separately focusable without a reason.",
+          "Overflow buttons must include the item name or context.",
+          "When using RecyclerView, bind contentDescription from current item data and avoid stale recycled labels."
+        ],
+        "requirements_zh": [
+          "使用结合条目的名称，例如“删除 AntennaPod”，而不是只有“删除”。",
+          "整行可点击时，通常暴露一个有意义的行级操作；只有确实需要时才让子操作独立聚焦。",
+          "不要无理由让整行和所有文本子节点都分别进入焦点。",
+          "更多/溢出菜单按钮必须包含条目名称或上下文。",
+          "RecyclerView 绑定 contentDescription 时必须来自当前条目数据，避免复用导致旧标签残留。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Item-specific overflow label",
+            "title_zh": "结合条目的更多菜单标签",
+            "code": "IconButton(onClick = { openMenu(app.id) }) {\n    Icon(\n        Icons.Default.MoreVert,\n        contentDescription = stringResource(R.string.more_options_for, app.name)\n    )\n}",
+            "explanation_en": "The repeated overflow action identifies the item it belongs to.",
+            "explanation_zh": "重复的更多菜单按钮会说明自己属于哪个条目。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Repeated generic more labels",
+            "title_zh": "重复的通用更多标签",
+            "code": "IconButton(onClick = { openMenu(app.id) }) {\n    Icon(Icons.Default.MoreVert, contentDescription = \"More\")\n}",
+            "explanation_en": "Many items will expose the same label, making navigation ambiguous.",
+            "explanation_zh": "大量条目都会读成同一个“更多”，用户无法区分上下文。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Include the item title in repeated action labels.",
+          "Merge row semantics when the row is the only action.",
+          "Clear or rebind labels during RecyclerView binding."
+        ],
+        "repair_suggestions_zh": [
+          "在重复操作标签中加入条目标题。",
+          "整行只有一个操作时合并行级语义。",
+          "RecyclerView 绑定时清理或重新绑定标签。"
+        ],
+        "manual_checks_en": [
+          "Swipe through at least five list items with TalkBack and check repeated actions.",
+          "Open overflow menus and verify focus returns to the triggering item.",
+          "Scroll recycled lists and confirm labels match visible item data."
+        ],
+        "manual_checks_zh": [
+          "用 TalkBack 遍历至少五个列表项，检查重复操作标签。",
+          "打开溢出菜单后，确认焦点能回到触发条目。",
+          "滚动复用列表，确认标签与可见条目数据一致。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Android list item actions LazyColumn RecyclerView card repeated buttons More overflow Open Delete Favorite item-specific contentDescription stale recycled labels row clickable merge semantics",
+        "search_text_zh": "安卓 列表项 LazyColumn RecyclerView 卡片 重复按钮 更多 菜单 打开 删除 收藏 结合条目的标签 contentDescription 复用标签 整行可点击 语义合并",
+        "search_text_mixed": "Android list item actions LazyColumn RecyclerView card repeated buttons More overflow Open Delete Favorite item-specific contentDescription stale recycled labels row clickable merge semantics\n安卓 列表项 LazyColumn RecyclerView 卡片 重复按钮 更多 菜单 打开 删除 收藏 结合条目的标签 contentDescription 复用标签 整行可点击 语义合并"
+      }
+    },
+    {
+      "doc_id": "android.pattern.dialog-bottom-sheet",
+      "doc_type": "component_pattern",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "recommended",
+      "conformance": {
+        "level": null,
+        "principle": null
+      },
+      "source": {
+        "title_en": "Android Dialog and Bottom Sheet",
+        "title_zh": "Android 对话框与底部弹层",
+        "standard_url": "",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "dialog",
+          "bottom-sheet",
+          "modal"
+        ],
+        "keywords_en": [
+          "dialog",
+          "bottom sheet",
+          "modal",
+          "paneTitle",
+          "focus",
+          "dismiss",
+          "close",
+          "alert dialog"
+        ],
+        "keywords_zh": [
+          "对话框",
+          "弹窗",
+          "底部弹层",
+          "模态",
+          "焦点",
+          "关闭",
+          "取消",
+          "确认"
+        ],
+        "related_wcag": [
+          "1.3.1",
+          "2.1.1",
+          "2.1.2",
+          "2.4.3",
+          "2.4.6",
+          "4.1.2"
+        ]
+      },
+      "content": {
+        "summary_en": "Android dialogs and bottom sheets need a clear title, controlled focus, accessible dismissal, and logical action order.",
+        "summary_zh": "Android 对话框和底部弹层需要清晰标题、受控焦点、可访问关闭方式和符合逻辑的操作顺序。",
+        "intent_en": "Help assistive technology users understand that a new modal surface opened and complete or dismiss it safely.",
+        "intent_zh": "帮助辅助技术用户理解新的模态界面已打开，并能安全完成或关闭它。",
+        "requirements_en": [
+          "Use AlertDialog, Dialog, ModalBottomSheet, or platform components where possible.",
+          "Provide a visible title and expose it as the dialog or pane title.",
+          "Move initial focus to the title or first meaningful control when the surface opens.",
+          "Provide a clearly named close/cancel action unless dismissal is intentionally blocked.",
+          "Return focus to the triggering control after dismissal."
+        ],
+        "requirements_zh": [
+          "尽量使用 AlertDialog、Dialog、ModalBottomSheet 或平台组件。",
+          "提供可见标题，并将其暴露为对话框或窗格标题。",
+          "弹层打开时把初始焦点移动到标题或第一个有意义控件。",
+          "除非业务明确禁止，否则提供名称清楚的关闭/取消操作。",
+          "关闭后焦点应回到触发控件。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Compose alert dialog with named actions",
+            "title_zh": "带命名操作的 Compose 对话框",
+            "code": "AlertDialog(\n    onDismissRequest = onDismiss,\n    title = { Text(stringResource(R.string.delete_title)) },\n    text = { Text(stringResource(R.string.delete_message)) },\n    confirmButton = { TextButton(onClick = onConfirm) { Text(stringResource(R.string.delete)) } },\n    dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } }\n)",
+            "explanation_en": "The dialog exposes title, message, confirm action, and dismiss action.",
+            "explanation_zh": "对话框暴露标题、说明、确认和取消操作。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Untitled custom overlay",
+            "title_zh": "无标题自定义遮罩",
+            "code": "Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = .4f))) {\n    Column { Text(\"Are you sure?\"); Text(\"OK\", Modifier.clickable { confirm() }) }\n}",
+            "explanation_en": "The overlay lacks modal semantics, title, focus management, and a proper button role.",
+            "explanation_zh": "遮罩缺少模态语义、标题、焦点管理和正确按钮角色。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Replace custom overlays with platform dialog/sheet components.",
+          "Add title/pane semantics and close actions.",
+          "Preserve the trigger reference and restore focus on close."
+        ],
+        "repair_suggestions_zh": [
+          "用平台对话框/底部弹层组件替换自定义遮罩。",
+          "补充标题/窗格语义和关闭操作。",
+          "保存触发控件引用，关闭后恢复焦点。"
+        ],
+        "manual_checks_en": [
+          "Open and close the dialog with TalkBack; verify title announcement and focus return.",
+          "Use Switch Access to confirm only dialog actions are scanned while modal.",
+          "Check destructive actions have clear labels and confirmation."
+        ],
+        "manual_checks_zh": [
+          "用 TalkBack 打开和关闭弹窗，确认标题播报和焦点返回。",
+          "用 Switch Access 确认模态期间只扫描弹窗操作。",
+          "检查破坏性操作有清晰标签和确认。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Android dialog bottom sheet modal AlertDialog ModalBottomSheet paneTitle focus dismiss close cancel confirm focus return TalkBack Switch Access",
+        "search_text_zh": "安卓 对话框 底部弹层 模态 AlertDialog ModalBottomSheet paneTitle 焦点 关闭 取消 确认 焦点返回 TalkBack Switch Access",
+        "search_text_mixed": "Android dialog bottom sheet modal AlertDialog ModalBottomSheet paneTitle focus dismiss close cancel confirm focus return TalkBack Switch Access\n安卓 对话框 底部弹层 模态 AlertDialog ModalBottomSheet paneTitle 焦点 关闭 取消 确认 焦点返回 TalkBack Switch Access"
+      }
+    },
+    {
+      "doc_id": "android.pattern.settings-controls",
+      "doc_type": "component_pattern",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "recommended",
+      "conformance": {
+        "level": null,
+        "principle": null
+      },
+      "source": {
+        "title_en": "Android Settings Controls",
+        "title_zh": "Android 设置页开关与选择控件",
+        "standard_url": "",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "settings",
+          "switch",
+          "checkbox",
+          "radio",
+          "slider"
+        ],
+        "keywords_en": [
+          "settings",
+          "Switch",
+          "Checkbox",
+          "RadioButton",
+          "Slider",
+          "stateDescription",
+          "selected",
+          "checked",
+          "disabled"
+        ],
+        "keywords_zh": [
+          "设置页",
+          "开关",
+          "复选框",
+          "单选",
+          "滑块",
+          "状态说明",
+          "选中",
+          "禁用"
+        ],
+        "related_wcag": [
+          "1.3.1",
+          "2.4.6",
+          "3.3.2",
+          "4.1.2"
+        ]
+      },
+      "content": {
+        "summary_en": "Android settings controls must expose label, role, state, disabled reason, and value changes without relying on visual position or color alone.",
+        "summary_zh": "Android 设置控件必须暴露标签、角色、状态、禁用原因和值变化，不能只依赖视觉位置或颜色。",
+        "intent_en": "Make settings screens efficient for repeated use with screen readers, keyboard, and switch scanning.",
+        "intent_zh": "让设置页在读屏、键盘和开关扫描中也能高效反复使用。",
+        "requirements_en": [
+          "Use Switch, Checkbox, RadioButton, Slider, or Material equivalents rather than generic clickable rows when possible.",
+          "If a whole row toggles a value, expose the row as one toggle control and avoid duplicate focus stops.",
+          "State must be programmatically exposed as checked/selected/value, with custom stateDescription only when default wording is insufficient.",
+          "Disabled settings should explain why they are unavailable when the reason is not obvious.",
+          "Sliders and progress controls must expose current value, range, and step behavior."
+          ,"For Spinner and other stateful selectors, associate an existing visible label with labelFor. Do not use a fixed contentDescription that can replace the selected value. If no visible label exists, the repair requires a layout-structure or runtime-code change rather than an attribute-only patch."
+        ],
+        "requirements_zh": [
+          "能用 Switch、Checkbox、RadioButton、Slider 或 Material 等价组件时，不要用普通 clickable Row 模拟。",
+          "整行切换值时，将整行暴露为一个切换控件，避免重复焦点。",
+          "状态必须以 checked/selected/value 等方式程序化暴露；默认播报不足时再加 stateDescription。",
+          "禁用设置在原因不明显时应说明不可用原因。",
+          "滑块和进度控件必须暴露当前值、范围和步进行为。"
+          ,"Spinner 等有状态选择控件应将现有可见标签通过 labelFor 关联；不要用可能覆盖当前选中值的固定 contentDescription。若不存在可见标签，则需要修改布局结构或运行时代码，不能仅靠属性补丁。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Compose settings row as one switch",
+            "title_zh": "整行作为一个开关的设置项",
+            "code": "Row(\n    modifier = Modifier\n        .fillMaxWidth()\n        .toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange)\n        .padding(16.dp),\n    verticalAlignment = Alignment.CenterVertically\n) {\n    Text(stringResource(R.string.use_wifi), Modifier.weight(1f))\n    Switch(checked = checked, onCheckedChange = null)\n}",
+            "explanation_en": "The row is one switch target and the visual Switch does not add a duplicate action.",
+            "explanation_zh": "整行是一个开关目标，视觉 Switch 不再创建重复操作。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Duplicate clickable setting",
+            "title_zh": "重复可点击的设置项",
+            "code": "Row(Modifier.clickable { onCheckedChange(!checked) }) {\n    Text(\"Use Wi-Fi\")\n    Switch(checked = checked, onCheckedChange = onCheckedChange)\n}",
+            "explanation_en": "The row and switch can become separate confusing focus stops for the same action.",
+            "explanation_zh": "整行和 Switch 可能成为两个重复焦点，表达同一个操作。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Use toggleable/selectable with the correct role.",
+          "Set child switch onCheckedChange to null when the parent row handles toggling.",
+          "Add value/range semantics for custom sliders."
+          ,"For unlabeled Spinners, add or associate a visible label; classify the issue as requiring structure or code when attribute-only XML repair cannot preserve the selected value."
+        ],
+        "repair_suggestions_zh": [
+          "使用 toggleable/selectable 并设置正确角色。",
+          "父行处理切换时，将子 Switch 的 onCheckedChange 设为 null。",
+          "为自定义滑块补充值和范围语义。"
+          ,"对于无标签 Spinner，应新增或关联可见标签；当仅修改 XML 属性无法保留当前值播报时，将问题归类为需要结构或代码修复。"
+        ],
+        "manual_checks_en": [
+          "Use TalkBack to verify setting name, role, state, and disabled status.",
+          "Toggle values and confirm state changes are announced.",
+          "Use Switch Access to check duplicate focus stops."
+        ],
+        "manual_checks_zh": [
+          "使用 TalkBack 确认设置名称、角色、状态和禁用状态。",
+          "切换值后确认状态变化会播报。",
+          "使用 Switch Access 检查重复焦点。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Android settings Switch Checkbox RadioButton Slider Spinner labelFor contentDescription selected value toggleable selectable Role.Switch stateDescription checked selected disabled duplicate focus stops whole row toggle Compose Views",
+        "search_text_zh": "安卓 设置页 开关 复选框 单选 滑块 Spinner labelFor contentDescription 当前值 选中 禁用 重复焦点 整行切换 Compose View",
+        "search_text_mixed": "Android settings Switch Checkbox RadioButton Slider Spinner labelFor contentDescription selected value toggleable selectable Role.Switch stateDescription checked selected disabled duplicate focus stops whole row toggle Compose Views\n安卓 设置页 开关 复选框 单选 滑块 Spinner labelFor contentDescription 当前值 选中 禁用 重复焦点 整行切换 Compose View"
+      }
+    },
+    {
+      "doc_id": "android.pattern.search-filter-results",
+      "doc_type": "component_pattern",
+      "standard": "Android Accessibility",
+      "language": "bilingual",
+      "priority": "recommended",
+      "conformance": {
+        "level": null,
+        "principle": null
+      },
+      "source": {
+        "title_en": "Android Search, Filter, and Results",
+        "title_zh": "Android 搜索、筛选与结果更新",
+        "standard_url": "",
+        "understanding_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "techniques_urls": [
+          "https://developer.android.com/develop/ui/compose/accessibility"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "compose",
+          "views",
+          "search",
+          "filter",
+          "results",
+          "empty-state"
+        ],
+        "keywords_en": [
+          "search",
+          "filter",
+          "results",
+          "result count",
+          "liveRegion",
+          "loading",
+          "empty state",
+          "clear button",
+          "chips"
+        ],
+        "keywords_zh": [
+          "搜索",
+          "筛选",
+          "结果",
+          "结果数量",
+          "实时区域",
+          "加载",
+          "空状态",
+          "清除按钮",
+          "筛选标签"
+        ],
+        "related_wcag": [
+          "1.3.1",
+          "2.4.3",
+          "2.4.6",
+          "3.2.2",
+          "4.1.3"
+        ]
+      },
+      "content": {
+        "summary_en": "Android search/filter screens need labelled inputs, explicit clear/filter controls, stable focus, and polite announcements for result updates.",
+        "summary_zh": "Android 搜索/筛选页面需要有标签的输入框、明确的清除/筛选控件、稳定焦点，以及对结果更新的礼貌播报。",
+        "intent_en": "Let users understand what changed after search or filter operations without losing their place.",
+        "intent_zh": "让用户在搜索或筛选后知道结果如何变化，同时不丢失当前位置。",
+        "requirements_en": [
+          "Search fields need a stable label or hint that identifies the purpose.",
+          "Clear buttons and filter chips must have accessible names and selected states.",
+          "Do not move focus on every keystroke; announce result count with a live region or status text.",
+          "Loading, no results, and error states must be visible and accessible.",
+          "Filter drawers or sheets should manage focus like dialogs when modal."
+        ],
+        "requirements_zh": [
+          "搜索框需要稳定标签或能说明用途的 hint。",
+          "清除按钮和筛选标签必须有可访问名称和选中状态。",
+          "不要每次输入都移动焦点；用 live region 或状态文本播报结果数量。",
+          "加载、无结果、错误状态必须可见且可访问。",
+          "筛选抽屉或底部弹层若为模态，应按对话框方式管理焦点。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Result count status in Compose",
+            "title_zh": "Compose 结果数量状态",
+            "code": "Text(\n    text = stringResource(R.string.result_count, results.size),\n    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite }\n)",
+            "explanation_en": "Result count changes can be announced without moving focus away from the search field.",
+            "explanation_zh": "结果数量变化可以被播报，同时焦点仍留在搜索框。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Silent result update",
+            "title_zh": "静默结果更新",
+            "code": "LazyColumn {\n    items(filteredApps) { AppRow(it) }\n}",
+            "explanation_en": "The result list changes but no status tells screen reader users what happened.",
+            "explanation_zh": "结果列表变化了，但没有状态信息告诉读屏用户发生了什么。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Add result count status with polite live announcement.",
+          "Expose selected state on filter chips.",
+          "Keep focus stable during incremental search."
+        ],
+        "repair_suggestions_zh": [
+          "增加结果数量状态，并使用礼貌实时播报。",
+          "在筛选标签上暴露选中状态。",
+          "增量搜索期间保持焦点稳定。"
+        ],
+        "manual_checks_en": [
+          "Type into search with TalkBack and verify focus remains predictable.",
+          "Toggle filters and check selected state and result count announcements.",
+          "Test empty, loading, and error states."
+        ],
+        "manual_checks_zh": [
+          "用 TalkBack 输入搜索词，确认焦点稳定可预测。",
+          "切换筛选条件，检查选中状态和结果数量播报。",
+          "测试空状态、加载状态和错误状态。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Android search filter results result count liveRegion loading empty state error clear button filter chips selected state focus stable Compose Views",
+        "search_text_zh": "安卓 搜索 筛选 结果 结果数量 liveRegion 实时区域 加载 空状态 错误 清除按钮 筛选标签 选中状态 焦点稳定 Compose View",
+        "search_text_mixed": "Android search filter results result count liveRegion loading empty state error clear button filter chips selected state focus stable Compose Views\n安卓 搜索 筛选 结果 结果数量 liveRegion 实时区域 加载 空状态 错误 清除按钮 筛选标签 选中状态 焦点稳定 Compose View"
+      }
+    },
+    {
+      "doc_id": "android.eval.testing-toolchain",
+      "doc_type": "evaluation_rule",
+      "standard": "Android Accessibility Testing",
+      "language": "bilingual",
+      "priority": "required",
+      "conformance": {
+        "level": null,
+        "principle": null
+      },
+      "source": {
+        "title_en": "Android Accessibility Testing Toolchain",
+        "title_zh": "Android 无障碍测试工具链",
+        "standard_url": "https://developer.android.com/guide/topics/ui/accessibility/testing",
+        "understanding_url": "https://developer.android.com/training/testing/espresso/accessibility-checking",
+        "techniques_urls": [
+          "https://developer.android.com/studio/write/lint"
+        ],
+        "apg_urls": []
+      },
+      "tags": {
+        "applies_to": [
+          "android",
+          "testing",
+          "lint",
+          "espresso",
+          "accessibility-scanner",
+          "uiautomator",
+          "talkback"
+        ],
+        "keywords_en": [
+          "Android Lint",
+          "Accessibility Scanner",
+          "AccessibilityChecks",
+          "Espresso",
+          "Accessibility Test Framework",
+          "UI Automator",
+          "TalkBack",
+          "Switch Access",
+          "pre-launch report"
+        ],
+        "keywords_zh": [
+          "安卓测试",
+          "无障碍扫描",
+          "Android Lint",
+          "Accessibility Scanner",
+          "Espresso",
+          "UI Automator",
+          "TalkBack",
+          "开关控制",
+          "预发布报告"
+        ],
+        "related_wcag": [
+          "1.1.1",
+          "1.4.3",
+          "2.4.3",
+          "2.5.8",
+          "4.1.2"
+        ]
+      },
+      "content": {
+        "summary_en": "Android accessibility evaluation should combine static lint, automated checks, UI hierarchy inspection, TalkBack/Switch Access manual testing, and issue-to-fix mapping.",
+        "summary_zh": "Android 无障碍评估应结合静态 lint、自动化检查、UI 层级检查、TalkBack/Switch Access 手工测试，以及问题到修复策略的映射。",
+        "intent_en": "Use tool feedback as a repair signal while recognizing that automated tools do not catch every screen reader usability problem.",
+        "intent_zh": "把工具反馈作为修复信号，同时承认自动工具无法覆盖全部读屏可用性问题。",
+        "requirements_en": [
+          "Run Android Lint to catch structural accessibility issues in source code.",
+          "Enable Espresso AccessibilityChecks for instrumented flows and root-view checks where appropriate.",
+          "Use Accessibility Scanner or ATF-style results to classify content labeling, touch target, contrast, and implementation issues.",
+          "Use UI Automator or semantics tree inspection to locate labels, roles, states, and focusable nodes.",
+          "Always include TalkBack and Switch Access manual checks for representative user flows."
+        ],
+        "requirements_zh": [
+          "运行 Android Lint 捕获源码结构层面的无障碍问题。",
+          "在关键仪器测试流程中启用 Espresso AccessibilityChecks，必要时从根视图检查。",
+          "使用 Accessibility Scanner 或 ATF 风格结果分类内容标签、触控目标、对比度和实现问题。",
+          "使用 UI Automator 或语义树检查定位标签、角色、状态和可聚焦节点。",
+          "代表性用户流程必须包含 TalkBack 和 Switch Access 手工检查。"
+        ],
+        "good_examples": [
+          {
+            "title_en": "Enable Espresso accessibility checks",
+            "title_zh": "启用 Espresso 无障碍检查",
+            "code": "import androidx.test.espresso.accessibility.AccessibilityChecks\n\n@RunWith(AndroidJUnit4::class)\nclass MainFlowTest {\n    init {\n        AccessibilityChecks.enable().setRunChecksFromRootView(true)\n    }\n}",
+            "explanation_en": "Instrumented actions trigger accessibility checks across the screen hierarchy.",
+            "explanation_zh": "仪器测试中的操作会触发屏幕层级的无障碍检查。"
+          }
+        ],
+        "bad_examples": [
+          {
+            "title_en": "Only compile check",
+            "title_zh": "只检查编译",
+            "code": "./gradlew assembleDebug",
+            "explanation_en": "Successful compilation does not prove the UI is accessible or usable with assistive technology.",
+            "explanation_zh": "编译成功并不能证明界面对辅助技术可访问或可用。"
+          }
+        ],
+        "repair_suggestions_en": [
+          "Map content labeling findings to contentDescription or semantics repairs.",
+          "Map touch target findings to min size and padding repairs.",
+          "Map implementation findings to focus order, role/state, custom view, and traversal repairs."
+        ],
+        "repair_suggestions_zh": [
+          "将内容标签问题映射到 contentDescription 或 semantics 修复。",
+          "将触控目标问题映射到最小尺寸和 padding 修复。",
+          "将实现类问题映射到焦点顺序、角色/状态、自定义 View 和遍历顺序修复。"
+        ],
+        "manual_checks_en": [
+          "Record before/after issue counts by category and severity.",
+          "For each selected app screen, verify build, launch, navigation, tool scan, and manual TalkBack flow.",
+          "Report automated-zero results as zero detected issues, not as proof of complete accessibility."
+        ],
+        "manual_checks_zh": [
+          "按类别和严重程度记录修复前后问题数量。",
+          "每个选定界面都验证构建、启动、导航、工具扫描和 TalkBack 手工流程。",
+          "自动检测为 0 时表述为“工具可检测问题为 0”，不要直接说完全无障碍。"
+        ]
+      },
+      "retrieval": {
+        "search_text_en": "Android accessibility testing lint Accessibility Scanner Espresso AccessibilityChecks Accessibility Test Framework UI Automator TalkBack Switch Access pre-launch report content labeling touch target low contrast implementation focus order",
+        "search_text_zh": "安卓 无障碍测试 lint Accessibility Scanner Espresso AccessibilityChecks Accessibility Test Framework UI Automator TalkBack Switch Access 预发布报告 内容标签 触控目标 低对比度 实现问题 焦点顺序",
+        "search_text_mixed": "Android accessibility testing lint Accessibility Scanner Espresso AccessibilityChecks Accessibility Test Framework UI Automator TalkBack Switch Access pre-launch report content labeling touch target low contrast implementation focus order\n安卓 无障碍测试 lint Accessibility Scanner Espresso AccessibilityChecks Accessibility Test Framework UI Automator TalkBack Switch Access 预发布报告 内容标签 触控目标 低对比度 实现问题 焦点顺序"
+      }
+    }
+  ]
+}
